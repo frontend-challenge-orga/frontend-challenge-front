@@ -7,7 +7,7 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import GithubProvider from "next-auth/providers/github";
 
-import { env } from "@/env";
+import { env } from "@/config/env";
 import { db } from "@/config/server/db";
 
 /**
@@ -21,14 +21,14 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: User["role"];
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    role: "USER" | "COLLABORATOR" | "ADMIN";
+  }
 }
 
 /**
@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        role: user.role ?? "USER",
       },
     }),
   },
@@ -51,6 +52,9 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+      // profile(profile) {
+      //   return { ...profile, role: profile.role ?? "USER" };
+      // },
     }),
     /**
      * ...add more providers here.
