@@ -2,6 +2,7 @@ export const URL = {
   LOGIN: "/api/auth/signin",
   HOME: "/",
   ADMIN: "/admin",
+  ADMIN_CHALLENGES: "/admin/challenges",
 };
 
 export const ROLE = {
