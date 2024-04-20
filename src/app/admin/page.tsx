@@ -1,5 +1,10 @@
-import { CreateChallengeForm } from "@/modules/admin/forms/create-challenge-form";
+import { Fragment } from "react";
+import { AnalyticsNavigation } from "@/modules/admin/layouts/navigation/analytics-navigation";
 
 export default async function AdminPage() {
-  return <CreateChallengeForm />;
+  return (
+    <Fragment>
+      <AnalyticsNavigation />
+    </Fragment>
+  );
 }
