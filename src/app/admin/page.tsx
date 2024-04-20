@@ -1,3 +1,5 @@
+import { CreateChallengeForm } from "@/modules/admin/forms/create-challenge-form";
+
 export default async function AdminPage() {
-  return <div>AdminPage</div>;
+  return <CreateChallengeForm />;
 }

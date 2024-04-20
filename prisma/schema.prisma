@@ -54,15 +54,16 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String      @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?     @unique
     emailVerified DateTime?
     image         String?
-    role          Role      @default(USER)
+    role          Role        @default(USER)
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    challenges    Challenge[]
 }
 
 model VerificationToken {
@@ -73,8 +74,42 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
+model Challenge {
+    id                  Int        @id @default(autoincrement())
+    name                String
+    description         String
+    language            Language
+    difficulty          Difficulty
+    brief               String
+    tips                String
+    assets_presentation String[]
+    premium             Boolean
+    starter_code_url    String
+    starter_figma_url   String
+    createdAt           DateTime   @default(now())
+    updatedAt           DateTime   @updatedAt
+    createdBy           User       @relation(fields: [createdById], references: [id])
+    createdById         String
+
+    @@index([name])
+}
+
 enum Role {
     USER
     COLLABORATOR
     ADMIN
+}
+
+enum Language {
+    HTML_CSS
+    JS
+    API
+}
+
+enum Difficulty {
+    NEWBIE
+    JUNIOR
+    INTERMEDIATE
+    ADVANCED
+    GURU
 }
