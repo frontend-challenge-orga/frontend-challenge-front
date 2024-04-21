@@ -2,10 +2,10 @@ import { FolderIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { URL } from "@/config/constants";
 
 export const navigation = [
-  { name: "Dashboard", href: URL.ADMIN, icon: HomeIcon, current: true },
+  { name: "Dashboard", href: URL.DASHBOARD, icon: HomeIcon, current: true },
   {
     name: "Challenges",
-    href: URL.ADMIN_CHALLENGES,
+    href: URL.DASHBOARD_CHALLENGES,
     icon: FolderIcon,
     current: false,
   },

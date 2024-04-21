@@ -1,8 +1,12 @@
 export const URL = {
+  LANDING: "/",
+  DASHBOARD: "/dashboard",
+  DASHBOARD_CHALLENGES: "/dashboard/challenges",
+  DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
+};
+
+export const AUTH_ENDPOINT = {
   LOGIN: "/api/auth/signin",
-  HOME: "/",
-  ADMIN: "/admin",
-  ADMIN_CHALLENGES: "/admin/challenges",
 };
 
 export const ROLE = {

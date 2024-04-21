@@ -15,9 +15,9 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
     session?.user.role !== ROLE.COLLABORATOR
   ) {
     console.log(PROTECTED_ROUTE_ERROR.ADMIN);
-
-    redirect(URL.HOME);
+    redirect(URL.LANDING);
   }
+
   return (
     <SessionProvider session={session}>
       <SidebarMobile />

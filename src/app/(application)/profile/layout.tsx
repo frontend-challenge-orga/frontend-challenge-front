@@ -9,7 +9,7 @@ export default async function ProfileLayout({ children }: PropsWithChildren) {
   if (!session) {
     console.log(PROTECTED_ROUTE_ERROR.PROFILE);
 
-    redirect(URL.HOME);
+    redirect(URL.LANDING);
   }
 
   return <div>{children}</div>;

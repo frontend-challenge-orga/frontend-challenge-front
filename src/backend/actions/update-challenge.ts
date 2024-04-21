@@ -1,16 +1,21 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import challengeService from "@/backend/services/challenge.service";
 import { adminAction } from "@/config/libs/next-safe-action";
-import { formSchema } from "@/modules/admin/forms/create-challenge-schema";
+import { formSchema as Schema } from "@/modules/admin/forms/create-challenge-schema";
 import { extractValuesFromArray } from "@/config/utils";
 import { URL } from "@/config/constants";
-import { revalidatePath } from "next/cache";
+import * as z from "zod";
 
-export const createChallengeAction = adminAction(
+const formSchema = Schema.extend({
+  id: z.number(),
+});
+
+export const updateChallengeAction = adminAction(
   formSchema,
   async (data, ctx) => {
-    await challengeService.createChallenge({
+    await challengeService.updateChallenge(data.id, {
       ...data,
       assets_presentation: extractValuesFromArray(data.assets_presentation),
       createdById: ctx.userId,
