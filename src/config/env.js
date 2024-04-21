@@ -24,6 +24,10 @@ export const env = createEnv({
     ),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
+    DROPBOX_APP_KEY: z.string(),
+    DROPBOX_APP_SECRET: z.string(),
+    DROPBOX_ACCESS_TOKEN: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
   },
 
   /**
@@ -46,6 +50,10 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    DROPBOX_APP_KEY: process.env.DROPBOX_APP_KEY,
+    DROPBOX_APP_SECRET: process.env.DROPBOX_APP_SECRET,
+    DROPBOX_ACCESS_TOKEN: process.env.DROPBOX_ACCESS_TOKEN,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
