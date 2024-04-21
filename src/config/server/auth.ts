@@ -52,9 +52,6 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
-      // profile(profile) {
-      //   return { ...profile, role: profile.role ?? "USER" };
-      // },
     }),
     /**
      * ...add more providers here.

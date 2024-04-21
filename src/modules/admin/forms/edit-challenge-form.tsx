@@ -6,35 +6,40 @@ import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/components/ui/form";
 import { InputForm } from "@/components/ui/input-form";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { createChallengeAction } from "@/backend/actions/create-challenge";
+import { updateChallengeAction } from "@/backend/actions/update-challenge";
 import { TextAreaForm } from "@/components/ui/textarea-form";
 import { SelectForm } from "@/components/ui/select-form";
 import { FieldArrayForm } from "@/components/ui/field-array-form";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/components/ui/switch-form";
+import type { Challenge } from "@prisma/client";
 import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 
+type Props = {
+  challenge: Challenge;
+};
+
 // TODO: Refactor this component to use it for editing and authoring
 
-export const CreateChallengeForm = () => {
+export const EditChallengeForm = ({ challenge }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
 
     defaultValues: {
-      name: "test",
-      description: "test",
-      language: "HTML_CSS",
-      difficulty: "NEWBIE",
-      brief: "test",
-      tips: "test",
+      name: challenge?.name,
+      description: challenge?.description,
+      language: challenge?.language,
+      difficulty: challenge?.difficulty,
+      brief: challenge?.brief,
+      tips: challenge?.tips,
       assets_presentation: [{ value: "https://test.com" }],
-      premium: false,
-      starter_code_url: "https://test.com",
-      starter_figma_url: "https://test.com",
+      premium: challenge?.premium,
+      starter_code_url: challenge?.starter_code_url,
+      starter_figma_url: challenge?.starter_figma_url,
     },
   });
 
@@ -45,8 +50,7 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      console.log(values);
-      await createChallengeAction(values);
+      await updateChallengeAction({ id: challenge?.id, ...values });
     });
   }
 
@@ -106,7 +110,7 @@ export const CreateChallengeForm = () => {
           label="Starter figma URL"
         />
 
-        <SubmitButton isPending={isPending}>Create Challenge</SubmitButton>
+        <SubmitButton isPending={isPending}>Edit Challenge</SubmitButton>
       </form>
     </Form>
   );

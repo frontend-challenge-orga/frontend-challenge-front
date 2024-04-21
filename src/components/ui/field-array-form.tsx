@@ -1,13 +1,6 @@
 import * as React from "react";
 import { InputForm } from "@/components/ui/input-form";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormControl,
-  FormDescription,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormControl } from "@/components/ui/form";
 import type {
   Control,
   FieldArrayWithId,
@@ -27,12 +20,13 @@ export interface Props<TFieldArrayValue extends Record<string, any>> {
     TFieldArrayValue,
     ArrayPath<TFieldArrayValue>
   >;
+  label?: string;
 }
 
 export const FieldArrayForm = <TFieldArrayValue extends Record<string, any>>(
   props: Props<TFieldArrayValue>,
 ) => {
-  const { control, fields, remove, append, name, createNewItem } = props;
+  const { control, fields, remove, append, name, createNewItem, label } = props;
   return (
     <FormField
       control={control}
@@ -45,7 +39,7 @@ export const FieldArrayForm = <TFieldArrayValue extends Record<string, any>>(
                 <InputForm
                   control={control}
                   name={`${name}.${index}.value`}
-                  label="Value"
+                  label={label}
                 />
               </FormControl>
               <button

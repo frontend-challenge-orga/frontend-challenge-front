@@ -1,6 +1,11 @@
 import * as React from "react";
 import { Switch } from "@/components/ui/switch";
-import { FormField } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import type { Control } from "react-hook-form";
 
 export interface SwitchProps
@@ -13,18 +18,24 @@ export interface SwitchProps
 const SwitchForm = React.forwardRef<
   HTMLButtonElement,
   Omit<SwitchProps, "type">
->(({ control, name, label, ...props }, ref) => {
+>(({ className, control, name, label, ...props }, ref) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <Switch
-          checked={field.value}
-          onCheckedChange={field.onChange}
-          ref={ref}
-          {...props}
-        />
+        <FormItem className={className}>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Switch
+              className={"block"}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              ref={ref}
+              {...props}
+            />
+          </FormControl>
+        </FormItem>
       )}
     />
   );
