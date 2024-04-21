@@ -5,8 +5,8 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/components/ui/form";
 import { InputForm } from "@/components/ui/input-form";
-import { SubmitButton } from "@/components/ui/submit-button";
-import { updateChallengeAction } from "@/backend/actions/update-challenge";
+import { ButtonSubmit } from "@/components/ui/button-submit";
+import { updateChallengeAction } from "@/backend/actions/challenge/update-challenge";
 import { TextAreaForm } from "@/components/ui/textarea-form";
 import { SelectForm } from "@/components/ui/select-form";
 import { FieldArrayForm } from "@/components/ui/field-array-form";
@@ -110,7 +110,7 @@ export const EditChallengeForm = ({ challenge }: Props) => {
           label="Starter figma URL"
         />
 
-        <SubmitButton isPending={isPending}>Edit Challenge</SubmitButton>
+        <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
       </form>
     </Form>
   );

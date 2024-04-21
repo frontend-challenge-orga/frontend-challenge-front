@@ -5,7 +5,7 @@ export const URL = {
   DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
 };
 
-export const AUTH_ENDPOINT = {
+export const API_ENDPOINT = {
   LOGIN: "/api/auth/signin",
 };
 
@@ -32,4 +32,5 @@ export const PROTECTED_ROUTE_ERROR = {
 
 export const ACTION_ERROR = {
   ADMIN: "You are not authorized to perform this action.",
+  USER: "You are not logged in.",
 };

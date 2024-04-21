@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ButtonLink } from "@/components/button-link";
+import { ButtonLink } from "@/components/ui/button-link";
 import { URL } from "@/config/constants";
 
 type Props = {
