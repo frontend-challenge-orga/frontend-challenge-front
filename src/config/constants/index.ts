@@ -7,7 +7,6 @@ export const URL = {
 
 export const API_ENDPOINT = {
   LOGIN: "/api/auth/signin",
-  CHECKOUT: "/api/checkout",
 };
 
 export const ROLE = {
@@ -33,4 +32,5 @@ export const PROTECTED_ROUTE_ERROR = {
 
 export const ACTION_ERROR = {
   ADMIN: "You are not authorized to perform this action.",
+  USER: "You are not logged in.",
 };

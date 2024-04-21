@@ -60,6 +60,8 @@ model User {
     emailVerified DateTime?
     image         String?
     role          Role        @default(USER)
+    subscribed    Boolean     @default(false)
+    subscribed_at DateTime?
     credits       Int         @default(0)
     accounts      Account[]
     sessions      Session[]

@@ -1,15 +1,16 @@
-import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { type VariantProps } from "class-variance-authority";
 import type { buttonVariants } from "@/components/ui/button";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  isPending?: boolean;
+  isPending: boolean;
   asChild?: boolean;
 }
 
-export const SubmitButton = ({
+export const ButtonSubmit = ({
   isPending,
   children,
   ...props

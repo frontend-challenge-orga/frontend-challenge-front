@@ -15,11 +15,23 @@ class PaymentService {
             },
           ],
           mode: "subscription",
-          success_url: "https://example.com/success",
+          success_url: env.NEXTAUTH_URL,
           cancel_url: env.NEXTAUTH_URL,
         });
 
       return checkoutSession;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async cancelSubscription(subscriptionId: string) {
+    try {
+      const cancelledSubscription: Stripe.Response<Stripe.Subscription> =
+        await stripe.subscriptions.cancel(subscriptionId);
+
+      return cancelledSubscription;
     } catch (error) {
       console.error(error);
       throw error;
