@@ -28,6 +28,7 @@ export const env = createEnv({
     DROPBOX_APP_SECRET: z.string(),
     DROPBOX_ACCESS_TOKEN: z.string(),
     STRIPE_SECRET_KEY: z.string(),
+    STRIPE_WEBHOOK_SECRET: z.string(),
   },
 
   /**
@@ -54,6 +55,7 @@ export const env = createEnv({
     DROPBOX_APP_SECRET: process.env.DROPBOX_APP_SECRET,
     DROPBOX_ACCESS_TOKEN: process.env.DROPBOX_ACCESS_TOKEN,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
