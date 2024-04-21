@@ -5,8 +5,9 @@ export const URL = {
   DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
 };
 
-export const AUTH_ENDPOINT = {
+export const API_ENDPOINT = {
   LOGIN: "/api/auth/signin",
+  CHECKOUT: "/api/checkout",
 };
 
 export const ROLE = {
