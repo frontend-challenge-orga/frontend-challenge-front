@@ -14,8 +14,8 @@ class PaymentService {
             },
           ],
           mode: "subscription",
-          success_url: env.NEXTAUTH_URL,
-          cancel_url: env.NEXTAUTH_URL,
+          success_url: env.STRIPE_SUCCESS_URL,
+          cancel_url: env.STRIPE_CANCEL_URL,
         });
 
       return checkoutSession;
