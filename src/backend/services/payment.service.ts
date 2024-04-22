@@ -13,9 +13,6 @@ class PaymentService {
               quantity: 1,
             },
           ],
-          metadata: {
-            userId: "123",
-          },
           mode: "subscription",
           success_url: env.NEXTAUTH_URL,
           cancel_url: env.NEXTAUTH_URL,
