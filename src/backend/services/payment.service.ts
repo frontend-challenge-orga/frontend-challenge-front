@@ -13,10 +13,8 @@ class PaymentService {
               quantity: 1,
             },
           ],
-          payment_intent_data: {
-            metadata: {
-              userId: "123",
-            },
+          metadata: {
+            userId: "123",
           },
           mode: "subscription",
           success_url: env.NEXTAUTH_URL,
