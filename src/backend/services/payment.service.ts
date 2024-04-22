@@ -13,9 +13,12 @@ class PaymentService {
               quantity: 1,
             },
           ],
-          metadata: {
-            userId: "123",
+          subscription_data: {
+            metadata: {
+              userId: "123",
+            },
           },
+
           mode: "subscription",
           success_url: env.STRIPE_SUCCESS_URL,
           cancel_url: env.STRIPE_CANCEL_URL,
