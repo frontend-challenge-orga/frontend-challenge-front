@@ -14,18 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -60,12 +48,11 @@ model User {
     emailVerified DateTime?
     image         String?
     role          Role        @default(USER)
-    subscribed    Boolean     @default(false)
-    subscribed_at DateTime?
     credits       Int         @default(0)
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    subscription  Subscription?
+    credit        Credit?
     challenges    Challenge[]
 }
 
@@ -75,6 +62,27 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Subscription {
+    id          Int      @id @default(autoincrement())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    subscribed  Boolean  @default(true)
+    subscribed_at DateTime?
+    subscription_id String
+    user        User     @relation(fields: [userId], references: [id])
+    userId      String   @unique
+}
+
+model Credit {
+    id          Int      @id @default(autoincrement())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    challenge_amount      Int
+    design_amount         Int
+    user        User     @relation(fields: [userId], references: [id])
+    userId      String   @unique
 }
 
 model Challenge {

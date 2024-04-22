@@ -1,7 +1,7 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import paymentService from "@/backend/services/payment.service";
+import paymentService from "@/backend/services/stripe.service";
 
 import * as z from "zod";
 
