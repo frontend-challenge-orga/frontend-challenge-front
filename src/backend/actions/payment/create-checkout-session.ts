@@ -11,7 +11,9 @@ export const createCheckoutSessionAction = userAction(
   schema,
   async (_, ctx) => {
     try {
-      const checkoutSession = await paymentService.createCheckoutSession();
+      const checkoutSession = await paymentService.createCheckoutSession(
+        ctx.userId,
+      );
 
       return {
         url: checkoutSession.url,

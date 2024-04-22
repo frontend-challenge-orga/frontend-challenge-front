@@ -3,7 +3,7 @@ import { env } from "@/config/env";
 import type Stripe from "stripe";
 
 class PaymentService {
-  async createCheckoutSession() {
+  async createCheckoutSession(userId: string) {
     try {
       const checkoutSession: Stripe.Response<Stripe.Checkout.Session> =
         await stripe.checkout.sessions.create({
@@ -15,7 +15,7 @@ class PaymentService {
           ],
           subscription_data: {
             metadata: {
-              userId: "123",
+              userID: userId,
             },
           },
 
@@ -37,18 +37,6 @@ class PaymentService {
         await stripe.subscriptions.cancel(subscriptionId);
 
       return cancelledSubscription;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
-  async getPaymentIntent(paymentIntentId: string) {
-    try {
-      const paymentIntent: Stripe.Response<Stripe.PaymentIntent> =
-        await stripe.paymentIntents.retrieve(paymentIntentId);
-
-      return paymentIntent;
     } catch (error) {
       console.error(error);
       throw error;
