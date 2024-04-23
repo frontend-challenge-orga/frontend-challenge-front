@@ -1,7 +1,7 @@
 import challengeService from "@/backend/services/challenge.service";
-import { EditChallengeForm } from "@/modules/admin/forms/edit-challenge-form";
+import { EditChallengeForm } from "@/framework/admin/forms/edit-challenge-form";
 import { Fragment } from "react";
-import { Heading } from "@/modules/admin/layouts/main/heading";
+import { Heading } from "@/framework/admin/layouts/main/heading";
 
 type Props = {
   params: {

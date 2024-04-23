@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import { Heading } from "@/modules/admin/layouts/main/heading";
-import { CreateChallengeForm } from "@/modules/admin/forms/create-challenge-form";
+import { Heading } from "@/framework/admin/layouts/main/heading";
+import { CreateChallengeForm } from "@/framework/admin/forms/create-challenge-form";
 
 export default function CreateChallengePage() {
   return (

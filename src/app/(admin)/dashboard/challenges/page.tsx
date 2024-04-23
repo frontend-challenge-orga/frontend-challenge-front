@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import challengeService from "@/backend/services/challenge.service";
-import { ChallengesList } from "@/modules/admin/components/challenges-list";
-import { Heading } from "@/modules/admin/layouts/main/heading";
+import { ChallengesList } from "@/framework/admin/components/challenges-list";
+import { Heading } from "@/framework/admin/layouts/main/heading";
 import { ButtonLink } from "@/components/ui/button-link";
 import { URL } from "@/config/constants";
 
