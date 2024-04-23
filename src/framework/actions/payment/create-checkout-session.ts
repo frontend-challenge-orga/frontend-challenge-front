@@ -1,7 +1,7 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import paymentService from "@/backend/services/stripe.service";
+import { createCheckoutSession } from "@/third-party-services/stripe.service";
 
 import * as z from "zod";
 
@@ -11,9 +11,7 @@ export const createCheckoutSessionAction = userAction(
   schema,
   async (_, ctx) => {
     try {
-      const checkoutSession = await paymentService.createCheckoutSession(
-        ctx.userId,
-      );
+      const checkoutSession = await createCheckoutSession(ctx.userId);
 
       return {
         url: checkoutSession.url,

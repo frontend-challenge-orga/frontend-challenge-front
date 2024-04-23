@@ -1,4 +1,4 @@
-import { teams } from "@/framework/admin/layouts/sidebar/data";
+import { teams } from "@/framework/modules/admin/layouts/sidebar/data";
 import { cn } from "@/config/utils";
 
 export const TeamsNavigation = () => {

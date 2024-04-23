@@ -1,12 +1,12 @@
 import { Fragment } from "react";
-import challengeService from "@/backend/services/challenge.service";
-import { ChallengesList } from "@/framework/admin/components/challenges-list";
-import { Heading } from "@/framework/admin/layouts/main/heading";
-import { ButtonLink } from "@/components/ui/button-link";
+import { getChallenges } from "@/data-access/challenge";
+import { ChallengesList } from "@/framework/modules/admin/components/challenges-list";
+import { Heading } from "@/framework/modules/admin/layouts/main/heading";
+import { ButtonLink } from "@/framework/components/ui/button-link";
 import { URL } from "@/config/constants";
 
 export default async function ChallengesPage() {
-  const challenges = await challengeService.getChallenges();
+  const challenges = await getChallenges();
 
   return (
     <Fragment>

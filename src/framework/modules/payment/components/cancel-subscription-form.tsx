@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useTransition } from "react";
-import { ButtonSubmit } from "@/components/ui/button-submit";
+import { ButtonSubmit } from "@/framework/components/ui/button-submit";
 import { cancelSubscriptionAction } from "@/framework/actions/payment/cancel-subscription";
 
 export const CancelSubscriptionForm = () => {

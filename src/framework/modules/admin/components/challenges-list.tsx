@@ -5,8 +5,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { ButtonLink } from "@/components/ui/button-link";
+} from "@/framework/components/ui/card";
+import { ButtonLink } from "@/framework/components/ui/button-link";
 import { URL } from "@/config/constants";
 
 type Props = {

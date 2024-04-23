@@ -1,6 +1,10 @@
 import * as React from "react";
-import { InputForm } from "@/components/ui/input-form";
-import { FormField, FormItem, FormControl } from "@/components/ui/form";
+import { InputForm } from "@/framework/components/ui/input-form";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+} from "@/framework/components/ui/form";
 import type {
   Control,
   FieldArrayWithId,

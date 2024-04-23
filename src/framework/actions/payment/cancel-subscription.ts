@@ -1,7 +1,7 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import paymentService from "@/backend/services/stripe.service";
+import { cancelSubscription } from "@/third-party-services/stripe.service";
 import * as z from "zod";
 
 const schema = z.object({
@@ -12,9 +12,7 @@ export const cancelSubscriptionAction = userAction(
   schema,
   async (data, ctx) => {
     try {
-      const payload = await paymentService.cancelSubscription(
-        data.subscriptionId,
-      );
+      const payload = await cancelSubscription(data.subscriptionId);
 
       return {
         status: "Subscription canceled",

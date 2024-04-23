@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useTransition } from "react";
-import { ButtonSubmit } from "@/components/ui/button-submit";
+import { ButtonSubmit } from "@/framework/components/ui/button-submit";
 import handleCheckoutSession from "@/framework/modules/payment/helpers/handle-checkout-session";
 
 export const CheckoutSessionForm = () => {

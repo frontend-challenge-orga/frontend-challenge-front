@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/framework/components/ui/button";
 
 type Props = {
   href: string;

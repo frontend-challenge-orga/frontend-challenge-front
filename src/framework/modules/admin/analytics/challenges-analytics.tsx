@@ -1,15 +1,15 @@
-import challengeService from "@/backend/services/challenge.service";
+import { getChallengesCount } from "@/data-access/challenge";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/framework/components/ui/card";
 
 // Todo: Implement Challenges started
 
 export const ChallengesAnalytics = async () => {
-  const challengesCount = await challengeService.getChallengesCount();
+  const challengesCount = await getChallengesCount();
 
   return (
     <Card>

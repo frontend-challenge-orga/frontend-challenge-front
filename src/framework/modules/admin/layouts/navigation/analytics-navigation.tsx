@@ -1,4 +1,4 @@
-import { ChallengesAnalytics } from "@/framework/admin/analytics/challenges-analytics";
+import { ChallengesAnalytics } from "@/framework/modules/admin/analytics/challenges-analytics";
 
 export const AnalyticsNavigation = () => {
   return (

@@ -2,11 +2,11 @@
 
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useSidebar } from "@/framework/admin/stores/useSidebar";
-import { SidebarLayout } from "@/framework/admin/layouts/sidebar/sidebar-layout";
-import { SidebarNavigation } from "@/framework/admin/layouts/sidebar/sidebar-navigation";
-import { SidebarClose } from "@/framework/admin/layouts/sidebar/sidebar-close";
-import { SidebarLogo } from "@/framework/admin/layouts/sidebar/sidebar-logo";
+import { useSidebar } from "@/framework/modules/admin/stores/useSidebar";
+import { SidebarLayout } from "@/framework/modules/admin/layouts/sidebar/sidebar-layout";
+import { SidebarNavigation } from "@/framework/modules/admin/layouts/sidebar/sidebar-navigation";
+import { SidebarClose } from "@/framework/modules/admin/layouts/sidebar/sidebar-close";
+import { SidebarLogo } from "@/framework/modules/admin/layouts/sidebar/sidebar-logo";
 
 export const SidebarMobile = () => {
   const { isOpen, close } = useSidebar();

@@ -1,5 +1,5 @@
-import { GlobalNavigation } from "@/framework/admin/layouts/navigation/global-navigation";
-import { SidebarSettings } from "@/framework/admin/layouts/sidebar/sidebar-settings";
+import { GlobalNavigation } from "@/framework/modules/admin/layouts/navigation/global-navigation";
+import { SidebarSettings } from "@/framework/modules/admin/layouts/sidebar/sidebar-settings";
 
 export const SidebarNavigation = () => {
   return (

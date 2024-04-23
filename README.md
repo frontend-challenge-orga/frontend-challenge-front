@@ -1,4 +1,4 @@
-# Frontend Challenge
+# Frontend Challenge (MVP)
 
 Frontend Challenge is a platform dedicated to frontend development enthusiasts, designers, and web developers looking to enhance their skills and tackle creative challenges. Our mission is to provide a space where professionals and amateurs alike can come together to explore, create, and collaborate on frontend development projects.
 

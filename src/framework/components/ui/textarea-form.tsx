@@ -5,8 +5,8 @@ import {
   FormLabel,
   FormMessage,
   FormControl,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/framework/components/ui/form";
+import { Textarea } from "@/framework/components/ui/textarea";
 import type { Control } from "react-hook-form";
 
 export interface TextAreaFormProps

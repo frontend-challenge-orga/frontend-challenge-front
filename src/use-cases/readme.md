@@ -1,5 +1,5 @@
-# Data Access
+# Use Cases
 
-Ce dossier contient toutes les requêtes et mutations nécessaires pour l'application. Il s'agit de l'endroit où nous interagissons avec nos sources de données, que ce soit une base de données, une API externe ou même le stockage local du navigateur.
+Ce dossier contient la logique métier de l'application. Il s'agit de l'endroit où nous définissons comment les différentes parties de notre application interagissent entre elles.
 
-Il est essentiel de garder cette logique séparée du reste de l'application pour assurer une séparation des préoccupations et faciliter les tests et la maintenance.
+C'est ici que nous définissons les "cas d'utilisation" de notre application, c'est-à-dire les différentes façons dont les utilisateurs (ou d'autres systèmes) peuvent interagir avec notre application. En gardant cette logique séparée, nous pouvons nous assurer que notre application reste flexible et facile à tester et à maintenir.

@@ -1,8 +1,8 @@
 "use client";
 
-import { SidebarLayout } from "@/framework/admin/layouts/sidebar/sidebar-layout";
-import { SidebarLogo } from "@/framework/admin/layouts/sidebar/sidebar-logo";
-import { SidebarNavigation } from "@/framework/admin/layouts/sidebar/sidebar-navigation";
+import { SidebarLayout } from "@/framework/modules/admin/layouts/sidebar/sidebar-layout";
+import { SidebarLogo } from "@/framework/modules/admin/layouts/sidebar/sidebar-logo";
+import { SidebarNavigation } from "@/framework/modules/admin/layouts/sidebar/sidebar-navigation";
 
 export const SidebarDesktop = () => {
   return (

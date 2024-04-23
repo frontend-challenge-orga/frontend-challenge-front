@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { useSidebar } from "@/framework/admin/stores/useSidebar";
-import { navigation } from "@/framework/admin/layouts/sidebar/data";
+import { useSidebar } from "@/framework/modules/admin/stores/useSidebar";
+import { navigation } from "@/framework/modules/admin/layouts/sidebar/data";
 import { cn } from "@/config/utils";
 
 export const GlobalNavigation = () => {

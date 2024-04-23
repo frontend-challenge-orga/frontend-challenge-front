@@ -1,8 +1,8 @@
 "use client";
 
-import { SidebarHamburger } from "@/framework/admin/layouts/sidebar/sidebar-hamburger";
-import { HeaderNotification } from "@/framework/admin/layouts/header/header-notification";
-import { HeaderUserNavigation } from "@/framework/admin/layouts/header/header-user-navigation";
+import { SidebarHamburger } from "@/framework/modules/admin/layouts/sidebar/sidebar-hamburger";
+import { HeaderNotification } from "@/framework/modules/admin/layouts/header/header-notification";
+import { HeaderUserNavigation } from "@/framework/modules/admin/layouts/header/header-user-navigation";
 
 export const Header = async () => {
   return (

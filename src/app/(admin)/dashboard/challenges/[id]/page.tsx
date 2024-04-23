@@ -1,7 +1,7 @@
-import challengeService from "@/backend/services/challenge.service";
-import { EditChallengeForm } from "@/framework/admin/forms/edit-challenge-form";
 import { Fragment } from "react";
-import { Heading } from "@/framework/admin/layouts/main/heading";
+import { getChallengeById } from "@/data-access/challenge";
+import { EditChallengeForm } from "@/framework/modules/admin/forms/edit-challenge-form";
+import { Heading } from "@/framework/modules/admin/layouts/main/heading";
 
 type Props = {
   params: {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default async function EditChallengePage({ params }: Props) {
-  const challenge = await challengeService.getChallengeById(Number(params.id));
+  const challenge = await getChallengeById(Number(params.id));
 
   if (!challenge) {
     return <div>Challenge not found</div>;

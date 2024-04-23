@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useSidebar } from "@/framework/admin/stores/useSidebar";
+import { useSidebar } from "@/framework/modules/admin/stores/useSidebar";
 
 export const SidebarClose = () => {
   const { close } = useSidebar();

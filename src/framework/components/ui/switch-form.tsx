@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/framework/components/ui/switch";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
+} from "@/framework/components/ui/form";
 import type { Control } from "react-hook-form";
 
 export interface SwitchProps

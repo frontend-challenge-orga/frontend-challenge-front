@@ -1,6 +1,6 @@
 import { getServerAuthSession } from "@/config/server/auth";
-import { LogoutButton } from "@/components/ui/logout-button";
-import { LoginButton } from "@/components/ui/login-button";
+import { LogoutButton } from "@/framework/components/ui/logout-button";
+import { LoginButton } from "@/framework/components/ui/login-button";
 import { CheckoutSessionForm } from "@/framework/modules/payment/components/checkout-session-form";
 import { CancelSubscriptionForm } from "@/framework/modules/payment/components/cancel-subscription-form";
 
