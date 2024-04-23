@@ -4,11 +4,9 @@ import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
 import type Stripe from "stripe";
 
-import {
-  handleCheckoutSessionCompleted,
-  handleInvoicePaymentSucceeded,
-  handleCustomerSubscriptionDeleted,
-} from "@/app/api/stripe/webhooks/subscription/stripe-webhook-handlers";
+import { handleCheckoutSessionCompleted } from "@/use-cases/handle-checkout-session-completed";
+import { handleInvoicePaymentSucceeded } from "@/use-cases/handle-invoice-payment-suceeded";
+import { handleCustomerSubscriptionDeleted } from "@/use-cases/handle-customer-subscription-deleted";
 
 const secret = env.STRIPE_WEBHOOK_SECRET;
 
