@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { getChallengeById } from "@/data-access/challenge";
-import { EditChallengeForm } from "@/framework/modules/admin/forms/edit-challenge-form";
-import { Heading } from "@/framework/modules/admin/layouts/main/heading";
+import { getChallengeById } from "@/infrastructure/data-access/challenge";
+import { EditChallengeForm } from "@/infrastructure/framework/modules/admin/forms/edit-challenge-form";
+import { Heading } from "@/infrastructure/framework/modules/admin/layouts/main/heading";
 
 type Props = {
   params: {

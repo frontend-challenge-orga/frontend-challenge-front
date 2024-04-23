@@ -31,6 +31,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string(),
     STRIPE_SUCCESS_URL: z.string().url(),
     STRIPE_CANCEL_URL: z.string().url(),
+    RESEND_API_KEY: z.string(),
   },
 
   /**
@@ -60,6 +61,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_SUCCESS_URL: process.env.STRIPE_SUCCESS_URL,
     STRIPE_CANCEL_URL: process.env.STRIPE_CANCEL_URL,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
