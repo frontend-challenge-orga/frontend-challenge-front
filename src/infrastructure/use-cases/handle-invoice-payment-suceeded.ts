@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 import { retrieveSubscription } from "@/infrastructure/third-party-services/stripe.service";
-import { updateSubscription } from "@/infrastructure/data-access/subscription";
+import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import { addMonthlySubscriptionCredit } from "@/infrastructure/use-cases/add-monthly-subscription-credit";
 import { sendSubscriptionEmailConfirmation } from "@/infrastructure/third-party-services/resend.service";
 
@@ -19,7 +19,7 @@ export async function handleInvoicePaymentSucceeded(
     session.subscription as string,
   );
 
-  await updateSubscription(session.metadata.userID);
+  await subscriptionRepository.updateSubscription(session.metadata.userID);
   await addMonthlySubscriptionCredit(subscription.metadata.userID!);
   await sendSubscriptionEmailConfirmation(session.customer_email);
 }

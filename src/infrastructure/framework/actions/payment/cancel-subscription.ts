@@ -8,22 +8,19 @@ const schema = z.object({
   subscriptionId: z.string(),
 });
 
-export const cancelSubscriptionAction = userAction(
-  schema,
-  async (data, ctx) => {
-    try {
-      const payload = await cancelSubscription(data.subscriptionId);
+export const cancelSubscriptionAction = userAction(schema, async (data, _) => {
+  try {
+    const payload = await cancelSubscription(data.subscriptionId);
 
-      return {
-        status: "Subscription canceled",
-        subscription: payload,
-      };
-    } catch (error) {
-      console.error("Error canceling subscription:", error);
+    return {
+      status: "Subscription canceled",
+      subscription: payload,
+    };
+  } catch (error) {
+    console.error("Error canceling subscription:", error);
 
-      return {
-        error: "Error canceling subscription",
-      };
-    }
-  },
-);
+    return {
+      error: "Error canceling subscription",
+    };
+  }
+});

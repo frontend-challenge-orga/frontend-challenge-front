@@ -1,6 +1,6 @@
 "use server";
 
-import { createChallenge } from "@/infrastructure/data-access/challenge";
+import challengeRepository from "@/infrastructure/data-access/challenge";
 import { adminAction } from "@/config/libs/next-safe-action";
 import { formSchema } from "@/infrastructure/framework/modules/admin/forms/create-challenge-schema";
 import { extractValuesFromArray } from "@/config/utils";
@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 export const createChallengeAction = adminAction(
   formSchema,
   async (data, ctx) => {
-    await createChallenge({
+    await challengeRepository.createChallenge({
       ...data,
       assets_presentation: extractValuesFromArray(data.assets_presentation),
       createdById: ctx.userId,

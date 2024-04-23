@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { getChallengeById } from "@/infrastructure/data-access/challenge";
+import challengeRepository from "@/infrastructure/data-access/challenge";
 import { EditChallengeForm } from "@/infrastructure/framework/modules/admin/forms/edit-challenge-form";
 import { Heading } from "@/infrastructure/framework/modules/admin/layouts/main/heading";
 
@@ -10,7 +10,9 @@ type Props = {
 };
 
 export default async function EditChallengePage({ params }: Props) {
-  const challenge = await getChallengeById(Number(params.id));
+  const challenge = await challengeRepository.getChallengeById(
+    Number(params.id),
+  );
 
   if (!challenge) {
     return <div>Challenge not found</div>;

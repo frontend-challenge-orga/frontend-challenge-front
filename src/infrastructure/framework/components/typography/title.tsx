@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cva, VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 
 const titleVariants = cva("scroll-m-20", {
   variants: {

@@ -41,7 +41,7 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
+model UserModel {
     id            String      @id @default(cuid())
     name          String?
     email         String?     @unique
@@ -49,6 +49,7 @@ model User {
     image         String?
     role          Role        @default(USER)
     credits       Int         @default(0)
+    premium       Boolean     @default(false)
     accounts      Account[]
     sessions      Session[]
     subscription  Subscription?
@@ -64,7 +65,7 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model Subscription {
+model SubscriptionModel {
     id          Int      @id @default(autoincrement())
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
