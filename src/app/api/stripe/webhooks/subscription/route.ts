@@ -4,9 +4,9 @@ import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
 import type Stripe from "stripe";
 
-import { handleCheckoutSessionCompleted } from "@/use-cases/handle-checkout-session-completed";
-import { handleInvoicePaymentSucceeded } from "@/use-cases/handle-invoice-payment-suceeded";
-import { handleCustomerSubscriptionDeleted } from "@/use-cases/handle-customer-subscription-deleted";
+import { handleCheckoutSessionCompleted } from "@/infrastructure/use-cases/handle-checkout-session-completed";
+import { handleInvoicePaymentSucceeded } from "@/infrastructure/use-cases/handle-invoice-payment-suceeded";
+import { handleCustomerSubscriptionDeleted } from "@/infrastructure/use-cases/handle-customer-subscription-deleted";
 
 const secret = env.STRIPE_WEBHOOK_SECRET;
 
@@ -35,6 +35,8 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ result: event, ok: true });
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message, ok: false });
+    }
   }
 };

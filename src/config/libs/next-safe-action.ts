@@ -30,6 +30,7 @@ export const userAction = createSafeActionClient({
 
     return {
       userId: session.user.id,
+      userEmail: session.user.email!,
     };
   },
 });

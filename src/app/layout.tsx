@@ -1,5 +1,5 @@
 import "@/config/styles/globals.css";
-
+import * as React from "react";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
