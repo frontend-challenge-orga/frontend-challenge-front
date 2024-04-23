@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 import { retrieveSubscription } from "@/infrastructure/third-party-services/stripe.service";
-import { cancelSubscription } from "@/infrastructure/data-access/subscription";
+import subscriptionRepository from "@/infrastructure/data-access/subscription";
 
 export async function handleCustomerSubscriptionDeleted(
   session: Stripe.Checkout.Session,
@@ -12,5 +12,7 @@ export async function handleCustomerSubscriptionDeleted(
   const subscription = await retrieveSubscription(
     session.subscription as string,
   );
-  await cancelSubscription(subscription.metadata.userID!);
+  await subscriptionRepository.cancelSubscription(
+    subscription.metadata.userID!,
+  );
 }

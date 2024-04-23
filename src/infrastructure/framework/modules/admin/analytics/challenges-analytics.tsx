@@ -1,4 +1,4 @@
-import { getChallengesCount } from "@/infrastructure/data-access/challenge";
+import challengeRepository from "@/infrastructure/data-access/challenge";
 import {
   Card,
   CardDescription,
@@ -9,7 +9,7 @@ import {
 // Todo: Implement Challenges started
 
 export const ChallengesAnalytics = async () => {
-  const challengesCount = await getChallengesCount();
+  const challengesCount = await challengeRepository.getChallengesCount();
 
   return (
     <Card>
