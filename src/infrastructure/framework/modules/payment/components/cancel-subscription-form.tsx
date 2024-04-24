@@ -11,7 +11,7 @@ export const CancelSubscriptionForm = () => {
     e.preventDefault();
 
     startTransition(async () => {
-      await cancelSubscriptionAction({ subscriptionId: "sub_12345" });
+      await cancelSubscriptionAction({});
     });
   };
 

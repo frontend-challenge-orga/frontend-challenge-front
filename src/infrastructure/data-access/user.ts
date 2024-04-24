@@ -1,4 +1,5 @@
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { db } from "@/config/server/db";
+import type { IUserRepository } from "@/domain/repositories/user.repository";
 
 export class UserRepository implements IUserRepository {}
 

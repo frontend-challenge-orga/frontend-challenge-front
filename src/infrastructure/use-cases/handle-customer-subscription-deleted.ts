@@ -1,18 +1,16 @@
-import type Stripe from "stripe";
-import { retrieveSubscription } from "@/infrastructure/third-party-services/stripe.service";
+import { suspendSubscription } from "@/infrastructure/third-party-services/stripe.service";
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
 
-export async function handleCustomerSubscriptionDeleted(
-  session: Stripe.Checkout.Session,
-) {
-  if (!session.subscription) {
-    throw new Error("Missing required session data");
-  }
+export async function handleCancelCustomerSubscription(userId: string) {
+  const subscriptionId = await subscriptionRepository.getSubscriptionId(userId);
+  const payload_subscription = await suspendSubscription(subscriptionId!);
 
-  const subscription = await retrieveSubscription(
-    session.subscription as string,
-  );
   await subscriptionRepository.cancelSubscription(
-    subscription.metadata.userID!,
+    userId,
+    new Date(payload_subscription.cancel_at! * 1000),
   );
+
+  return {
+    cancel_at: new Date(payload_subscription.cancel_at! * 1000),
+  };
 }

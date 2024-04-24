@@ -1,6 +1,6 @@
 import { db } from "@/config/server/db";
 import type { CreateChallengeType } from "@/infrastructure/data-access/types/challenge.type";
-import { IChallengeRepository } from "@/domain/repositories/challenge.repository";
+import type { IChallengeRepository } from "@/domain/repositories/challenge.repository";
 import type { Challenge } from "@/domain/models/challenge.model";
 
 export class ChallengeRepository implements IChallengeRepository {

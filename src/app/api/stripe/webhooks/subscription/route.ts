@@ -4,9 +4,8 @@ import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
 import type Stripe from "stripe";
 
-import { handleCheckoutSessionCompleted } from "@/infrastructure/use-cases/handle-checkout-session-completed";
-import { handleInvoicePaymentSucceeded } from "@/infrastructure/use-cases/handle-invoice-payment-suceeded";
-import { handleCustomerSubscriptionDeleted } from "@/infrastructure/use-cases/handle-customer-subscription-deleted";
+import { handleCheckoutSessionCompletedWebHook } from "@/infrastructure/use-cases/handle-checkout-session-completed";
+import { handleInvoicePaymentSucceededWebhook } from "@/infrastructure/use-cases/handle-invoice-payment-suceeded";
 
 const secret = env.STRIPE_WEBHOOK_SECRET;
 
@@ -21,14 +20,12 @@ export const POST = async (req: Request) => {
 
     switch (event.type) {
       case "checkout.session.completed":
-        await handleCheckoutSessionCompleted(session);
+        await handleCheckoutSessionCompletedWebHook(session);
         break;
       case "invoice.payment_succeeded":
-        await handleInvoicePaymentSucceeded(session);
+        await handleInvoicePaymentSucceededWebhook(session);
         break;
-      case "customer.subscription.deleted":
-        await handleCustomerSubscriptionDeleted(session);
-        break;
+
       default:
         console.log(`Unhandled event type: ${event.type}`);
     }

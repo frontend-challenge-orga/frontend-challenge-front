@@ -1,13 +1,18 @@
 import { db } from "@/config/server/db";
-import { ICreditRepository } from "@/domain/repositories/credit.repository";
+import type { ICreditRepository } from "@/domain/repositories/credit.repository";
 import type { Credit } from "@/domain/models/credit.model";
 
 export class CreditRepository implements ICreditRepository {
   async addCredits(userId: string): Promise<void> {
     try {
-      await db.credit.update({
+      await db.credit.upsert({
         where: { userId: userId },
-        data: {
+        create: {
+          userId: userId,
+          challenge_amount: 2,
+          design_amount: 5,
+        },
+        update: {
           challenge_amount: {
             increment: 2,
           },
