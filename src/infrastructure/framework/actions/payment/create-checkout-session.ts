@@ -5,17 +5,21 @@ import { createCheckoutSession } from "@/infrastructure/third-party-services/str
 
 import * as z from "zod";
 
-const schema = z.object({});
+const schema = z.object({
+  subscription_duration: z.enum(["MONTHLY", "YEARLY"]),
+});
 
 // TODO: Refactor userEmail optional chaining
+// TODO: Refactor subscriptionDuration string
 
 export const createCheckoutSessionAction = userAction(
   schema,
-  async (_, ctx) => {
+  async ({ subscription_duration }, ctx) => {
     try {
       const checkoutSession = await createCheckoutSession(
         ctx.userId,
         ctx.userEmail,
+        subscription_duration,
       );
 
       return {

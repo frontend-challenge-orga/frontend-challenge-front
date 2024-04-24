@@ -1,8 +1,13 @@
 import { createCheckoutSessionAction } from "@/infrastructure/framework/actions/payment/create-checkout-session";
 import { checkoutSessionRedirection } from "@/infrastructure/framework/modules/payment/helpers/checkout-session-redirection";
+import type { SubscriptionDurationEnum } from "@/config/types";
 
-export default async function handleCheckoutSession() {
-  const response = await createCheckoutSessionAction({});
+export default async function handleCheckoutSession(
+  subscriptionDuration: SubscriptionDurationEnum,
+) {
+  const response = await createCheckoutSessionAction({
+    subscription_duration: subscriptionDuration,
+  });
 
   if (!response.data) {
     console.error("Error creating stripe session:", response.serverError);

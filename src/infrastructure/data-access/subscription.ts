@@ -1,6 +1,7 @@
 import { db } from "@/config/server/db";
-import type { ISubscriptionRepository } from "@/domain/repositories/subscription.repository";
+import type { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import type { Subscription } from "@/domain/models/subscription.model";
+import type { SubscriptionDurationEnum } from "@/config/types";
 
 export class SubscriptionRepository implements ISubscriptionRepository {
   async getSubscription(userId: string): Promise<Subscription | undefined> {
@@ -15,7 +16,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async getSubscriptionId(userId: string): Promise<string | undefined> {
+  async getSubscriptionById(userId: string): Promise<string | undefined> {
     try {
       const subscription = await db.subscription.findUniqueOrThrow({
         where: {
@@ -35,6 +36,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async createSubscription(
     userId: string,
     subscriptionId: string,
+    subscriptionDuration: SubscriptionDurationEnum,
   ): Promise<void> {
     try {
       await db.subscription.create({
@@ -45,6 +47,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
             },
           },
           subscription_id: subscriptionId,
+          subscription_duration: subscriptionDuration,
           subscribed_at: new Date(),
         },
       });
@@ -72,9 +75,9 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async cancelSubscription(
     userId: string,
     subscriptionEndDate: Date,
-  ): Promise<void> {
+  ): Promise<Subscription | undefined> {
     try {
-      await db.subscription.update({
+      return await db.subscription.update({
         where: {
           userId,
         },

@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
-import { isSubscriptionActive } from "@/domain/services/subscription.service";
+
 import type { Subscription } from "@/domain/models/subscription.model";
+import { checkSubscriptionActive } from "@/domain/services/utils/check-subscription-active";
 
 describe("isSubscriptionActive", () => {
   it("should return true if the subscription is active and has no end date", () => {
@@ -9,13 +10,14 @@ describe("isSubscriptionActive", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       subscribed: true,
+      subscription_duration: "YEARLY",
       subscribed_at: new Date(),
       subscription_id: "sub_123",
       subscription_end_at: null,
       userId: "user_123",
     };
 
-    const result = isSubscriptionActive(subscription);
+    const result = checkSubscriptionActive(subscription);
 
     expect(result).toBe(true);
   });
@@ -29,13 +31,14 @@ describe("isSubscriptionActive", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       subscribed: true,
+      subscription_duration: "YEARLY",
       subscribed_at: new Date(),
       subscription_id: "sub_123",
       subscription_end_at: null,
       userId: "user_123",
     };
 
-    const result = isSubscriptionActive(subscription);
+    const result = checkSubscriptionActive(subscription);
 
     expect(result).toBe(true);
   });
@@ -46,13 +49,14 @@ describe("isSubscriptionActive", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       subscribed: false,
+      subscription_duration: "YEARLY",
       subscribed_at: new Date(),
       subscription_id: "sub_123",
       subscription_end_at: null,
       userId: "user_123",
     };
 
-    const result = isSubscriptionActive(subscription);
+    const result = checkSubscriptionActive(subscription);
 
     expect(result).toBe(false);
   });
@@ -66,13 +70,14 @@ describe("isSubscriptionActive", () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       subscribed: true,
+      subscription_duration: "YEARLY",
       subscribed_at: new Date(),
       subscription_end_at: pastDate,
       subscription_id: "sub_123",
       userId: "user_123",
     };
 
-    const result = isSubscriptionActive(subscription);
+    const result = checkSubscriptionActive(subscription);
 
     expect(result).toBe(false);
   });

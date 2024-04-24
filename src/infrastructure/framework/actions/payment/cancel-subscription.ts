@@ -8,7 +8,10 @@ const schema = z.object({});
 
 export const cancelSubscriptionAction = userAction(schema, async (_, ctx) => {
   try {
-    const { cancel_at } = await handleCancelCustomerSubscription(ctx.userId);
+    const { cancel_at } = await handleCancelCustomerSubscription(
+      ctx.userId,
+      ctx.userEmail,
+    );
 
     return {
       customer_canceled_at: cancel_at,

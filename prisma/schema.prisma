@@ -69,6 +69,7 @@ model Subscription {
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     subscribed  Boolean  @default(true)
+    subscription_duration SubscriptionDuration
     subscribed_at DateTime?
     subscription_end_at DateTime?
     subscription_id String
@@ -124,4 +125,9 @@ enum Difficulty {
     INTERMEDIATE
     ADVANCED
     GURU
+}
+
+enum SubscriptionDuration {
+    MONTHLY
+    YEARLY
 }

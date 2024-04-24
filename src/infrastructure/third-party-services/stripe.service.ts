@@ -2,7 +2,11 @@ import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
 import type Stripe from "stripe";
 
-export async function createCheckoutSession(userId: string, userEmail: string) {
+export async function createCheckoutSession(
+  userId: string,
+  userEmail: string,
+  subscriptionDuration: string,
+) {
   try {
     const checkoutSession: Stripe.Response<Stripe.Checkout.Session> =
       await stripe.checkout.sessions.create({
@@ -14,6 +18,7 @@ export async function createCheckoutSession(userId: string, userEmail: string) {
         ],
         metadata: {
           userID: userId,
+          subscription_duration: subscriptionDuration,
         },
 
         mode: "subscription",
