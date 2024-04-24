@@ -1,6 +1,6 @@
 import { db } from "@/config/server/db";
-import { ISubscriptionRepository } from "@/domain/repositories/subscription.repository";
-import { Subscription } from "@/domain/models/subscription.model";
+import type { ISubscriptionRepository } from "@/domain/repositories/subscription.repository";
+import type { Subscription } from "@/domain/models/subscription.model";
 
 export class SubscriptionRepository implements ISubscriptionRepository {
   async getSubscription(userId: string): Promise<Subscription | undefined> {
@@ -10,6 +10,23 @@ export class SubscriptionRepository implements ISubscriptionRepository {
           userId,
         },
       });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getSubscriptionId(userId: string): Promise<string | undefined> {
+    try {
+      const subscription = await db.subscription.findUniqueOrThrow({
+        where: {
+          userId,
+        },
+        select: {
+          subscription_id: true,
+        },
+      });
+
+      return subscription.subscription_id;
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +69,10 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async cancelSubscription(userId: string): Promise<void> {
+  async cancelSubscription(
+    userId: string,
+    subscriptionEndDate: Date,
+  ): Promise<void> {
     try {
       await db.subscription.update({
         where: {
@@ -60,7 +80,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
         },
         data: {
           subscribed: false,
-          subscribed_at: null,
+          subscription_end_at: subscriptionEndDate,
         },
       });
     } catch (error) {

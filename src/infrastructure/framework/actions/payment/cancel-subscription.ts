@@ -1,20 +1,17 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import { cancelSubscription } from "@/infrastructure/third-party-services/stripe.service";
+import { handleCancelCustomerSubscription } from "@/infrastructure/use-cases/handle-customer-subscription-deleted";
 import * as z from "zod";
 
-const schema = z.object({
-  subscriptionId: z.string(),
-});
+const schema = z.object({});
 
-export const cancelSubscriptionAction = userAction(schema, async (data, _) => {
+export const cancelSubscriptionAction = userAction(schema, async (_, ctx) => {
   try {
-    const payload = await cancelSubscription(data.subscriptionId);
+    const { cancel_at } = await handleCancelCustomerSubscription(ctx.userId);
 
     return {
-      status: "Subscription canceled",
-      subscription: payload,
+      customer_canceled_at: cancel_at,
     };
   } catch (error) {
     console.error("Error canceling subscription:", error);

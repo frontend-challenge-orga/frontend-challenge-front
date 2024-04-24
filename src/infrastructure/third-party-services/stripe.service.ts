@@ -41,6 +41,20 @@ export async function cancelSubscription(subscriptionId: string) {
   }
 }
 
+export async function suspendSubscription(subscriptionId: string) {
+  try {
+    const suspendedSubscription: Stripe.Response<Stripe.Subscription> =
+      await stripe.subscriptions.update(subscriptionId, {
+        cancel_at_period_end: true,
+      });
+
+    return suspendedSubscription;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function retrieveSubscription(subscriptionId: string) {
   try {
     const subscription: Stripe.Response<Stripe.Subscription> =
