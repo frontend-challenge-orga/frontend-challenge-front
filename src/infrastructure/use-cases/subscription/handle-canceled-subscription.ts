@@ -2,23 +2,17 @@ import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import { suspendSubscription } from "@/infrastructure/third-party-services/stripe.service";
 import { sendCancellationSubscriptionEmail } from "@/infrastructure/third-party-services/resend.service";
 
-export async function handleCancelCustomerSubscription(
+export async function handleCanceledSubscription(
   userId: string,
   userEmail: string,
 ) {
-  const subscriptionId =
-    await subscriptionRepository.getSubscriptionById(userId);
-  const payload_subscription = await suspendSubscription(subscriptionId!);
+  const subscription = await subscriptionRepository.getSubscription(userId);
 
-  const response = await subscriptionRepository.cancelSubscription(
-    userId,
-    new Date(payload_subscription.cancel_at! * 1000),
+  const payload_subscription = await suspendSubscription(
+    subscription?.subscription_id!,
   );
 
-  if (!response) {
-    throw new Error("Subscription not found");
-  }
-
+  await subscriptionRepository.cancelSubscription(userId);
   await sendCancellationSubscriptionEmail(userEmail);
 
   return {

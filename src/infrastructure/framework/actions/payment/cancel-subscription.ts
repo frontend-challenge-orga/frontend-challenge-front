@@ -1,14 +1,14 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import { handleCancelCustomerSubscription } from "@/infrastructure/use-cases/handle-customer-subscription-deleted";
+import { handleCanceledSubscription } from "@/infrastructure/use-cases/subscription/handle-canceled-subscription";
 import * as z from "zod";
 
 const schema = z.object({});
 
 export const cancelSubscriptionAction = userAction(schema, async (_, ctx) => {
   try {
-    const { cancel_at } = await handleCancelCustomerSubscription(
+    const { cancel_at } = await handleCanceledSubscription(
       ctx.userId,
       ctx.userEmail,
     );

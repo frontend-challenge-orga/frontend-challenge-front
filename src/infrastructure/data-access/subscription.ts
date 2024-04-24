@@ -16,39 +16,31 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async getSubscriptionById(userId: string): Promise<string | undefined> {
-    try {
-      const subscription = await db.subscription.findUniqueOrThrow({
-        where: {
-          userId,
-        },
-        select: {
-          subscription_id: true,
-        },
-      });
-
-      return subscription.subscription_id;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async createSubscription(
+  async saveSubscription(
     userId: string,
     subscriptionId: string,
     subscriptionDuration: SubscriptionDurationEnum,
+    subscriptionEndDate: Date,
   ): Promise<void> {
     try {
-      await db.subscription.create({
-        data: {
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
+      await db.subscription.upsert({
+        where: {
+          userId,
+        },
+        create: {
+          userId,
           subscription_id: subscriptionId,
           subscription_duration: subscriptionDuration,
+          subscribed: true,
           subscribed_at: new Date(),
+          subscription_end_at: subscriptionEndDate,
+        },
+        update: {
+          subscription_id: subscriptionId,
+          subscription_duration: subscriptionDuration,
+          subscribed: true,
+          subscribed_at: new Date(),
+          subscription_end_at: subscriptionEndDate,
         },
       });
     } catch (error) {
@@ -72,10 +64,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async cancelSubscription(
-    userId: string,
-    subscriptionEndDate: Date,
-  ): Promise<Subscription | undefined> {
+  async cancelSubscription(userId: string): Promise<Subscription | undefined> {
     try {
       return await db.subscription.update({
         where: {
@@ -83,7 +72,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
         },
         data: {
           subscribed: false,
-          subscription_end_at: subscriptionEndDate,
+          subscription_cancelled_at: new Date(),
         },
       });
     } catch (error) {

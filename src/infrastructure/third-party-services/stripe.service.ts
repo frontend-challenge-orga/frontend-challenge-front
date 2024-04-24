@@ -16,9 +16,12 @@ export async function createCheckoutSession(
             quantity: 1,
           },
         ],
-        metadata: {
-          userID: userId,
-          subscription_duration: subscriptionDuration,
+        subscription_data: {
+          metadata: {
+            userID: userId,
+            customer_email: userEmail,
+            subscription_duration: subscriptionDuration,
+          },
         },
 
         mode: "subscription",
@@ -60,7 +63,9 @@ export async function suspendSubscription(subscriptionId: string) {
   }
 }
 
-export async function retrieveSubscription(subscriptionId: string) {
+export async function retrieveSubscription(
+  subscriptionId: Stripe.Subscription["id"],
+) {
   try {
     const subscription: Stripe.Response<Stripe.Subscription> =
       await stripe.subscriptions.retrieve(subscriptionId);
