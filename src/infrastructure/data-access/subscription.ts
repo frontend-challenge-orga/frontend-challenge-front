@@ -1,6 +1,7 @@
 import { db } from "@/config/server/db";
-import type { ISubscriptionRepository } from "@/domain/repositories/subscription.repository";
+import type { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import type { Subscription } from "@/domain/models/subscription.model";
+import type { SubscriptionDurationType } from "@/config/types";
 
 export class SubscriptionRepository implements ISubscriptionRepository {
   async getSubscription(userId: string): Promise<Subscription | undefined> {
@@ -15,37 +16,31 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async getSubscriptionId(userId: string): Promise<string | undefined> {
+  async saveSubscription(
+    userId: string,
+    subscriptionId: string,
+    subscriptionDuration: SubscriptionDurationType,
+    subscriptionEndDate: Date,
+  ): Promise<void> {
     try {
-      const subscription = await db.subscription.findUniqueOrThrow({
+      await db.subscription.upsert({
         where: {
           userId,
         },
-        select: {
-          subscription_id: true,
-        },
-      });
-
-      return subscription.subscription_id;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async createSubscription(
-    userId: string,
-    subscriptionId: string,
-  ): Promise<void> {
-    try {
-      await db.subscription.create({
-        data: {
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
+        create: {
+          userId,
           subscription_id: subscriptionId,
+          subscription_duration: subscriptionDuration,
+          subscribed: true,
           subscribed_at: new Date(),
+          subscription_end_at: subscriptionEndDate,
+        },
+        update: {
+          subscription_id: subscriptionId,
+          subscription_duration: subscriptionDuration,
+          subscribed: true,
+          subscribed_at: new Date(),
+          subscription_end_at: subscriptionEndDate,
         },
       });
     } catch (error) {
@@ -69,18 +64,15 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
   }
 
-  async cancelSubscription(
-    userId: string,
-    subscriptionEndDate: Date,
-  ): Promise<void> {
+  async cancelSubscription(userId: string): Promise<Subscription | undefined> {
     try {
-      await db.subscription.update({
+      return await db.subscription.update({
         where: {
           userId,
         },
         data: {
           subscribed: false,
-          subscription_end_at: subscriptionEndDate,
+          subscription_cancelled_at: new Date(),
         },
       });
     } catch (error) {

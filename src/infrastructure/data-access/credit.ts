@@ -1,5 +1,5 @@
 import { db } from "@/config/server/db";
-import type { ICreditRepository } from "@/domain/repositories/credit.repository";
+import type { ICreditRepository } from "@/domain/interfaces/repositories/credit.repository";
 import type { Credit } from "@/domain/models/credit.model";
 
 export class CreditRepository implements ICreditRepository {

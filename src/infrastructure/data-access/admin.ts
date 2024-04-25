@@ -1,4 +1,4 @@
-import type { IAdminRepository } from "@/domain/repositories/admin.repository";
+import type { IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
 
 class AdminRepository implements IAdminRepository {}
 

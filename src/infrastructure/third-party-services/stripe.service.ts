@@ -1,19 +1,30 @@
 import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
+import { getStripePriceIdBySubscriptionDuration } from "@/infrastructure/use-cases/subscription/get-stripe-price-id-by-subscription-duration";
+import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
 
-export async function createCheckoutSession(userId: string, userEmail: string) {
+export async function createCheckoutSession(
+  userId: string,
+  userEmail: string,
+  subscriptionDuration: SubscriptionDurationType,
+) {
   try {
     const checkoutSession: Stripe.Response<Stripe.Checkout.Session> =
       await stripe.checkout.sessions.create({
         line_items: [
           {
-            price: "price_1P84uXP0a9h6Ik6fLb5TWUfG",
+            price: getStripePriceIdBySubscriptionDuration(subscriptionDuration),
             quantity: 1,
           },
         ],
-        metadata: {
-          userID: userId,
+
+        subscription_data: {
+          metadata: {
+            userID: userId,
+            customer_email: userEmail,
+            subscription_duration: subscriptionDuration,
+          },
         },
 
         mode: "subscription",
@@ -29,18 +40,6 @@ export async function createCheckoutSession(userId: string, userEmail: string) {
   }
 }
 
-export async function cancelSubscription(subscriptionId: string) {
-  try {
-    const cancelledSubscription: Stripe.Response<Stripe.Subscription> =
-      await stripe.subscriptions.cancel(subscriptionId);
-
-    return cancelledSubscription;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export async function suspendSubscription(subscriptionId: string) {
   try {
     const suspendedSubscription: Stripe.Response<Stripe.Subscription> =
@@ -49,18 +48,6 @@ export async function suspendSubscription(subscriptionId: string) {
       });
 
     return suspendedSubscription;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
-export async function retrieveSubscription(subscriptionId: string) {
-  try {
-    const subscription: Stripe.Response<Stripe.Subscription> =
-      await stripe.subscriptions.retrieve(subscriptionId);
-
-    return subscription;
   } catch (error) {
     console.error(error);
     throw error;

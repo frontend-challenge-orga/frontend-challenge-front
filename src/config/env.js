@@ -31,6 +31,8 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string(),
     STRIPE_SUCCESS_URL: z.string().url(),
     STRIPE_CANCEL_URL: z.string().url(),
+    STRIPE_MONTHLY_SUBSCRIPTION_PRICE_ID: z.string(),
+    STRIPE_YEARLY_SUBSCRIPTION_PRICE_ID: z.string(),
     RESEND_API_KEY: z.string(),
   },
 
@@ -61,6 +63,10 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_SUCCESS_URL: process.env.STRIPE_SUCCESS_URL,
     STRIPE_CANCEL_URL: process.env.STRIPE_CANCEL_URL,
+    STRIPE_MONTHLY_SUBSCRIPTION_PRICE_ID:
+      process.env.STRIPE_MONTHLY_SUBSCRIPTION_PRICE_ID,
+    STRIPE_YEARLY_SUBSCRIPTION_PRICE_ID:
+      process.env.STRIPE_YEARLY_SUBSCRIPTION_PRICE_ID,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
   /**
