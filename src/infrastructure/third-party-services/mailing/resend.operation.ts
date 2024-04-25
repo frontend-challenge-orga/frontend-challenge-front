@@ -1,6 +1,6 @@
 import { resend } from "@/config/libs/resend";
 
-export async function sendSubscriptionEmailConfirmation(email: string) {
+export async function sendSubscriptionConfirmation(email: string) {
   if (!email) {
     throw new Error("Missing required email");
   }
@@ -13,7 +13,7 @@ export async function sendSubscriptionEmailConfirmation(email: string) {
   });
 }
 
-export async function sendCancellationSubscriptionEmail(email: string) {
+export async function sendCancellationSubscriptionConfirmation(email: string) {
   if (!email) {
     throw new Error("Missing required email");
   }
@@ -26,20 +26,7 @@ export async function sendCancellationSubscriptionEmail(email: string) {
   });
 }
 
-export async function sendFailedPaymentSubscriptionEmail(email: string) {
-  if (!email) {
-    throw new Error("Missing required email");
-  }
-
-  return resend.emails.send({
-    from: "contact@frontend-challenge.com",
-    to: email,
-    subject: "Payment Failed",
-    html: `<p>Your payment has failed</p>`,
-  });
-}
-
-export async function sendAbortedSubscriptionEmail(email: string) {
+export async function sendAbortedSubscription(email: string) {
   if (!email) {
     throw new Error("Missing required email");
   }
@@ -52,7 +39,7 @@ export async function sendAbortedSubscriptionEmail(email: string) {
   });
 }
 
-export async function sendUpcomingInvoiceEmail(
+export async function sendUpcomingInvoice(
   email: string,
   nextPaymentAttempt: Date,
 ) {
@@ -68,7 +55,7 @@ export async function sendUpcomingInvoiceEmail(
   });
 }
 
-export async function sendCreatedInvoiceEmail(email: string, total: number) {
+export async function sendCreatedInvoice(email: string, total: number) {
   if (!email) {
     throw new Error("Missing required email");
   }

@@ -1,5 +1,5 @@
+import mailingService from "@/infrastructure/third-party-services/mailing/resend.service";
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
-import { sendAbortedSubscriptionEmail } from "@/infrastructure/third-party-services/resend.service";
 import type Stripe from "stripe";
 
 export async function handleAbortedSubscriptionWebhook(
@@ -19,5 +19,7 @@ export async function handleAbortedSubscriptionWebhook(
 
   await subscriptionRepository.getSubscription(subscription.metadata.userID);
   await subscriptionRepository.cancelSubscription(subscription.metadata.userID);
-  await sendAbortedSubscriptionEmail(subscription.metadata.customer_email);
+  await mailingService.sendAbortedSubscription(
+    subscription.metadata.customer_email,
+  );
 }
