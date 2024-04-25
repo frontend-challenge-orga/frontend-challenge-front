@@ -1,6 +1,1 @@
-export type SubscriptionDurationType = ["MONTHLY", "YEARLY"];
-
-export enum SubscriptionDurationEnum {
-  MONTHLY = "MONTHLY",
-  YEARLY = "YEARLY",
-}
+export type SubscriptionDurationType = "MONTHLY" | "YEARLY";

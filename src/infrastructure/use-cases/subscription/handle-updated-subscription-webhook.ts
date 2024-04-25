@@ -1,7 +1,7 @@
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import { addMonthlySubscriptionCredit } from "@/infrastructure/use-cases/add-monthly-subscription-credit";
 import { sendSubscriptionEmailConfirmation } from "@/infrastructure/third-party-services/resend.service";
-import type { SubscriptionDurationEnum } from "@/config/types";
+import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
 
 export async function handleUpdatedSubscriptionWebhook(
@@ -22,7 +22,7 @@ export async function handleUpdatedSubscriptionWebhook(
   await subscriptionRepository.saveSubscription(
     subscription.metadata.userID,
     subscription.id,
-    subscription.metadata.subscription_duration as SubscriptionDurationEnum,
+    subscription.metadata.subscription_duration as SubscriptionDurationType,
     new Date(subscription.current_period_end * 1000),
   );
 

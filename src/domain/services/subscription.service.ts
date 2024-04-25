@@ -1,3 +1,5 @@
+// Source
+
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import type { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import type { ISubscriptionService } from "@/domain/interfaces/services/subscription.service";

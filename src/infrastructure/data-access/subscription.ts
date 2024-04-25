@@ -1,7 +1,7 @@
 import { db } from "@/config/server/db";
 import type { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import type { Subscription } from "@/domain/models/subscription.model";
-import type { SubscriptionDurationEnum } from "@/config/types";
+import type { SubscriptionDurationType } from "@/config/types";
 
 export class SubscriptionRepository implements ISubscriptionRepository {
   async getSubscription(userId: string): Promise<Subscription | undefined> {
@@ -19,7 +19,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async saveSubscription(
     userId: string,
     subscriptionId: string,
-    subscriptionDuration: SubscriptionDurationEnum,
+    subscriptionDuration: SubscriptionDurationType,
     subscriptionEndDate: Date,
   ): Promise<void> {
     try {

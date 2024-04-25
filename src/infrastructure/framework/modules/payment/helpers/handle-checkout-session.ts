@@ -1,9 +1,9 @@
 import { createCheckoutSessionAction } from "@/infrastructure/framework/actions/payment/create-checkout-session";
 import { checkoutSessionRedirection } from "@/infrastructure/framework/modules/payment/helpers/checkout-session-redirection";
-import type { SubscriptionDurationEnum } from "@/config/types";
+import type { SubscriptionDurationType } from "@/config/types";
 
 export default async function handleCheckoutSession(
-  subscriptionDuration: SubscriptionDurationEnum,
+  subscriptionDuration: SubscriptionDurationType,
 ) {
   const response = await createCheckoutSessionAction({
     subscription_duration: subscriptionDuration,

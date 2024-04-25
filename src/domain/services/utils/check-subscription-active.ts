@@ -1,3 +1,4 @@
+// Source:
 import type { Subscription } from "@/domain/models/subscription.model";
 
 export function checkSubscriptionActive(subscription: Subscription): boolean {

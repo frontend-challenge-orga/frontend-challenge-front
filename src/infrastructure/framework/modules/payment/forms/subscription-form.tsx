@@ -9,7 +9,6 @@ import type * as z from "zod";
 import { ButtonSubmit } from "@/infrastructure/framework/components/ui/button-submit";
 import { SubscriptionDurationSwitch } from "@/infrastructure/framework/modules/payment/components/subscription-duration-switch";
 import handleCheckoutSession from "@/infrastructure/framework/modules/payment/helpers/handle-checkout-session";
-import type { SubscriptionDurationEnum } from "@/config/types";
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -28,9 +27,7 @@ export const SubscriptionForm = () => {
         ? "YEARLY"
         : "MONTHLY";
 
-      await handleCheckoutSession(
-        subscriptionDuration as SubscriptionDurationEnum,
-      );
+      await handleCheckoutSession(subscriptionDuration);
     });
   }
 
