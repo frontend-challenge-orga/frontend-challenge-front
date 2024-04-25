@@ -1,6 +1,6 @@
+import mailingService from "@/infrastructure/third-party-services/mailing/resend.service";
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import { addMonthlySubscriptionCredit } from "@/infrastructure/use-cases/add-monthly-subscription-credit";
-import { sendSubscriptionEmailConfirmation } from "@/infrastructure/third-party-services/resend.service";
 import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
 
@@ -27,5 +27,7 @@ export async function handleUpdatedSubscriptionWebhook(
   );
 
   await addMonthlySubscriptionCredit(subscription.metadata.userID);
-  await sendSubscriptionEmailConfirmation(subscription.metadata.customer_email);
+  await mailingService.sendSubscriptionConfirmation(
+    subscription.metadata.customer_email,
+  );
 }

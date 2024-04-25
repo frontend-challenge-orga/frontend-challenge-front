@@ -1,4 +1,4 @@
-import { sendUpcomingInvoiceEmail } from "@/infrastructure/third-party-services/resend.service";
+import mailingService from "@/infrastructure/third-party-services/mailing/resend.service";
 import type Stripe from "stripe";
 
 export async function handleUpcomingInvoiceWebhook(invoice: Stripe.Invoice) {
@@ -10,7 +10,7 @@ export async function handleUpcomingInvoiceWebhook(invoice: Stripe.Invoice) {
     throw new Error("Missing required customer email");
   }
 
-  await sendUpcomingInvoiceEmail(
+  await mailingService.sendUpcomingInvoice(
     invoice.subscription_details.metadata.customer_email!,
     new Date(invoice.next_payment_attempt! * 1000),
   );

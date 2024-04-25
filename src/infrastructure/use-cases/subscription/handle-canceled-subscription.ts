@@ -1,6 +1,6 @@
+import mailingService from "@/infrastructure/third-party-services/mailing/resend.service";
 import subscriptionRepository from "@/infrastructure/data-access/subscription";
 import { suspendSubscription } from "@/infrastructure/third-party-services/stripe.service";
-import { sendCancellationSubscriptionEmail } from "@/infrastructure/third-party-services/resend.service";
 
 export async function handleCanceledSubscription(
   userId: string,
@@ -17,7 +17,7 @@ export async function handleCanceledSubscription(
   );
 
   await subscriptionRepository.cancelSubscription(userId);
-  await sendCancellationSubscriptionEmail(userEmail);
+  await mailingService.sendCancellationSubscriptionConfirmation(userEmail);
 
   return {
     cancel_at: new Date(payload_subscription.cancel_at! * 1000),
