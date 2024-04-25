@@ -64,7 +64,7 @@ export async function sendUpcomingInvoiceEmail(
     from: "contact@frontend-challenge.com",
     to: email,
     subject: "Upcoming Invoice",
-    html: `<p>Your subscription will be renewed soon ${nextPaymentAttempt}</p>`,
+    html: `<p>Your subscription will be renewed soon ${nextPaymentAttempt.toISOString()}</p>`,
   });
 }
 

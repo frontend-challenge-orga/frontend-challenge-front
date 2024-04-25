@@ -23,7 +23,7 @@ export async function handleUpdatedSubscriptionWebhook(
     subscription.metadata.userID,
     subscription.id,
     subscription.metadata.subscription_duration as SubscriptionDurationEnum,
-    new Date(subscription.current_period_end! * 1000),
+    new Date(subscription.current_period_end * 1000),
   );
 
   await addMonthlySubscriptionCredit(subscription.metadata.userID);

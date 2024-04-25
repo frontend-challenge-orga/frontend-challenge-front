@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
-import type Stripe from "stripe";
 
 import { handleUpdatedSubscriptionWebhook } from "@/infrastructure/use-cases/subscription/handle-updated-subscription-webhook";
 import { handleAbortedSubscriptionWebhook } from "@/infrastructure/use-cases/subscription/handle-aborted-subscription-webhook";
@@ -19,7 +18,7 @@ export const POST = async (req: Request) => {
     const event = stripe.webhooks.constructEvent(body, signature, secret);
 
     if (event.data.object.object === "subscription") {
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object;
 
       switch (event.type) {
         case "customer.subscription.updated":
@@ -32,7 +31,7 @@ export const POST = async (req: Request) => {
     }
 
     if (event.data.object.object === "invoice") {
-      const invoice = event.data.object as Stripe.Invoice;
+      const invoice = event.data.object;
 
       switch (event.type) {
         case "invoice.updated":

@@ -8,8 +8,12 @@ export async function handleCanceledSubscription(
 ) {
   const subscription = await subscriptionRepository.getSubscription(userId);
 
+  if (!subscription) {
+    throw new Error("Subscription not found");
+  }
+
   const payload_subscription = await suspendSubscription(
-    subscription?.subscription_id!,
+    subscription.subscription_id,
   );
 
   await subscriptionRepository.cancelSubscription(userId);

@@ -1,17 +1,3 @@
-enum Language {
-  HTML_CSS = "HTML_CSS",
-  JS = "JS",
-  API = "API",
-}
-
-enum Difficulty {
-  NEWBIE = "NEWBIE",
-  JUNIOR = "JUNIOR",
-  INTERMEDIATE = "INTERMEDIATE",
-  ADVANCED = "ADVANCED",
-  GURU = "GURU",
-}
-
 export type Challenge = {
   id: number;
   name: string;
