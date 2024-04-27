@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "@/config/server/auth";
 import { URL, ROLE, PROTECTED_ROUTE_ERROR } from "@/config/constants";
-import { SessionProvider } from "@/infrastructure/framework/modules/auth/context/session-context";
-import { SidebarMobile } from "@/infrastructure/framework/modules/admin/layouts/sidebar/sidebar-mobile";
-import { SidebarDesktop } from "@/infrastructure/framework/modules/admin/layouts/sidebar/sidebar-desktop";
-import { Header } from "@/infrastructure/framework/modules/admin/layouts/header";
+import { SessionProvider } from "@/core/views/modules/auth/context/session-context";
+import { SidebarMobile } from "@/core/views/modules/admin/layouts/sidebar/sidebar-mobile";
+import { SidebarDesktop } from "@/core/views/modules/admin/layouts/sidebar/sidebar-desktop";
+import { Header } from "@/core/views/modules/admin/layouts/header";
 import type { PropsWithChildren } from "react";
 
 export default async function AdminLayout({ children }: PropsWithChildren) {

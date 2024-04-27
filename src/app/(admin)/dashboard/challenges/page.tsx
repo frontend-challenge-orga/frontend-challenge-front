@@ -1,12 +1,13 @@
 import { Fragment } from "react";
-import challengeRepository from "@/infrastructure/data-access/challenge";
-import { ChallengesList } from "@/infrastructure/framework/modules/admin/components/challenges-list";
-import { Heading } from "@/infrastructure/framework/modules/admin/layouts/main/heading";
-import { ButtonLink } from "@/infrastructure/framework/components/ui/button-link";
+import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
+
+import { ChallengesList } from "@/core/views/modules/admin/components/challenges-list";
+import { Heading } from "@/core/views/modules/admin/layouts/main/heading";
+import { ButtonLink } from "@/core/views/components/ui/button-link";
 import { URL } from "@/config/constants";
 
 export default async function ChallengesPage() {
-  const challenges = await challengeRepository.getChallenges();
+  const challenges = await challengeRepository.index();
 
   return (
     <Fragment>

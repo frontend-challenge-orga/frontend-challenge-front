@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { SubscriptionForm } from "@/infrastructure/framework/modules/payment/forms/subscription-form";
+import { SubscriptionForm } from "@/core/views/modules/payment/forms/subscription-form";
 
 export default async function SubscriptionPage() {
   return (

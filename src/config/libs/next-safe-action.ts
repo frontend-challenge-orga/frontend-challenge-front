@@ -18,9 +18,14 @@ export const adminAction = createSafeActionClient({
   },
 });
 
+export class MyCustomError extends Error {}
+
 export const userAction = createSafeActionClient({
   handleReturnedServerError(e) {
-    console.log(e);
+    if (e instanceof MyCustomError) {
+      return e.message;
+    }
+
     return DEFAULT_SERVER_ERROR;
   },
 
