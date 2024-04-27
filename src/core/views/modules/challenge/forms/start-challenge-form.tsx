@@ -8,10 +8,15 @@ import { StartChallengeButton } from "@/core/views//modules/challenge/components
 
 type Props = {
   challenge: Challenge;
-  session: Session | null;
+  session: Session;
+  userHasStartedChallenge: boolean;
 };
 
-export const StartChallengeForm = ({ challenge, session }: Props) => {
+export const StartChallengeForm = ({
+  challenge,
+  session,
+  userHasStartedChallenge,
+}: Props) => {
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -38,6 +43,7 @@ export const StartChallengeForm = ({ challenge, session }: Props) => {
         session={session}
         challenge={challenge}
         isPending={isPending}
+        userHasStartedChallenge={userHasStartedChallenge}
       />
     </form>
   );

@@ -1,11 +1,15 @@
-import type { Challenge } from "@/core/domain/entities/challenge.entity";
+import type {
+  Challenge,
+  ChallengeDTO,
+} from "@/core/domain/entities/challenge.entity";
 
 export interface IChallengeRepository {
   index(): Promise<Challenge[] | undefined>;
   show(id: number): Promise<Challenge | undefined>;
+  showBySlug(slug: string): Promise<Challenge | undefined>;
   count(): Promise<number | undefined>;
-  create(data: Challenge): Promise<Challenge>;
-  update(id: number, data: Challenge): Promise<Challenge | undefined>;
+  create(data: ChallengeDTO): Promise<Challenge>;
+  update(id: number, data: ChallengeDTO): Promise<Challenge | undefined>;
 }
 
 export interface IUserChallengeRepository {

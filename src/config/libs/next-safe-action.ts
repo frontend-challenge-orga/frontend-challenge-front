@@ -36,6 +36,11 @@ export const userAction = createSafeActionClient({
     return {
       userId: session.user.id,
       userEmail: session.user.email!,
+      userRole: session.user.role,
+      userSubscription: session.user.subscribed,
+      userSubscriptionDuration: session.user.subscription_duration,
+      userCreditChallengeAmount: session.user.credit_challenge_amount,
+      userCreditDesignAmount: session.user.credit_design_amount,
     };
   },
 });

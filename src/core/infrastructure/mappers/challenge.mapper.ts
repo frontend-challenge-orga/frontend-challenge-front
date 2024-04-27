@@ -10,4 +10,10 @@ export class ChallengeMapper {
       updatedAt: new Date(), // This should be replaced by the actual logic to generate a date
     };
   }
+
+  static toInfrastructure(challenge: Challenge): CreateChallengeDTO {
+    return {
+      ...challenge,
+    };
+  }
 }

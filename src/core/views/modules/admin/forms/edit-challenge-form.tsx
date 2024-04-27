@@ -38,8 +38,8 @@ export const EditChallengeForm = ({ challenge }: Props) => {
       tips: challenge?.tips,
       assets_presentation: [{ value: "https://test.com" }],
       premium: challenge?.premium,
-      starter_code_url: challenge?.starter_code_url,
-      starter_figma_url: challenge?.starter_figma_url,
+      starter_code_path_file: challenge?.starter_code_path_file,
+      starter_figma_path_file: challenge?.starter_figma_path_file,
     },
   });
 
@@ -97,17 +97,17 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         />
         {/* Premium */}
         <SwitchForm control={form.control} name="premium" label="Premium" />
-        {/* Starter code URL */}
+        {/* Starter code PATH FILE */}
         <InputForm
           control={form.control}
-          name="starter_code_url"
-          label="Starter code URL"
+          name="starter_code_path_file"
+          label="Starter code PATH FILE"
         />
-        {/* Starter figma URL */}
+        {/* Starter figma PATH FILE */}
         <InputForm
           control={form.control}
-          name="starter_figma_url"
-          label="Starter figma URL"
+          name="starter_figma_path_file"
+          label="Starter figma PATH FILE"
         />
 
         <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
