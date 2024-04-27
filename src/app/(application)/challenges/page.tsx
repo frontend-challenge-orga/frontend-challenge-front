@@ -10,7 +10,7 @@ export default async function ChallengesPage() {
         <div key={challenge.id}>
           <h1>{challenge.name}</h1>
           <p>{challenge.description}</p>
-          <Link href={`/challenges/${challenge.id}`}>Go to challenge</Link>
+          <Link href={`/challenges/${challenge.slug}`}>Go to challenge</Link>
         </div>
       ))}
     </div>

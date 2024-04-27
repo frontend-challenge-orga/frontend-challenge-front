@@ -91,7 +91,7 @@ model Credit {
 
 model Challenge {
     id                  Int        @id @default(autoincrement())
-    name                String
+    name                String     @unique
     slug                String     @unique
     description         String
     language            Language
@@ -100,8 +100,8 @@ model Challenge {
     tips                String
     assets_presentation String[]
     premium             Boolean
-    starter_code_url    String
-    starter_figma_url   String
+    starter_code_path_file    String
+    starter_figma_path_file   String
     createdAt           DateTime   @default(now())
     updatedAt           DateTime   @updatedAt
     createdBy           User       @relation(fields: [createdById], references: [id])

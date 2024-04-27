@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { userAction } from "@/config/libs/next-safe-action";
 import { startChallenge } from "@/core/infrastructure/use-cases/start-challenge";
+import { revalidatePath } from "next/cache";
 
 const schema = z.object({
   challengeId: z.number(),
@@ -17,4 +18,6 @@ export const startChallengeAction = userAction(schema, async (data, ctx) => {
       throw new Error(error.message);
     }
   }
+
+  revalidatePath(`challenges/${data.challengeId}`);
 });

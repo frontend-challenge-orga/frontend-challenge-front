@@ -9,9 +9,12 @@ export type Challenge = {
   tips: string;
   assets_presentation: string[];
   premium: boolean;
-  starter_code_url: string;
-  starter_figma_url: string;
+  starter_code_path_file: string;
+  starter_figma_path_file: string;
   createdAt: Date;
   updatedAt: Date;
   createdById: string;
 };
+
+export interface ChallengeDTO
+  extends Omit<Challenge, "id" | "createdAt" | "updatedAt"> {}

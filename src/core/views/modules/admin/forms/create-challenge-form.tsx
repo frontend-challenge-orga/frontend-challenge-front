@@ -33,8 +33,8 @@ export const CreateChallengeForm = () => {
       tips: "test",
       assets_presentation: [{ value: "https://test.com" }],
       premium: false,
-      starter_code_url: "https://test.com",
-      starter_figma_url: "https://test.com",
+      starter_code_path_file: "/starter-code/LOLACCOUNT.txt",
+      starter_figma_path_file: "/starter-code/LOLACCOUNT.txt",
     },
   });
 
@@ -45,7 +45,6 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      console.log(values);
       await createChallengeAction(values);
     });
   }
@@ -93,17 +92,17 @@ export const CreateChallengeForm = () => {
         />
         {/* Premium */}
         <SwitchForm control={form.control} name="premium" label="Premium" />
-        {/* Starter code URL */}
+        {/* Starter code PATH FILE */}
         <InputForm
           control={form.control}
-          name="starter_code_url"
-          label="Starter code URL"
+          name="starter_code_path_file"
+          label="Starter code PATH FILE"
         />
-        {/* Starter figma URL */}
+        {/* Starter figma PATH FILE */}
         <InputForm
           control={form.control}
-          name="starter_figma_url"
-          label="Starter figma URL"
+          name="starter_figma_path_file"
+          label="Starter figma PATH FILE"
         />
 
         <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>

@@ -11,6 +11,6 @@ export const formSchema = z.object({
   tips: z.string().min(1, "Tips is required"),
   assets_presentation: z.object({ value: z.string() }).array().min(1),
   premium: z.boolean(),
-  starter_code_url: z.string().url(),
-  starter_figma_url: z.string().url(),
+  starter_code_path_file: z.string(),
+  starter_figma_path_file: z.string(),
 });

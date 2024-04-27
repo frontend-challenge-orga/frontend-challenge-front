@@ -7,7 +7,6 @@ import { formSchema as Schema } from "@/core/views/modules/admin/forms/create-ch
 import { extractValuesFromArray } from "@/config/utils";
 import { URL } from "@/config/constants";
 import * as z from "zod";
-import { ChallengeMapper } from "@/core/infrastructure/mappers/challenge.mapper";
 
 const formSchema = Schema.extend({
   id: z.number(),
@@ -16,14 +15,12 @@ const formSchema = Schema.extend({
 export const updateChallengeAction = adminAction(
   formSchema,
   async (data, ctx) => {
-    const challenge = ChallengeMapper.toDomain({
+    await challengeRepository.update(data.id, {
       ...data,
       slug: data.name.toLowerCase().replace(/ /g, "-"),
       assets_presentation: extractValuesFromArray(data.assets_presentation),
       createdById: ctx.userId,
     });
-
-    await challengeRepository.update(data.id, challenge);
 
     revalidatePath(URL.DASHBOARD_CHALLENGES);
   },

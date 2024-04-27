@@ -6,6 +6,7 @@ import { SendEmailButton } from "@/core/views/modules/payment/components/send-em
 
 export default async function HomePage() {
   const session = await getServerAuthSession();
+  console.log(session);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center space-y-4">

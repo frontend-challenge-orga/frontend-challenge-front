@@ -11,7 +11,7 @@ export const challengeRepository: IChallengeRepository = {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 
@@ -23,7 +23,19 @@ export const challengeRepository: IChallengeRepository = {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  },
+
+  showBySlug: async (slug: string) => {
+    try {
+      return await db.challenge.findUniqueOrThrow({
+        where: {
+          slug,
+        },
+      });
+    } catch (error) {
+      console.error(error);
     }
   },
 
@@ -31,11 +43,11 @@ export const challengeRepository: IChallengeRepository = {
     try {
       return await db.challenge.count();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 
-  create: async (data: CreateChallengeDTO) => {
+  create: async (data) => {
     try {
       return await db.challenge.create({ data });
     } catch (error) {
@@ -52,7 +64,7 @@ export const challengeRepository: IChallengeRepository = {
         data,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 };
