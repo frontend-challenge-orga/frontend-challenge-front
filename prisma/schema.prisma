@@ -48,12 +48,12 @@ model User {
     emailVerified DateTime?
     image         String?
     role          Role        @default(USER)
-    credits       Int         @default(0)
     accounts      Account[]
     sessions      Session[]
     subscription  Subscription?
     credit        Credit?
     challenges    Challenge[]
+    userChallenges UserChallenge[]
 }
 
 model VerificationToken {
@@ -92,6 +92,7 @@ model Credit {
 model Challenge {
     id                  Int        @id @default(autoincrement())
     name                String
+    slug                String     @unique
     description         String
     language            Language
     difficulty          Difficulty
@@ -105,8 +106,21 @@ model Challenge {
     updatedAt           DateTime   @updatedAt
     createdBy           User       @relation(fields: [createdById], references: [id])
     createdById         String
+    userChallenges      UserChallenge[]
 
     @@index([name])
+}
+
+model UserChallenge {
+    id           Int       @id @default(autoincrement())
+    startedAt    DateTime  @default(now())
+    completedAt  DateTime?
+    user         User      @relation(fields: [userId], references: [id])
+    userId       String
+    challenge    Challenge @relation(fields: [challengeId], references: [id])
+    challengeId  Int
+
+    @@unique([userId, challengeId])
 }
 
 enum Role {

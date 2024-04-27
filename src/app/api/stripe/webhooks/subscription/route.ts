@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/config/libs/stripe";
 import { env } from "@/config/env";
 
-import { handleUpdatedSubscriptionWebhook } from "@/infrastructure/use-cases/subscription/handle-updated-subscription-webhook";
-import { handleAbortedSubscriptionWebhook } from "@/infrastructure/use-cases/subscription/handle-aborted-subscription-webhook";
-import { handleUpcomingInvoiceWebhook } from "@/infrastructure/use-cases/subscription/handle-upcoming-invoice-webhook";
-import { handleCreatedInvoiceWebhook } from "@/infrastructure/use-cases/subscription/handle-created-invoice-webhook";
+import { handleUpdatedSubscriptionWebhook } from "@/core/infrastructure/webhooks/handle-updated-subscription-webhook";
+import { handleAbortedSubscriptionWebhook } from "@/core/infrastructure/webhooks/handle-aborted-subscription-webhook";
+import { handleUpcomingInvoiceWebhook } from "@/core/infrastructure/webhooks/handle-upcoming-invoice-webhook";
+import { handleCreatedInvoiceWebhook } from "@/core/infrastructure/webhooks/handle-created-invoice-webhook";
 
 const secret = env.STRIPE_WEBHOOK_SECRET;
 
