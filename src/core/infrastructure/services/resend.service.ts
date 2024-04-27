@@ -1,4 +1,9 @@
 import { resend } from "@/config/libs/resend";
+import { SendSubscriptionTemplate } from "@/core/views/modules/mailing/send-subscription-template";
+import { SendCancellationSubscriptionConfirmationTemplate } from "@/core/views/modules/mailing/send-cancellation-subscription-confirmation-template";
+import { SendAbortedSubscriptionTemplate } from "@/core/views/modules/mailing/send-aborted-subscription-template";
+import { SendUpcomingInvoiceTemplate } from "@/core/views/modules/mailing/send-upcoming-invoice-template";
+import { SendCreatedInvoiceTemplate } from "@/core/views/modules/mailing/send-created-invoice-template";
 
 export const mailingService = (email: string) => ({
   sendSubscriptionConfirmation: async () => {
@@ -11,7 +16,7 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Subscription Confirmation",
-        html: `<p>Congratulations! You have successfully subscribed to Frontend challenge</p>`,
+        react: SendSubscriptionTemplate(),
       });
     } catch (error) {
       console.error(error);
@@ -28,7 +33,7 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Subscription Cancellation",
-        html: `<p>Your subscription has been successfully canceled</p>`,
+        react: SendCancellationSubscriptionConfirmationTemplate(),
       });
     } catch (error) {
       console.error(error);
@@ -45,7 +50,7 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Subscription Renewal Failed",
-        html: `<p>Your subscription renewal has failed</p>`,
+        react: SendAbortedSubscriptionTemplate(),
       });
     } catch (error) {
       console.error(error);
@@ -62,7 +67,7 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Upcoming Invoice",
-        html: `<p>Your subscription will be renewed soon ${nextPaymentAttempt.toISOString()}</p>`,
+        react: SendUpcomingInvoiceTemplate({ nextPaymentAttempt }),
       });
     } catch (error) {
       console.error(error);
@@ -79,7 +84,7 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Invoice Created",
-        html: `<p>Your invoice has been created total: ${total}</p>`,
+        react: SendCreatedInvoiceTemplate({ total }),
       });
     } catch (error) {
       console.error(error);

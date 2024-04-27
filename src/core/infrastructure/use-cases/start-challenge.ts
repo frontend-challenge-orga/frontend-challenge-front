@@ -3,10 +3,11 @@ import { userChallengeRepository } from "@/core/infrastructure/repositories/user
 
 export const startChallenge = async (
   userId: string,
+  subscription_duration: "MONTHLY" | "YEARLY",
   challengeId: number,
   isPremiumChallenge: boolean,
 ) => {
-  if (isPremiumChallenge) {
+  if (isPremiumChallenge && subscription_duration === "MONTHLY") {
     await creditRepository.subtractChallengeCredits(userId, 1);
   }
 

@@ -12,7 +12,12 @@ const schema = z.object({
 
 export const startChallengeAction = userAction(schema, async (data, ctx) => {
   try {
-    await startChallenge(ctx.userId, data.challengeId, data.premium);
+    await startChallenge(
+      ctx.userId,
+      ctx.userSubscriptionDuration,
+      data.challengeId,
+      data.premium,
+    );
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
