@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/core/views/components/ui/form";
@@ -10,6 +10,7 @@ import { MultiSelectForm } from "@/core/views/components/ui/multi-select-form";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
 import { createChallengeSolutionAction } from "@/core/views/actions/challenge/create-challenge-solution";
+import { Typography } from "@/core/views/components/typography";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
 
@@ -20,6 +21,9 @@ type Props = {
 };
 
 export const ChallengeSolutionForm = ({ challenge }: Props) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>();
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormValues>({
@@ -35,10 +39,12 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      await createChallengeSolutionAction({
+      const { serverError } = await createChallengeSolutionAction({
         ...values,
         challengeId: challenge.id,
       });
+
+      serverError ? setErrorMessage(serverError) : setSuccessMessage("Success");
     });
   }
 
@@ -95,7 +101,6 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
         />
 
         {/* Stacks */}
-
         <MultiSelectForm
           control={form.control}
           name="stacks"
@@ -111,6 +116,8 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
         />
 
         <ButtonSubmit isPending={isPending}>Submit</ButtonSubmit>
+        <Typography.Error>{errorMessage}</Typography.Error>
+        <Typography.Success>{successMessage}</Typography.Success>
       </form>
     </Form>
   );

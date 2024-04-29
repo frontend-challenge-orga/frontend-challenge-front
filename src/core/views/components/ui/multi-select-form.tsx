@@ -30,12 +30,7 @@ export function MultiSelectForm({
         <FormItem>
           <FormLabel>{label}</FormLabel>
 
-          <MultiSelect
-            options={options}
-            selected={field.value}
-            {...props}
-            {...field}
-          />
+          <MultiSelect options={options} selected={field.value} {...field} />
           <FormMessage />
         </FormItem>
       )}

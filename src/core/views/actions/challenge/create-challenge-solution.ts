@@ -13,18 +13,13 @@ const schema = formSchema.extend({
 export const createChallengeSolutionAction = userAction(
   schema,
   async (data, ctx) => {
-    try {
-      const challengeSolution = ChallengeSolutionTransformer.toDomain({
-        ...data,
-        stacks: ["Nextjs"],
-        userId: ctx.userId,
-        challengeId: data.challengeId,
-      });
+    const challengeSolution = ChallengeSolutionTransformer.toDomain({
+      ...data,
+      stacks: data.stacks.map((stack) => stack),
+      userId: ctx.userId,
+      challengeId: data.challengeId,
+    });
 
-      await challengeSolutionRepository.create(challengeSolution);
-    } catch (error) {
-      /*throw new Error("Failed to submit challenge solution");*/
-      console.error(error);
-    }
+    await challengeSolutionRepository.create(challengeSolution);
   },
 );
