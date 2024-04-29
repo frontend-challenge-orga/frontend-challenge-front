@@ -1,10 +1,9 @@
 "use server";
-import { challengeSolutionRepository } from "@/core/infrastructure/repositories/challenge.solution.repository";
-import * as z from "zod";
-
+import { challengeSolutionService } from "@/core/infrastructure/services/challenge.solution.service";
 import { userAction } from "@/config/libs/next-safe-action";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
 import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers/challenge-solution-transformer";
+import * as z from "zod";
 
 const schema = formSchema.extend({
   challengeId: z.number(),
@@ -13,13 +12,16 @@ const schema = formSchema.extend({
 export const createChallengeSolutionAction = userAction(
   schema,
   async (data, ctx) => {
+    const { stacks, challengeId } = data;
+
     const challengeSolution = ChallengeSolutionTransformer.toDomain({
       ...data,
-      stacks: data.stacks.map((stack) => stack),
+      id: crypto.randomUUID(),
       userId: ctx.userId,
-      challengeId: data.challengeId,
+      stacks: stacks.map((stack) => stack),
+      challengeId,
     });
 
-    await challengeSolutionRepository.create(challengeSolution);
+    await challengeSolutionService.createChallengeSolution(challengeSolution);
   },
 );

@@ -20,7 +20,6 @@ export function MultiSelectForm({
   name,
   label,
   options,
-  ...props
 }: SelectProps) {
   return (
     <FormField

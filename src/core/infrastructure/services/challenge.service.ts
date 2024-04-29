@@ -1,34 +1,39 @@
 import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
 import { ChallengeTransformer } from "@/core/infrastructure/transformers/challenge-transformer";
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 interface IChallengeService {
-  getChallenges(): Promise<Challenge[]>;
-  getChallengeById(id: number): Promise<Challenge>;
-  getChallengeBySlug(slug: string): Promise<Challenge>;
+  getChallenges(): Promise<ChallengeDTO[]>;
+  getChallengeById(id: number): Promise<ChallengeDTO>;
+  getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
+  createChallenge(data: Challenge): Promise<ChallengeDTO>;
 }
 
-class ChallengeService implements IChallengeService {
-  async getChallenges() {
+export const challengeService: IChallengeService = {
+  getChallenges: async () => {
     return challengeRepository.index().then((challenges) => {
       return challenges?.map((challenge: Challenge) => {
         return ChallengeTransformer.toEntity(challenge);
       });
     });
-  }
+  },
 
-  async getChallengeById(id: number) {
+  getChallengeById: async (id: number) => {
     return challengeRepository.show(id).then((challenge) => {
       return ChallengeTransformer.toEntity(challenge);
     });
-  }
+  },
 
-  async getChallengeBySlug(slug: string) {
+  getChallengeBySlug: async (slug: string) => {
     return challengeRepository.showBySlug(slug).then((challenge) => {
       return ChallengeTransformer.toEntity(challenge);
     });
-  }
-}
+  },
 
-const challengeService = new ChallengeService();
-export { challengeService };
+  createChallenge: async (data) => {
+    return challengeRepository.create(data).then((challenge) => {
+      return ChallengeTransformer.toEntity(challenge);
+    });
+  },
+};
