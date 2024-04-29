@@ -1,4 +1,4 @@
-import {
+import type {
   ChallengeSolutionDTO,
   CreateChallengeSolutionDTO,
 } from "@/core/infrastructure/dto/challenge.solution.dto";

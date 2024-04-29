@@ -1,5 +1,5 @@
-import { SubscriptionDTO } from "@/core/infrastructure/dto/subscription.dto";
-import { Subscription } from "@/core/domain/entities/subscription.entity";
+import type { Subscription } from "@/core/domain/entities/subscription.entity";
+import type { SubscriptionDTO } from "@/core/infrastructure/dto/subscription.dto";
 
 export class SubscriptionTransformer {
   static toDomain(subscriptionDTO: SubscriptionDTO): Subscription {
@@ -20,9 +20,9 @@ export class SubscriptionTransformer {
   static toEntity(subscription: Subscription): SubscriptionDTO {
     return {
       ...subscription,
-      subscribed_at: subscription.subscribed_at || null,
-      subscription_end_at: subscription.subscription_end_at || null,
-      subscription_cancelled_at: subscription.subscription_cancelled_at || null,
+      subscribed_at: subscription.subscribed_at ?? null,
+      subscription_end_at: subscription.subscription_end_at ?? null,
+      subscription_cancelled_at: subscription.subscription_cancelled_at ?? null,
     };
   }
 }

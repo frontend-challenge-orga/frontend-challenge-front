@@ -9,12 +9,9 @@ import {
 } from "@/core/views/components/ui/card";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { Typography } from "@/core/views/components/typography";
-
-import type { Challenge } from "@prisma/client";
-import type { Session } from "next-auth";
-
 import { downloadFigmaFile } from "@/core/infrastructure/use-cases/download-figma-file";
-import { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
+import type { Session } from "next-auth";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
   session: Session;
@@ -28,7 +25,7 @@ export const DownloadDesignFile = ({ session, challenge }: Props) => {
   const handleDownload = async () => {
     startTransition(async () => {
       try {
-        await downloadFigmaFile(session, challenge);
+        await downloadFigmaFile(session, challenge.starter_figma_path_file);
       } catch (e) {
         if (e instanceof Error) setErrorMessage(e.message);
       }

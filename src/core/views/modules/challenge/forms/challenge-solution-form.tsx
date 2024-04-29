@@ -4,17 +4,14 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/core/views/components/ui/form";
-
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { InputForm } from "@/core/views/components/ui/input-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
-import { createChallengeAction } from "@/core/views/actions/challenge/create-challenge";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
-import * as z from "zod";
 import { createChallengeSolutionAction } from "@/core/views/actions/challenge/create-challenge-solution";
-import { Challenge } from "@prisma/client";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
+import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 

@@ -1,9 +1,8 @@
 import { downloadFileAction } from "@/core/views/actions/challenge/download-file";
-import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
-export async function downloadCodeFile(challenge: ChallengeDTO) {
+export async function downloadCodeFile(pathFile: string) {
   const { data } = await downloadFileAction({
-    pathFile: challenge.starter_code_path_file,
+    pathFile,
     type: "starter",
   });
 

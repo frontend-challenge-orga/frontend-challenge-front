@@ -1,4 +1,4 @@
-import { SubscriptionDTO } from "@/core/infrastructure/dto/subscription.dto";
+import type { SubscriptionDTO } from "@/core/infrastructure/dto/subscription.dto";
 
 interface Props {
   subscriptions: SubscriptionDTO[];
