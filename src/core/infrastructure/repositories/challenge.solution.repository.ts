@@ -3,10 +3,33 @@ import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers
 import type { IChallengeSolutionRepository } from "@/core/domain/repositories/challenge.repository";
 
 export const challengeSolutionRepository: IChallengeSolutionRepository = {
-  create: async (data) => {
+  createChallengeSolution: async (data) => {
     const challengeSolution = ChallengeSolutionTransformer.toEntity(data);
     return db.challengeSolution.create({
       data: challengeSolution,
     });
+  },
+
+  findByChallengeSlug: async (slug) => {
+    return db.challengeSolution.findMany({
+      where: {
+        challenge: {
+          slug,
+        },
+      },
+    });
+  },
+
+  hasUserSubmittedSolution: async (userId, slug) => {
+    const challengeSolution = await db.challengeSolution.findFirst({
+      where: {
+        userId,
+        challenge: {
+          slug,
+        },
+      },
+    });
+
+    return !!challengeSolution;
   },
 };

@@ -21,5 +21,9 @@ export interface IUserChallengeRepository {
 }
 
 export interface IChallengeSolutionRepository {
-  create: (data: ChallengeSolution) => Promise<ChallengeSolution>;
+  createChallengeSolution: (
+    data: ChallengeSolution,
+  ) => Promise<ChallengeSolution>;
+  findByChallengeSlug: (slug: string) => Promise<ChallengeSolution[]>;
+  hasUserSubmittedSolution: (userId: string, slug: string) => Promise<boolean>;
 }
