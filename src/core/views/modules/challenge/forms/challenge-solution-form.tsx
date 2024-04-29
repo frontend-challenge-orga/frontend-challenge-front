@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/core/views/components/ui/form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { InputForm } from "@/core/views/components/ui/input-form";
-import { SelectForm } from "@/core/views/components/ui/select-form";
+import { MultiSelectForm } from "@/core/views/components/ui/multi-select-form";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
 import { createChallengeSolutionAction } from "@/core/views/actions/challenge/create-challenge-solution";
@@ -28,7 +28,7 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
       title: "azfazfazf",
       repository_url: "https://www.twitch.tv/moderator/swiichy_",
       live_preview_url: "https://www.twitch.tv/moderator/swiichy_",
-      stacks: "Nextjs",
+      stacks: [],
       solution_retrospective: "zekjbfkzjebfkjzebfkjzb",
     },
   });
@@ -41,6 +41,38 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
       });
     });
   }
+
+  // Get from database
+  const stacks = [
+    {
+      value: "next.js",
+      label: "Next.js",
+    },
+    {
+      value: "sveltekit",
+      label: "SvelteKit",
+    },
+    {
+      value: "nuxt.js",
+      label: "Nuxt.js",
+    },
+    {
+      value: "remix",
+      label: "Remix",
+    },
+    {
+      value: "astro",
+      label: "Astro",
+    },
+    {
+      value: "wordpress",
+      label: "WordPress",
+    },
+    {
+      value: "express.js",
+      label: "Express.js",
+    },
+  ];
 
   return (
     <Form {...form}>
@@ -63,11 +95,11 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
         />
 
         {/* Stacks */}
-        <SelectForm
+
+        <MultiSelectForm
           control={form.control}
           name="stacks"
-          placeholder="Select..."
-          items={["Nextjs", "Tailwind"]}
+          options={stacks}
           label="Stacks"
         />
 
