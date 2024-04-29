@@ -1,5 +1,5 @@
 export type ChallengeSolutionDTO = {
-  readonly id: number;
+  readonly id: string;
   readonly title: string;
   readonly repository_url: string;
   readonly live_preview_url: string;
@@ -8,6 +8,3 @@ export type ChallengeSolutionDTO = {
   readonly userId: string;
   readonly challengeId: number;
 };
-
-export interface CreateChallengeSolutionDTO
-  extends Omit<ChallengeSolutionDTO, "id"> {}

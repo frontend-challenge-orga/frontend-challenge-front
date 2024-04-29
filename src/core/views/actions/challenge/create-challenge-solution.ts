@@ -12,11 +12,14 @@ const schema = formSchema.extend({
 export const createChallengeSolutionAction = userAction(
   schema,
   async (data, ctx) => {
+    const { stacks, challengeId } = data;
+
     const challengeSolution = ChallengeSolutionTransformer.toDomain({
       ...data,
-      stacks: data.stacks.map((stack) => stack),
+      id: crypto.randomUUID(),
       userId: ctx.userId,
-      challengeId: data.challengeId,
+      stacks: stacks.map((stack) => stack),
+      challengeId,
     });
 
     await challengeSolutionService.createChallengeSolution(challengeSolution);

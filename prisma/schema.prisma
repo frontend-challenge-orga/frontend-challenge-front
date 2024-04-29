@@ -108,13 +108,13 @@ model Challenge {
     createdBy           User       @relation(fields: [createdById], references: [id])
     createdById         String
     userChallenges      UserChallenge[]
-    challengeSubmissions ChallengeSolution[]
+    challengeSolutions ChallengeSolution[]
 
     @@index([name])
 }
 
 model ChallengeSolution {
-    id           Int       @id @default(autoincrement())
+    id           String    @id @default(uuid())
     title        String
     repository_url String
     live_preview_url String

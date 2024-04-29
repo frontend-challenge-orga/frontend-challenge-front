@@ -25,5 +25,6 @@ export interface IChallengeSolutionRepository {
     data: ChallengeSolution,
   ) => Promise<ChallengeSolution>;
   findByChallengeSlug: (slug: string) => Promise<ChallengeSolution[]>;
+  findByChallengeId: (challengeId: string) => Promise<ChallengeSolution[]>;
   hasUserSubmittedSolution: (userId: string, slug: string) => Promise<boolean>;
 }

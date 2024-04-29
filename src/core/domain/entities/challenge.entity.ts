@@ -20,7 +20,7 @@ export type Challenge = {
 };
 
 export type ChallengeSolution = {
-  readonly id: number;
+  readonly id: string;
   readonly title: string;
   readonly repository_url: string;
   readonly live_preview_url: string;

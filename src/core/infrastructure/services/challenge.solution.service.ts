@@ -8,6 +8,7 @@ interface IChallengeSolutionService {
     data: ChallengeSolution,
   ) => Promise<ChallengeSolutionDTO>;
   findByChallengeSlug: (slug: string) => Promise<ChallengeSolutionDTO[]>;
+  findByChallengeId: (challengeId: string) => Promise<ChallengeSolutionDTO[]>;
   hasUserSubmittedSolution: (userId: string, slug: string) => Promise<boolean>;
 }
 
@@ -23,6 +24,18 @@ export const challengeSolutionService: IChallengeSolutionService = {
   findByChallengeSlug: async (slug) => {
     return challengeSolutionRepository
       .findByChallengeSlug(slug)
+      .then((challengeSolutions) => {
+        return challengeSolutions?.map(
+          (challengeSolution: ChallengeSolution) => {
+            return ChallengeSolutionTransformer.toEntity(challengeSolution);
+          },
+        );
+      });
+  },
+
+  findByChallengeId: async (challengeId) => {
+    return challengeSolutionRepository
+      .findByChallengeId(challengeId)
       .then((challengeSolutions) => {
         return challengeSolutions?.map(
           (challengeSolution: ChallengeSolution) => {
