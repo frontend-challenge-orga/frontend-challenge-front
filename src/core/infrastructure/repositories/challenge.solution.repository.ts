@@ -5,6 +5,8 @@ import type { IChallengeSolutionRepository } from "@/core/domain/repositories/ch
 export const challengeSolutionRepository: IChallengeSolutionRepository = {
   create: async (data) => {
     const challengeSolution = ChallengeSolutionTransformer.toEntity(data);
-    return db.challengeSolution.create({ data: challengeSolution });
+    return db.challengeSolution.create({
+      data: challengeSolution,
+    });
   },
 };

@@ -7,6 +7,7 @@ import { Large } from "@/core/views/components/typography/large";
 import { Small } from "@/core/views/components/typography/small";
 import { Muted } from "@/core/views/components/typography/muted";
 import { Error } from "@/core/views/components/typography/error";
+import { Success } from "@/core/views/components/typography/success";
 
 export const Typography = {
   Title,
@@ -18,4 +19,5 @@ export const Typography = {
   Small,
   Muted,
   Error,
+  Success,
 };
