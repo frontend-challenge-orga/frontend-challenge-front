@@ -1,13 +1,13 @@
 "use client";
 import React, { useTransition } from "react";
-import type { Challenge } from "@prisma/client";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { Session } from "next-auth";
 
 import { startChallengeAction } from "@/core/views/actions/challenge/start-challenge";
 import { StartChallengeButton } from "@/core/views//modules/challenge/components/start-challenge-button";
 
 type Props = {
-  challenge: Challenge;
+  challenge: ChallengeDTO;
   session: Session;
   userHasStartedChallenge: boolean;
 };

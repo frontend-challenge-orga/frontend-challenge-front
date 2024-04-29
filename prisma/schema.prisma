@@ -54,6 +54,7 @@ model User {
     credit        Credit?
     challenges    Challenge[]
     userChallenges UserChallenge[]
+    challengeSubmissions ChallengeSolution[]
 }
 
 model VerificationToken {
@@ -107,8 +108,26 @@ model Challenge {
     createdBy           User       @relation(fields: [createdById], references: [id])
     createdById         String
     userChallenges      UserChallenge[]
+    challengeSubmissions ChallengeSolution[]
 
     @@index([name])
+}
+
+model ChallengeSolution {
+    id           Int       @id @default(autoincrement())
+    title        String
+    repository_url String
+    live_preview_url String
+    stacks       String[]
+    solution_retrospective String
+    user         User      @relation(fields: [userId], references: [id])
+    userId       String
+    challenge    Challenge @relation(fields: [challengeId], references: [id])
+    challengeId  Int
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    @@unique([userId, challengeId])
 }
 
 model UserChallenge {
@@ -147,3 +166,4 @@ enum SubscriptionDuration {
     MONTHLY
     YEARLY
 }
+

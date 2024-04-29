@@ -1,20 +1,31 @@
 export type Challenge = {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  language: "HTML_CSS" | "JS" | "API";
-  difficulty: "NEWBIE" | "JUNIOR" | "INTERMEDIATE" | "ADVANCED" | "GURU";
-  brief: string;
-  tips: string;
-  assets_presentation: string[];
-  premium: boolean;
-  starter_code_path_file: string;
-  starter_figma_path_file: string;
-  createdAt: Date;
-  updatedAt: Date;
-  createdById: string;
+  readonly id: number;
+  readonly name: string;
+  readonly slug: string;
+  readonly description: string;
+  readonly language: "HTML_CSS" | "JS" | "API";
+  readonly difficulty:
+    | "NEWBIE"
+    | "JUNIOR"
+    | "INTERMEDIATE"
+    | "ADVANCED"
+    | "GURU";
+  readonly brief: string;
+  readonly tips: string;
+  readonly assets_presentation: string[];
+  readonly premium: boolean;
+  readonly starter_code_path_file: string;
+  readonly starter_figma_path_file: string;
+  readonly createdById: string;
 };
 
-export interface ChallengeDTO
-  extends Omit<Challenge, "id" | "createdAt" | "updatedAt"> {}
+export type ChallengeSolution = {
+  readonly id: number;
+  readonly title: string;
+  readonly repository_url: string;
+  readonly live_preview_url: string;
+  readonly stacks: string[];
+  readonly solution_retrospective: string;
+  readonly userId: string;
+  readonly challengeId: number;
+};

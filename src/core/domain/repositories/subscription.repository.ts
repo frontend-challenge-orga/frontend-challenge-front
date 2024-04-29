@@ -1,13 +1,14 @@
 import type { Subscription } from "@/core/domain/entities/subscription.entity";
 
 export interface ISubscriptionRepository {
-  show(userId: string): Promise<Subscription | undefined>;
+  index(): Promise<Subscription[]>;
+  show(userId: string): Promise<Subscription>;
   store(
     userId: string,
     subscriptionId: string,
     subscriptionDuration: "MONTHLY" | "YEARLY",
     subscriptionEndDate: Date,
-  ): Promise<void>;
-  update(userId: string): Promise<void>;
-  cancel(userId: string): Promise<Subscription | undefined>;
+  ): Promise<Subscription>;
+  update(userId: string): Promise<Subscription>;
+  cancel(userId: string): Promise<Subscription>;
 }

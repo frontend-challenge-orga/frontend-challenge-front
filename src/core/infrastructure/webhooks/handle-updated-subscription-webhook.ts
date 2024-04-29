@@ -1,5 +1,5 @@
 import { mailingService } from "@/core/infrastructure/services/resend.service";
-import { subscriptionRepository } from "@/core/infrastructure/repositories/subscription.repository";
+import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
 import { addMonthlySubscriptionCredit } from "@/core/infrastructure/use-cases/add-monthly-subscription-credit";
 import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
@@ -19,7 +19,7 @@ export async function handleUpdatedSubscriptionWebhook(
     throw new Error("Missing required customer email");
   }
 
-  await subscriptionRepository.store(
+  await subscriptionService.createSubscription(
     subscription.metadata.userID,
     subscription.id,
     subscription.metadata.subscription_duration as SubscriptionDurationType,

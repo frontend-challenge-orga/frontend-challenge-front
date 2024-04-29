@@ -1,70 +1,47 @@
 import { db } from "@/config/server/db";
+import { ChallengeTransformer } from "@/core/infrastructure/transformers/challenge-transformer";
 import type { IChallengeRepository } from "@/core/domain/repositories/challenge.repository";
-import type { CreateChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 export const challengeRepository: IChallengeRepository = {
   index: async () => {
-    try {
-      return await db.challenge.findMany({
-        orderBy: {
-          id: "desc",
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.challenge.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
   },
 
   show: async (id: number) => {
-    try {
-      return await db.challenge.findUniqueOrThrow({
-        where: {
-          id,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.challenge.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    });
   },
 
   showBySlug: async (slug: string) => {
-    try {
-      return await db.challenge.findUniqueOrThrow({
-        where: {
-          slug,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.challenge.findUniqueOrThrow({
+      where: {
+        slug,
+      },
+    });
   },
 
   count: async () => {
-    try {
-      return await db.challenge.count();
-    } catch (error) {
-      console.error(error);
-    }
+    return db.challenge.count();
   },
 
   create: async (data) => {
-    try {
-      return await db.challenge.create({ data });
-    } catch (error) {
-      throw new Error("Failed to create challenge");
-    }
+    const challenge = ChallengeTransformer.toEntity(data);
+    return db.challenge.create({ data: challenge });
   },
 
   update: async (id, data) => {
-    try {
-      return await db.challenge.update({
-        where: {
-          id,
-        },
-        data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.challenge.update({
+      where: {
+        id,
+      },
+      data,
+    });
   },
 };

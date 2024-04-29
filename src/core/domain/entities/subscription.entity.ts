@@ -1,7 +1,5 @@
 export type Subscription = {
   readonly id: number;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
   readonly subscribed: boolean;
   readonly subscription_id: string;
   readonly subscription_duration: "MONTHLY" | "YEARLY";

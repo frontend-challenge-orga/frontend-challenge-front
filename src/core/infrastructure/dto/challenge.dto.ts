@@ -1,4 +1,5 @@
-export type CreateChallengeDTO = {
+export type ChallengeDTO = {
+  id: number;
   name: string;
   slug: string;
   description: string;
@@ -12,3 +13,5 @@ export type CreateChallengeDTO = {
   starter_figma_path_file: string;
   createdById: string;
 };
+
+export type CreateChallengeDTO = Omit<ChallengeDTO, "id">;

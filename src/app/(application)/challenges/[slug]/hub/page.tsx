@@ -1,4 +1,4 @@
-import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
+import { challengeService } from "@/core/infrastructure/services/challenge.service";
 import { ChallengeNotFound } from "@/core/views/modules/challenge/components/challenge-not-found";
 import { DownloadStarterFile } from "@/core/views/modules/challenge/components/download-starter-file";
 import { DownloadDesignFile } from "@/core/views/modules/challenge/components/download-design-file";
@@ -12,7 +12,7 @@ type Props = {
 
 export default async function ChallengeHubPage({ params }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await challengeRepository.showBySlug(params.slug);
+  const challenge = await challengeService.getChallengeBySlug(params.slug);
 
   if (!session || !challenge) {
     return <ChallengeNotFound />;

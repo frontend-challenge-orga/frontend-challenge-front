@@ -3,12 +3,11 @@ import { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form } from "@/core/views/components/ui/form";
-import { formSchema } from "@/core/views/modules/payment/forms/subscription-schema";
-import type * as z from "zod";
-
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { SubscriptionDurationSwitch } from "@/core/views/modules/payment/components/subscription-duration-switch";
 import handleCheckoutSession from "@/core/views/modules/payment/helpers/handle-checkout-session";
+import { formSchema } from "@/core/views/modules/payment/forms/subscription-schema";
+import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 

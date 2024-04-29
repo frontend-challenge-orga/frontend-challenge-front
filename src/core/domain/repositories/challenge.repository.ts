@@ -1,15 +1,15 @@
 import type {
   Challenge,
-  ChallengeDTO,
+  ChallengeSolution,
 } from "@/core/domain/entities/challenge.entity";
 
 export interface IChallengeRepository {
-  index(): Promise<Challenge[] | undefined>;
-  show(id: number): Promise<Challenge | undefined>;
-  showBySlug(slug: string): Promise<Challenge | undefined>;
+  index(): Promise<Challenge[]>;
+  show(id: number): Promise<Challenge>;
+  showBySlug(slug: string): Promise<Challenge>;
   count(): Promise<number | undefined>;
-  create(data: ChallengeDTO): Promise<Challenge>;
-  update(id: number, data: ChallengeDTO): Promise<Challenge | undefined>;
+  create(data: Challenge): Promise<Challenge>;
+  update(id: number, data: Challenge): Promise<Challenge | undefined>;
 }
 
 export interface IUserChallengeRepository {
@@ -18,4 +18,8 @@ export interface IUserChallengeRepository {
     userId: string,
     challengeId: number,
   ): Promise<boolean>;
+}
+
+export interface IChallengeSolutionRepository {
+  create: (data: ChallengeSolution) => Promise<ChallengeSolution>;
 }
