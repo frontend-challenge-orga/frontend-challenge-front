@@ -2,16 +2,16 @@ import { db } from "@/config/server/db";
 import type { ISubscriptionRepository } from "@/core/domain/repositories/subscription.repository";
 
 export const subscriptionRepository: ISubscriptionRepository = {
+  index: async () => {
+    return db.subscription.findMany();
+  },
+
   show: async (userId: string) => {
-    try {
-      return await db.subscription.findUniqueOrThrow({
-        where: {
-          userId,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.subscription.findUniqueOrThrow({
+      where: {
+        userId,
+      },
+    });
   },
 
   store: async (
@@ -20,61 +20,49 @@ export const subscriptionRepository: ISubscriptionRepository = {
     subscriptionDuration: "MONTHLY" | "YEARLY",
     subscriptionEndDate: Date,
   ) => {
-    try {
-      await db.subscription.upsert({
-        where: {
-          userId,
-        },
-        create: {
-          userId,
-          subscription_id: subscriptionId,
-          subscription_duration: subscriptionDuration,
-          subscribed: true,
-          subscribed_at: new Date(),
-          subscription_end_at: subscriptionEndDate,
-        },
-        update: {
-          subscription_id: subscriptionId,
-          subscription_duration: subscriptionDuration,
-          subscribed: true,
-          subscribed_at: new Date(),
-          subscription_end_at: subscriptionEndDate,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.subscription.upsert({
+      where: {
+        userId,
+      },
+      create: {
+        userId,
+        subscription_id: subscriptionId,
+        subscription_duration: subscriptionDuration,
+        subscribed: true,
+        subscribed_at: new Date(),
+        subscription_end_at: subscriptionEndDate,
+      },
+      update: {
+        subscription_id: subscriptionId,
+        subscription_duration: subscriptionDuration,
+        subscribed: true,
+        subscribed_at: new Date(),
+        subscription_end_at: subscriptionEndDate,
+      },
+    });
   },
 
   update: async (userId: string) => {
-    try {
-      await db.subscription.update({
-        where: {
-          userId,
-        },
-        data: {
-          subscribed: true,
-          subscribed_at: new Date(),
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.subscription.update({
+      where: {
+        userId,
+      },
+      data: {
+        subscribed: true,
+        subscribed_at: new Date(),
+      },
+    });
   },
 
   cancel: async (userId: string) => {
-    try {
-      return await db.subscription.update({
-        where: {
-          userId,
-        },
-        data: {
-          subscribed: false,
-          subscription_cancelled_at: new Date(),
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return db.subscription.update({
+      where: {
+        userId,
+      },
+      data: {
+        subscribed: false,
+        subscription_cancelled_at: new Date(),
+      },
+    });
   },
 };

@@ -1,7 +1,7 @@
 import { downloadFileAction } from "@/core/views/actions/challenge/download-file";
-import type { Challenge } from "@prisma/client";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
-export async function downloadCodeFile(challenge: Challenge) {
+export async function downloadCodeFile(challenge: ChallengeDTO) {
   const { data } = await downloadFileAction({
     pathFile: challenge.starter_code_path_file,
     type: "starter",

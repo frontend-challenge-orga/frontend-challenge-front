@@ -9,6 +9,12 @@ export const navigation = [
     icon: FolderIcon,
     current: false,
   },
+  {
+    name: "Subscriptions",
+    href: URL.DASHBOARD_SUBSCRIPTIONS,
+    icon: FolderIcon,
+    current: false,
+  },
 ];
 
 export const teams = [

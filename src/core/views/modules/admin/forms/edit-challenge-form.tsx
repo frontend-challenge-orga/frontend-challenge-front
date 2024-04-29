@@ -12,13 +12,13 @@ import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
-import type { Challenge } from "@prisma/client";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 
 type Props = {
-  challenge: Challenge;
+  challenge: ChallengeDTO;
 };
 
 // TODO: Refactor this component to use it for editing and authoring

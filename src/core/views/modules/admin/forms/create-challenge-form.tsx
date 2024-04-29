@@ -1,5 +1,5 @@
 "use client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { formSchema } from "./create-challenge-schema";
@@ -19,6 +19,7 @@ type FormValues = z.infer<typeof formSchema>;
 // TODO: Refactor this component to use it for editing and authoring
 
 export const CreateChallengeForm = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormValues>({
@@ -45,7 +46,11 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      await createChallengeAction(values);
+      try {
+        await createChallengeAction(values);
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 

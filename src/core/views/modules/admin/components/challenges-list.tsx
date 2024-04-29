@@ -1,4 +1,4 @@
-import type { Challenge } from "@prisma/client";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import {
   Card,
   CardDescription,
@@ -10,7 +10,7 @@ import { ButtonLink } from "@/core/views//components/ui/button-link";
 import { URL } from "@/config/constants";
 
 type Props = {
-  challenges: Challenge[] | undefined;
+  challenges: ChallengeDTO[] | undefined;
 };
 
 export const ChallengesList = ({ challenges }: Props) => {

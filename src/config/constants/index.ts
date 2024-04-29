@@ -3,6 +3,7 @@ export const URL = {
   DASHBOARD: "/dashboard",
   DASHBOARD_CHALLENGES: "/dashboard/challenges",
   DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
+  DASHBOARD_SUBSCRIPTIONS: "/dashboard/subscriptions",
 };
 
 export const API_ENDPOINT = {

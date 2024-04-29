@@ -13,9 +13,10 @@ import type { Challenge } from "@prisma/client";
 
 import { downloadCodeFile } from "@/core/infrastructure/use-cases/download-code-file";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
+import { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
-  challenge: Challenge;
+  challenge: ChallengeDTO;
 };
 
 export const DownloadStarterFile = ({ challenge }: Props) => {

@@ -1,11 +1,11 @@
 import { checkValidityOfDesignCreditBalance } from "@/core/infrastructure/use-cases/check-validity-of-design-credit-balance";
 import { downloadFileAction } from "@/core/views/actions/challenge/download-file";
 import type { Session } from "next-auth";
-import type { Challenge } from "@prisma/client";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 export async function downloadFigmaFile(
   session: Session,
-  challenge: Challenge,
+  challenge: ChallengeDTO,
 ) {
   const balance = checkValidityOfDesignCreditBalance(
     session.user.credit_design_amount,

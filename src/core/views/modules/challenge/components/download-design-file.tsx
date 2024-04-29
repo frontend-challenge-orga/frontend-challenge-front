@@ -14,10 +14,11 @@ import type { Challenge } from "@prisma/client";
 import type { Session } from "next-auth";
 
 import { downloadFigmaFile } from "@/core/infrastructure/use-cases/download-figma-file";
+import { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
   session: Session;
-  challenge: Challenge;
+  challenge: ChallengeDTO;
 };
 
 export const DownloadDesignFile = ({ session, challenge }: Props) => {
