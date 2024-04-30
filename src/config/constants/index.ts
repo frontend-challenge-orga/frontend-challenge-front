@@ -49,4 +49,5 @@ export const ACTION_ERROR = {
   USER: "You are not logged in.",
   CREATE_CHALLENGE: "An error occurred while creating the challenge.",
   START_CHALLENGE: "An error occurred while starting the challenge.",
+  REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
 };

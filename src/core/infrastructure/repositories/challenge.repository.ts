@@ -44,4 +44,12 @@ export const challengeRepository: IChallengeRepository = {
       data,
     });
   },
+
+  remove: async (id: string) => {
+    await db.challenge.delete({
+      where: {
+        id,
+      },
+    });
+  },
 };

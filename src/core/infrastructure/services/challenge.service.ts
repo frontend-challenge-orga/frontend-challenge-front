@@ -8,6 +8,7 @@ interface IChallengeService {
   getChallengeById(id: string): Promise<ChallengeDTO>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
   createChallenge(data: Challenge): Promise<ChallengeDTO>;
+  removeChallenge(id: string): Promise<void>;
 }
 
 export const challengeService: IChallengeService = {
@@ -35,5 +36,9 @@ export const challengeService: IChallengeService = {
     return challengeRepository.create(data).then((challenge) => {
       return ChallengeTransformer.toEntity(challenge);
     });
+  },
+
+  removeChallenge: async (id: string) => {
+    return challengeRepository.remove(id);
   },
 };

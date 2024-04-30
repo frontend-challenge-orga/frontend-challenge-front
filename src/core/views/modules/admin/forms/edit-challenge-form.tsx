@@ -6,7 +6,7 @@ import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
-import { updateChallengeAction } from "@/core/views/actions/challenge/update-challenge";
+import { updateChallengeAction } from "@/core/views/actions/admin/update-challenge";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
