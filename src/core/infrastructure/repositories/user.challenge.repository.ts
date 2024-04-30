@@ -1,9 +1,9 @@
 import { db } from "@/config/server/db";
-import type { IUserChallengeRepository } from "@/core/domain/repositories/challenge.repository";
+import type { IUserChallengeRepository } from "@/core/domain/repositories/user.challenge.repository";
 
 export const userChallengeRepository: IUserChallengeRepository = {
   startChallenge: async (userId: string, challengeId: string) => {
-    await db.userChallenge.create({
+    return db.userChallenge.create({
       data: {
         user: {
           connect: {

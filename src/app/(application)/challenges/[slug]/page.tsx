@@ -1,5 +1,5 @@
 import { challengeService } from "@/core/infrastructure/services/challenge.service";
-import { userChallengeRepository } from "@/core/infrastructure/repositories/user-challenge.repository";
+import { userChallengeRepository } from "@/core/infrastructure/repositories/user.challenge.repository";
 import { StartChallengeForm } from "@/core/views/modules/challenge/forms/start-challenge-form";
 import { getServerAuthSession } from "@/config/server/auth";
 

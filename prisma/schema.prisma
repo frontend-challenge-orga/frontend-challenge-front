@@ -144,7 +144,7 @@ model ChallengeSolution {
 }
 
 model UserChallenge {
-    id           Int       @id @default(autoincrement())
+    id           String    @id @default(uuid())
     startedAt    DateTime  @default(now())
     completedAt  DateTime?
     user         User      @relation(fields: [userId], references: [id])
