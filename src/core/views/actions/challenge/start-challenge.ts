@@ -6,7 +6,7 @@ import { startChallenge } from "@/core/infrastructure/use-cases/start-challenge"
 import { revalidatePath } from "next/cache";
 
 const schema = z.object({
-  challengeId: z.number(),
+  challengeId: z.string(),
   premium: z.boolean(),
 });
 

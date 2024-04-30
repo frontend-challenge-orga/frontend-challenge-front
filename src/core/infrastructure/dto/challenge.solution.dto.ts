@@ -6,5 +6,5 @@ export type ChallengeSolutionDTO = {
   readonly stacks: string[];
   readonly solution_retrospective: string;
   readonly userId: string;
-  readonly challengeId: number;
+  readonly challengeId: string;
 };

@@ -18,6 +18,24 @@ export const ROLE = {
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
 
+// Documentation
+/**
+ * `difficultyPoints` is an object that maps the difficulty levels of challenges to points.
+ * - "NEWBIE": 5 points
+ * - "JUNIOR": 10 points
+ * - "INTERMEDIATE": 15 points
+ * - "ADVANCED": 20 points
+ * - "GURU": 25 points
+ */
+
+export const DIFFICULTY_POINTS = {
+  NEWBIE: 5,
+  JUNIOR: 10,
+  INTERMEDIATE: 15,
+  ADVANCED: 20,
+  GURU: 25,
+};
+
 export const DIFFICULTY = [
   "NEWBIE",
   "JUNIOR",

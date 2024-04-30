@@ -9,7 +9,7 @@ import { InputForm } from "@/core/views/components/ui/input-form";
 import { MultiSelectForm } from "@/core/views/components/ui/multi-select-form";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
-import { createChallengeSolutionAction } from "@/core/views/actions/challenge/create-challenge-solution";
+import { submitChallengeSolutionAction } from "@/core/views/actions/challenge/submit-challenge-solution";
 import { Typography } from "@/core/views/components/typography";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
@@ -39,9 +39,10 @@ export const ChallengeSolutionForm = ({ challenge }: Props) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      const { serverError } = await createChallengeSolutionAction({
+      const { serverError } = await submitChallengeSolutionAction({
         ...values,
         challengeId: challenge.id,
+        challengePoints: challenge.points,
       });
 
       serverError ? setErrorMessage(serverError) : setSuccessMessage("Success");

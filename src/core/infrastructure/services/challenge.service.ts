@@ -5,7 +5,7 @@ import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
-  getChallengeById(id: number): Promise<ChallengeDTO>;
+  getChallengeById(id: string): Promise<ChallengeDTO>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
   createChallenge(data: Challenge): Promise<ChallengeDTO>;
 }
@@ -19,7 +19,7 @@ export const challengeService: IChallengeService = {
     });
   },
 
-  getChallengeById: async (id: number) => {
+  getChallengeById: async (id: string) => {
     return challengeRepository.show(id).then((challenge) => {
       return ChallengeTransformer.toEntity(challenge);
     });

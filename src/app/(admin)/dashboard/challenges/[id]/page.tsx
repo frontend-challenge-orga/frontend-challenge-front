@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default async function EditChallengePage({ params }: Props) {
-  const challenge = await challengeService.getChallengeById(Number(params.id));
+  const challenge = await challengeService.getChallengeById(params.id);
 
   if (!challenge) {
     return <div>Challenge not found</div>;

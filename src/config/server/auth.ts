@@ -27,14 +27,15 @@ declare module "next-auth" {
       subscription_duration: Subscription["subscription_duration"];
       credit_challenge_amount: number;
       credit_design_amount: number;
+      points: number;
     } & DefaultSession["user"];
   }
 
   interface User {
     // ...other properties
     role: "USER" | "COLLABORATOR" | "ADMIN";
+    points: number;
     subscription: Subscription;
-
     credit: { challenge_amount: number; design_amount: number };
   }
 }
@@ -53,10 +54,11 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: user.id,
         role: user.role ?? "USER",
+        points: user.points,
         subscribed: user.subscription?.subscribed,
         subscription_duration: user.subscription?.subscription_duration,
-        credit_challenge_amount: user.credit.challenge_amount ?? 0,
-        credit_design_amount: user.credit.design_amount ?? 0,
+        credit_challenge_amount: user.credit ? user.credit.challenge_amount : 0,
+        credit_design_amount: user.credit ? user.credit.design_amount : 0,
       },
     }),
   },
