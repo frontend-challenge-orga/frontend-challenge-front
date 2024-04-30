@@ -47,5 +47,7 @@ export const PROTECTED_ROUTE_ERROR = {
 export const ACTION_ERROR = {
   ADMIN: "You are not authorized to perform this action.",
   USER: "You are not logged in.",
+  CREATE_CHALLENGE: "An error occurred while creating the challenge.",
   START_CHALLENGE: "An error occurred while starting the challenge.",
+  REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
 };

@@ -7,4 +7,5 @@ export interface IChallengeRepository {
   count(): Promise<number | undefined>;
   create(data: Challenge): Promise<Challenge>;
   update(id: string, data: Challenge): Promise<Challenge | undefined>;
+  remove(id: string): Promise<void>;
 }
