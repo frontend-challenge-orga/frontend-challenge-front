@@ -18,8 +18,6 @@ import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 
-// TODO: Refactor this component to use it for editing and authoring
-
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -48,12 +46,10 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      try {
-        await createChallengeAction(values);
-      } catch (error) {
-        if (error instanceof Error) {
-          setErrorMessage(error.message);
-        }
+      const payload = await createChallengeAction(values);
+
+      if (payload.serverError) {
+        setErrorMessage(payload.serverError);
       }
     });
   }

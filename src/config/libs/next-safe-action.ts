@@ -4,7 +4,10 @@ import { ACTION_ERROR, ROLE } from "@/config/constants";
 
 export const adminAction = createSafeActionClient({
   handleReturnedServerError(e) {
-    console.log(e);
+    if (e instanceof ServerActionError) {
+      return e.message;
+    }
+
     return DEFAULT_SERVER_ERROR;
   },
 

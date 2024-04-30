@@ -30,7 +30,6 @@ export const StartChallengeForm = ({
 
       if (payload.serverError) {
         setErrorMessage(payload.serverError);
-        return;
       }
     });
   }
