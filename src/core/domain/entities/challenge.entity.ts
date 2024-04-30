@@ -1,5 +1,5 @@
 export type Challenge = {
-  readonly id: number;
+  readonly id: string;
   readonly name: string;
   readonly slug: string;
   readonly description: string;
@@ -10,6 +10,7 @@ export type Challenge = {
     | "INTERMEDIATE"
     | "ADVANCED"
     | "GURU";
+  readonly points: number;
   readonly brief: string;
   readonly tips: string;
   readonly assets_presentation: string[];
@@ -27,5 +28,5 @@ export type ChallengeSolution = {
   readonly stacks: string[];
   readonly solution_retrospective: string;
   readonly userId: string;
-  readonly challengeId: number;
+  readonly challengeId: string;
 };

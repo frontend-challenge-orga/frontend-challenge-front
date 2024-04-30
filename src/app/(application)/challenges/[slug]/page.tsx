@@ -23,6 +23,8 @@ export default async function ChallengePage({ params }: Props) {
       challenge.id,
     );
 
+  console.log(userHasStartedChallenge);
+
   if (!challenge) {
     return <div>Challenge not found</div>;
   }

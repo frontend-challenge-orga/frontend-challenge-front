@@ -5,18 +5,18 @@ import type {
 
 export interface IChallengeRepository {
   index(): Promise<Challenge[]>;
-  show(id: number): Promise<Challenge>;
+  show(id: string): Promise<Challenge>;
   showBySlug(slug: string): Promise<Challenge>;
   count(): Promise<number | undefined>;
   create(data: Challenge): Promise<Challenge>;
-  update(id: number, data: Challenge): Promise<Challenge | undefined>;
+  update(id: string, data: Challenge): Promise<Challenge | undefined>;
 }
 
 export interface IUserChallengeRepository {
-  startChallenge(userId: string, challengeId: number): Promise<void>;
+  startChallenge(userId: string, challengeId: string): Promise<void>;
   hasUserStartedChallenge(
     userId: string,
-    challengeId: number,
+    challengeId: string,
   ): Promise<boolean>;
 }
 

@@ -1,14 +1,10 @@
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
-import type {
-  ChallengeDTO,
-  CreateChallengeDTO,
-} from "@/core/infrastructure/dto/challenge.dto";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 export class ChallengeTransformer {
-  static toDomain(createChallengeDTO: CreateChallengeDTO): Challenge {
+  static toDomain(createChallengeDTO: ChallengeDTO): Challenge {
     return {
       ...createChallengeDTO,
-      id: 0,
     };
   }
 

@@ -11,7 +11,7 @@ export const challengeRepository: IChallengeRepository = {
     });
   },
 
-  show: async (id: number) => {
+  show: async (id: string) => {
     return db.challenge.findUniqueOrThrow({
       where: {
         id,

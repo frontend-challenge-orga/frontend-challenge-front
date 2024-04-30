@@ -37,6 +37,7 @@ export const userAction = createSafeActionClient({
       userId: session.user.id,
       userEmail: session.user.email!,
       userRole: session.user.role,
+      userPoints: session.user.points,
       userSubscription: session.user.subscribed,
       userSubscriptionDuration: session.user.subscription_duration,
       userCreditChallengeAmount: session.user.credit_challenge_amount,
