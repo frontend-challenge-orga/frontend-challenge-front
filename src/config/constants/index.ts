@@ -31,6 +31,11 @@ export const SUBSCRIPTION = {
   YEARLY: "YEARLY",
 } as const;
 
+export const FILE_TYPE = {
+  STARTER: "STARTER",
+  FIGMA: "FIGMA",
+} as const;
+
 export const DIFFICULTY = [
   "NEWBIE",
   "JUNIOR",
@@ -50,4 +55,9 @@ export const ACTION_ERROR = {
   CREATE_CHALLENGE: "An error occurred while creating the challenge.",
   START_CHALLENGE: "An error occurred while starting the challenge.",
   REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
+  SUBMIT_CHALLENGE_SOLUTION:
+    "An error occurred while submitting the challenge solution.",
+  DOWNLOAD_FILE: "An error occurred while downloading the file.",
+  INSUFFICIENT_DESIGN_CREDITS:
+    "You don't have enough credit to download the design file.",
 };

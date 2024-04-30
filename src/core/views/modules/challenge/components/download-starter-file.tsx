@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+
 import {
   Card,
   CardContent,
@@ -8,8 +8,7 @@ import {
   CardTitle,
 } from "@/core/views/components/ui/card";
 import { Typography } from "@/core/views/components/typography";
-import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
-import { downloadCodeFile } from "@/core/infrastructure/use-cases/download-code-file";
+import { DownloadStarterFileForm } from "@/core/views/modules/challenge/forms/download-starter-file-form";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
@@ -17,19 +16,6 @@ type Props = {
 };
 
 export const DownloadStarterFile = ({ challenge }: Props) => {
-  const [isPending, startTransition] = useTransition();
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const handleDownload = async () => {
-    startTransition(async () => {
-      try {
-        await downloadCodeFile(challenge.starter_code_path_file);
-      } catch (e) {
-        if (e instanceof Error) setErrorMessage(e.message);
-      }
-    });
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -42,12 +28,9 @@ export const DownloadStarterFile = ({ challenge }: Props) => {
         </Typography.Paragraph>
       </CardContent>
       <CardFooter>
-        <ButtonSubmit onClick={handleDownload} isPending={isPending}>
-          Starter code
-        </ButtonSubmit>
-        {errorMessage && (
-          <Typography.Paragraph>{errorMessage}</Typography.Paragraph>
-        )}
+        <DownloadStarterFileForm
+          starter_code_path_file={challenge.starter_code_path_file}
+        />
       </CardFooter>
     </Card>
   );
