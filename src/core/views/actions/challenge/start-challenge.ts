@@ -1,9 +1,10 @@
 "use server";
 
 import * as z from "zod";
-import { userAction } from "@/config/libs/next-safe-action";
+import { userAction, ServerActionError } from "@/config/libs/next-safe-action";
 import { startChallenge } from "@/core/infrastructure/use-cases/start-challenge";
 import { revalidatePath } from "next/cache";
+import { ACTION_ERROR } from "@/config/constants";
 
 const schema = z.object({
   challengeId: z.string(),
@@ -18,11 +19,9 @@ export const startChallengeAction = userAction(schema, async (data, ctx) => {
       data.challengeId,
       data.premium,
     );
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
 
-  revalidatePath(`challenges/${data.challengeId}`);
+    revalidatePath(`challenges/${data.challengeId}`);
+  } catch (error) {
+    throw new ServerActionError(ACTION_ERROR.START_CHALLENGE);
+  }
 });

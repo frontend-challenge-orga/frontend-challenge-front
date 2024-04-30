@@ -1,7 +1,7 @@
 import { challengeSolutionRepository } from "@/core/infrastructure/repositories/challenge.solution.repository";
 import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers/challenge-solution-transformer";
 import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
-import type { ChallengeSolution } from "@/core/domain/entities/challenge.entity";
+import type { ChallengeSolution } from "@/core/domain/entities/challenge.solution.entity";
 
 interface IChallengeSolutionService {
   createChallengeSolution: (

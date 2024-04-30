@@ -1,6 +1,6 @@
 import { db } from "@/config/server/db";
 import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers/challenge-solution-transformer";
-import type { IChallengeSolutionRepository } from "@/core/domain/repositories/challenge.repository";
+import type { IChallengeSolutionRepository } from "@/core/domain/repositories/challenge.solution.repository";
 
 export const challengeSolutionRepository: IChallengeSolutionRepository = {
   createChallengeSolution: async (data) => {

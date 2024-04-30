@@ -18,16 +18,6 @@ export const ROLE = {
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
 
-// Documentation
-/**
- * `difficultyPoints` is an object that maps the difficulty levels of challenges to points.
- * - "NEWBIE": 5 points
- * - "JUNIOR": 10 points
- * - "INTERMEDIATE": 15 points
- * - "ADVANCED": 20 points
- * - "GURU": 25 points
- */
-
 export const DIFFICULTY_POINTS = {
   NEWBIE: 5,
   JUNIOR: 10,
@@ -35,6 +25,11 @@ export const DIFFICULTY_POINTS = {
   ADVANCED: 20,
   GURU: 25,
 };
+
+export const SUBSCRIPTION = {
+  MONTHLY: "MONTHLY",
+  YEARLY: "YEARLY",
+} as const;
 
 export const DIFFICULTY = [
   "NEWBIE",
@@ -52,4 +47,5 @@ export const PROTECTED_ROUTE_ERROR = {
 export const ACTION_ERROR = {
   ADMIN: "You are not authorized to perform this action.",
   USER: "You are not logged in.",
+  START_CHALLENGE: "An error occurred while starting the challenge.",
 };
