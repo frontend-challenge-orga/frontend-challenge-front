@@ -21,7 +21,7 @@ export default async function ChallengeHubPage({ params }: Props) {
   return (
     <div>
       <DownloadStarterFile challenge={challenge} />
-      <DownloadDesignFile session={session} challenge={challenge} />
+      <DownloadDesignFile challenge={challenge} />
     </div>
   );
 }
