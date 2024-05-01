@@ -1,7 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
@@ -14,6 +14,7 @@ import { Typography } from "@/core/views/components/typography";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { formSchema } from "./create-challenge-schema";
 import { createChallengeAction } from "@/core/views/actions/admin/create-challenge";
+import { ChallengePreview } from "../components/challenge-preview";
 import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
@@ -27,7 +28,8 @@ export const CreateChallengeForm = () => {
 
     defaultValues: {
       name: "test",
-      description: "test",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem illo, neque ea architecto sapiente nobis deleniti fuga tenetur. Harum iusto quos deleniti perspiciatis aperiam ut amet doloremque quisquam porro aliquam.",
       language: "HTML_CSS",
       difficulty: "NEWBIE",
       brief: "test",
@@ -53,6 +55,8 @@ export const CreateChallengeForm = () => {
       }
     });
   }
+
+  const inputValues = useWatch(form);
 
   return (
     <Form {...form}>
@@ -109,7 +113,10 @@ export const CreateChallengeForm = () => {
           name="starter_figma_path_file"
           label="Starter figma PATH FILE"
         />
-        <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
+        <div className="mt-4 flex ">
+          <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
+          <ChallengePreview data={inputValues} />
+        </div>
         <Typography.Error>{errorMessage}</Typography.Error>
       </form>
     </Form>
