@@ -1,18 +1,17 @@
 import { getServerAuthSession } from "@/config/server/auth";
-import { LogoutButton } from "@/core/views/components/ui/logout-button";
-import { LoginButton } from "@/core/views/components/ui/login-button";
+import { Header } from "@/core/views/components/layouts/header";
 import { CancelSubscriptionForm } from "@/core/views/modules/payment/forms/cancel-subscription-form";
 
 export default async function HomePage() {
   const session = await getServerAuthSession();
-  console.log(session);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center space-y-4">
-      <p>{session?.user.email}</p>
-      <LoginButton session={session} />
-      <LogoutButton session={session} />
-      <CancelSubscriptionForm />
-    </main>
+    <>
+      <Header />
+      <main className="flex flex-col items-center justify-center space-y-4">
+        <p>{session?.user.email}</p>
+        <CancelSubscriptionForm />
+      </main>
+    </>
   );
 }
