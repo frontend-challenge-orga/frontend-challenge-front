@@ -1,6 +1,6 @@
 "use server";
 
-import { checkAndSubtractDesignCredits } from "@/core/infrastructure/use-cases/check-and-substract-design-credits";
+import { deductDesignCredits } from "@/core/infrastructure/use-cases/deduct-design-credits";
 import { ServerActionError, userAction } from "@/config/libs/next-safe-action";
 import { getTemporaryFileLink } from "@/core/infrastructure/services/dropbox.service";
 import { FILE_TYPE, SUBSCRIPTION } from "@/config/constants";
@@ -20,10 +20,7 @@ export const downloadFileAction = userAction(schema, async (data, ctx) => {
       ctx.userSubscriptionDuration !== SUBSCRIPTION.YEARLY;
 
     if (isFigmaType && isNotYearlySubscription) {
-      await checkAndSubtractDesignCredits(
-        ctx.userId,
-        ctx.userCreditDesignAmount,
-      );
+      await deductDesignCredits(ctx.userId, ctx.userCreditDesignAmount);
     }
 
     return file_url;

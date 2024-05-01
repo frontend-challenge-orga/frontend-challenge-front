@@ -2,7 +2,7 @@ import { creditRepository } from "@/core/infrastructure/repositories/credit.repo
 import { ACTION_ERROR } from "@/config/constants";
 import { ServerActionError } from "@/config/libs/next-safe-action";
 
-export async function checkAndSubtractDesignCredits(
+export async function deductDesignCredits(
   userId: string,
   userCreditDesignAmount: number,
 ) {
