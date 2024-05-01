@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+
 import {
   Card,
   CardContent,
@@ -7,33 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/core/views/components/ui/card";
-import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
+import { DownloadDesignFileForm } from "@/core/views/modules/challenge/forms/download-design-file-form";
 import { Typography } from "@/core/views/components/typography";
-
-import type { Challenge } from "@prisma/client";
-import type { Session } from "next-auth";
-
-import { downloadFigmaFile } from "@/core/infrastructure/use-cases/download-figma-file";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
-  session: Session;
-  challenge: Challenge;
+  challenge: ChallengeDTO;
 };
 
-export const DownloadDesignFile = ({ session, challenge }: Props) => {
-  const [isPending, startTransition] = useTransition();
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const handleDownload = async () => {
-    startTransition(async () => {
-      try {
-        await downloadFigmaFile(session, challenge);
-      } catch (e) {
-        if (e instanceof Error) setErrorMessage(e.message);
-      }
-    });
-  };
-
+export const DownloadDesignFile = ({ challenge }: Props) => {
   return (
     <Card>
       <CardHeader>
@@ -46,12 +28,9 @@ export const DownloadDesignFile = ({ session, challenge }: Props) => {
         </Typography.Paragraph>
       </CardContent>
       <CardFooter>
-        <ButtonSubmit onClick={handleDownload} isPending={isPending}>
-          Figma
-        </ButtonSubmit>
-        {errorMessage && (
-          <Typography.Paragraph>{errorMessage}</Typography.Paragraph>
-        )}
+        <DownloadDesignFileForm
+          starter_figma_path_file={challenge.starter_figma_path_file}
+        />
       </CardFooter>
     </Card>
   );

@@ -9,35 +9,27 @@ export async function createCheckoutSession(
   userEmail: string,
   subscriptionDuration: SubscriptionDurationType,
 ) {
-  try {
-    const checkoutSession: Stripe.Response<Stripe.Checkout.Session> =
-      await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: getStripePriceIdBySubscriptionDuration(subscriptionDuration),
-            quantity: 1,
-          },
-        ],
+  return await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price: getStripePriceIdBySubscriptionDuration(subscriptionDuration),
+        quantity: 1,
+      },
+    ],
 
-        subscription_data: {
-          metadata: {
-            userID: userId,
-            customer_email: userEmail,
-            subscription_duration: subscriptionDuration,
-          },
-        },
-
-        mode: "subscription",
+    subscription_data: {
+      metadata: {
+        userID: userId,
         customer_email: userEmail,
-        success_url: env.STRIPE_SUCCESS_URL,
-        cancel_url: env.STRIPE_CANCEL_URL,
-      });
+        subscription_duration: subscriptionDuration,
+      },
+    },
 
-    return checkoutSession;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+    mode: "subscription",
+    customer_email: userEmail,
+    success_url: env.STRIPE_SUCCESS_URL,
+    cancel_url: env.STRIPE_CANCEL_URL,
+  });
 }
 
 export async function suspendSubscription(subscriptionId: string) {

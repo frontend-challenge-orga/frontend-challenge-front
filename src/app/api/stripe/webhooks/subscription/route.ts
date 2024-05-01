@@ -22,7 +22,10 @@ export const POST = async (req: Request) => {
 
       switch (event.type) {
         case "customer.subscription.updated":
-          await handleUpdatedSubscriptionWebhook(subscription);
+          await handleUpdatedSubscriptionWebhook(
+            event.request?.idempotency_key,
+            subscription,
+          );
           break;
         case "subscription_schedule.aborted":
           await handleAbortedSubscriptionWebhook(subscription);

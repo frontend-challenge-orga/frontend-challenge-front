@@ -48,12 +48,26 @@ model User {
     emailVerified DateTime?
     image         String?
     role          Role        @default(USER)
+    points        Int @default(0)
+    pointTransactions PointTransaction[]
     accounts      Account[]
     sessions      Session[]
     subscription  Subscription?
     credit        Credit?
     challenges    Challenge[]
     userChallenges UserChallenge[]
+    challengeSubmissions ChallengeSolution[]
+}
+
+model PointTransaction {
+    id String @id @default(uuid())
+    user User @relation(fields: [userId], references: [id])
+    userId String
+    points Int
+    type String
+    referenceId String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -68,34 +82,42 @@ model Subscription {
     id          Int      @id @default(autoincrement())
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    subscribed  Boolean  @default(true)
+    subscribed  Boolean
     subscription_id String
     subscription_duration SubscriptionDuration
     subscribed_at DateTime?
     subscription_end_at DateTime?
     subscription_cancelled_at DateTime?
-
     user        User     @relation(fields: [userId], references: [id])
     userId      String   @unique
 }
 
-model Credit {
-    id          Int      @id @default(autoincrement())
+model WebhookEvent {
+    id          String      @id @default(uuid())
+    event_type  String
+    event_idempotency_key String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    challenge_amount      Int
-    design_amount         Int
+}
+
+model Credit {
+    id          String   @id @default(uuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    challenge_amount      Int  @default(0)
+    design_amount         Int  @default(0)
     user        User     @relation(fields: [userId], references: [id])
     userId      String   @unique
 }
 
 model Challenge {
-    id                  Int        @id @default(autoincrement())
+    id                  String     @id @default(uuid())
     name                String     @unique
     slug                String     @unique
     description         String
     language            Language
     difficulty          Difficulty
+    points              Int
     brief               String
     tips                String
     assets_presentation String[]
@@ -107,18 +129,36 @@ model Challenge {
     createdBy           User       @relation(fields: [createdById], references: [id])
     createdById         String
     userChallenges      UserChallenge[]
+    challengeSolutions ChallengeSolution[]
 
     @@index([name])
 }
 
+model ChallengeSolution {
+    id           String    @id @default(uuid())
+    title        String
+    repository_url String
+    live_preview_url String
+    stacks       String[]
+    solution_retrospective String
+    user         User      @relation(fields: [userId], references: [id])
+    userId       String
+    challenge    Challenge @relation(fields: [challengeId], references: [id])
+    challengeId  String
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    @@unique([userId, challengeId])
+}
+
 model UserChallenge {
-    id           Int       @id @default(autoincrement())
+    id           String    @id @default(uuid())
     startedAt    DateTime  @default(now())
     completedAt  DateTime?
     user         User      @relation(fields: [userId], references: [id])
     userId       String
     challenge    Challenge @relation(fields: [challengeId], references: [id])
-    challengeId  Int
+    challengeId  String
 
     @@unique([userId, challengeId])
 }
@@ -147,3 +187,8 @@ enum SubscriptionDuration {
     MONTHLY
     YEARLY
 }
+
+
+
+
+

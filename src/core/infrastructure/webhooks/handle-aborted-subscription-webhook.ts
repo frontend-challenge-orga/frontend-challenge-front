@@ -1,25 +1,21 @@
 import { mailingService } from "@/core/infrastructure/services/resend.service";
 import { subscriptionRepository } from "@/core/infrastructure/repositories/subscription.repository";
+import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
 import type Stripe from "stripe";
 
 export async function handleAbortedSubscriptionWebhook(
   subscription: Stripe.Subscription,
 ) {
-  if (!subscription.metadata) {
-    throw new Error("Missing required subscription metadata");
+  const payload = await subscriptionService.getSubscriptionById(
+    subscription.metadata.userID!,
+  );
+
+  if (!payload) {
+    throw new Error("Subscription not found");
   }
 
-  if (!subscription.metadata.userID) {
-    throw new Error("Missing required user ID");
-  }
-
-  if (!subscription.metadata.customer_email) {
-    throw new Error("Missing required customer email");
-  }
-
-  await subscriptionRepository.show(subscription.metadata.userID);
-  await subscriptionRepository.cancel(subscription.metadata.userID);
+  await subscriptionRepository.cancel(subscription.metadata.userID!);
   await mailingService(
-    subscription.metadata.customer_email,
+    subscription.metadata.customer_email!,
   ).sendAbortedSubscription();
 }

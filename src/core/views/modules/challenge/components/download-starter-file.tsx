@@ -1,6 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
-import Link from "next/link";
+
 import {
   Card,
   CardContent,
@@ -9,29 +8,14 @@ import {
   CardTitle,
 } from "@/core/views/components/ui/card";
 import { Typography } from "@/core/views/components/typography";
-import type { Challenge } from "@prisma/client";
-
-import { downloadCodeFile } from "@/core/infrastructure/use-cases/download-code-file";
-import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
+import { DownloadStarterFileForm } from "@/core/views/modules/challenge/forms/download-starter-file-form";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
-  challenge: Challenge;
+  challenge: ChallengeDTO;
 };
 
 export const DownloadStarterFile = ({ challenge }: Props) => {
-  const [isPending, startTransition] = useTransition();
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const handleDownload = async () => {
-    startTransition(async () => {
-      try {
-        await downloadCodeFile(challenge);
-      } catch (e) {
-        if (e instanceof Error) setErrorMessage(e.message);
-      }
-    });
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -44,12 +28,9 @@ export const DownloadStarterFile = ({ challenge }: Props) => {
         </Typography.Paragraph>
       </CardContent>
       <CardFooter>
-        <ButtonSubmit onClick={handleDownload} isPending={isPending}>
-          Starter code
-        </ButtonSubmit>
-        {errorMessage && (
-          <Typography.Paragraph>{errorMessage}</Typography.Paragraph>
-        )}
+        <DownloadStarterFileForm
+          starter_code_path_file={challenge.starter_code_path_file}
+        />
       </CardFooter>
     </Card>
   );

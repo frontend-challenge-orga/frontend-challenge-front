@@ -1,24 +1,25 @@
 "use client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import { formSchema } from "./create-challenge-schema";
+
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
-import { createChallengeAction } from "@/core/views/actions/challenge/create-challenge";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
-import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
+import { Typography } from "@/core/views/components/typography";
+import { DIFFICULTY, LANGUAGE } from "@/config/constants";
+import { formSchema } from "./create-challenge-schema";
+import { createChallengeAction } from "@/core/views/actions/admin/create-challenge";
 import type * as z from "zod";
 
 type FormValues = z.infer<typeof formSchema>;
 
-// TODO: Refactor this component to use it for editing and authoring
-
 export const CreateChallengeForm = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormValues>({
@@ -45,7 +46,11 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      await createChallengeAction(values);
+      const payload = await createChallengeAction(values);
+
+      if (payload.serverError) {
+        setErrorMessage(payload.serverError);
+      }
     });
   }
 
@@ -104,8 +109,8 @@ export const CreateChallengeForm = () => {
           name="starter_figma_path_file"
           label="Starter figma PATH FILE"
         />
-
         <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
+        <Typography.Error>{errorMessage}</Typography.Error>
       </form>
     </Form>
   );

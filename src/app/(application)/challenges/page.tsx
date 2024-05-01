@@ -1,8 +1,8 @@
-import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
 import Link from "next/link";
+import { challengeService } from "@/core/infrastructure/services/challenge.service";
 
 export default async function ChallengesPage() {
-  const challenges = await challengeRepository.index();
+  const challenges = await challengeService.getChallenges();
 
   return (
     <div>

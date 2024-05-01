@@ -4,7 +4,10 @@ import { ACTION_ERROR, ROLE } from "@/config/constants";
 
 export const adminAction = createSafeActionClient({
   handleReturnedServerError(e) {
-    console.log(e);
+    if (e instanceof ServerActionError) {
+      return e.message;
+    }
+
     return DEFAULT_SERVER_ERROR;
   },
 
@@ -18,11 +21,11 @@ export const adminAction = createSafeActionClient({
   },
 });
 
-export class MyCustomError extends Error {}
+export class ServerActionError extends Error {}
 
 export const userAction = createSafeActionClient({
   handleReturnedServerError(e) {
-    if (e instanceof MyCustomError) {
+    if (e instanceof ServerActionError) {
       return e.message;
     }
 
@@ -37,6 +40,7 @@ export const userAction = createSafeActionClient({
       userId: session.user.id,
       userEmail: session.user.email!,
       userRole: session.user.role,
+      userPoints: session.user.points,
       userSubscription: session.user.subscribed,
       userSubscriptionDuration: session.user.subscription_duration,
       userCreditChallengeAmount: session.user.credit_challenge_amount,

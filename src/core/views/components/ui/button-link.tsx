@@ -9,7 +9,7 @@ type Props = {
 
 export const ButtonLink = ({ href, children, ...props }: Props) => {
   return (
-    <Button {...props}>
+    <Button type="button" {...props}>
       <Link href={href}>{children}</Link>
     </Button>
   );

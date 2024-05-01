@@ -1,13 +1,19 @@
 export const URL = {
   LANDING: "/",
+  CHALLENGES: "/challenges",
+  SOLUTIONS: "/solutions",
+  SUBSCRIPTION: "/subscription",
   DASHBOARD: "/dashboard",
   DASHBOARD_CHALLENGES: "/dashboard/challenges",
   DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
+  DASHBOARD_SUBSCRIPTIONS: "/dashboard/subscriptions",
 };
 
-export const API_ENDPOINT = {
-  LOGIN: "/api/auth/signin",
-};
+export const NAVIGATION = [
+  { name: "Challenges", href: URL.CHALLENGES },
+  { name: "Solutions", href: URL.SOLUTIONS },
+  { name: "Unlock Pro", href: URL.SUBSCRIPTION },
+];
 
 export const ROLE = {
   USER: "USER",
@@ -16,6 +22,24 @@ export const ROLE = {
 };
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
+
+export const DIFFICULTY_POINTS = {
+  NEWBIE: 5,
+  JUNIOR: 10,
+  INTERMEDIATE: 15,
+  ADVANCED: 20,
+  GURU: 25,
+};
+
+export const SUBSCRIPTION = {
+  MONTHLY: "MONTHLY",
+  YEARLY: "YEARLY",
+} as const;
+
+export const FILE_TYPE = {
+  STARTER: "STARTER",
+  FIGMA: "FIGMA",
+} as const;
 
 export const DIFFICULTY = [
   "NEWBIE",
@@ -33,4 +57,16 @@ export const PROTECTED_ROUTE_ERROR = {
 export const ACTION_ERROR = {
   ADMIN: "You are not authorized to perform this action.",
   USER: "You are not logged in.",
+  CREATE_CHECKOUT_SESSION:
+    "An error occurred while creating the checkout session. Contact support.",
+  CANCEL_SUBSCRIPTION:
+    "An error occurred while canceling the subscription. Contact support.",
+  CREATE_CHALLENGE: "An error occurred while creating the challenge.",
+  START_CHALLENGE: "An error occurred while starting the challenge.",
+  REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
+  SUBMIT_CHALLENGE_SOLUTION:
+    "An error occurred while submitting the challenge solution.",
+  DOWNLOAD_FILE: "An error occurred while downloading the file.",
+  INSUFFICIENT_DESIGN_CREDITS:
+    "You don't have enough credit to download the design file.",
 };

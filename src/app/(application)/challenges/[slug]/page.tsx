@@ -1,5 +1,5 @@
-import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
-import { userChallengeRepository } from "@/core/infrastructure/repositories/user-challenge.repository";
+import { challengeService } from "@/core/infrastructure/services/challenge.service";
+import { userChallengeRepository } from "@/core/infrastructure/repositories/user.challenge.repository";
 import { StartChallengeForm } from "@/core/views/modules/challenge/forms/start-challenge-form";
 import { getServerAuthSession } from "@/config/server/auth";
 
@@ -11,7 +11,7 @@ type Props = {
 
 export default async function ChallengePage({ params }: Props) {
   const session = await getServerAuthSession();
-  const challenge = await challengeRepository.showBySlug(params.slug);
+  const challenge = await challengeService.getChallengeBySlug(params.slug);
 
   if (!session || !challenge) {
     return <div>Challenge not found</div>;
@@ -22,6 +22,8 @@ export default async function ChallengePage({ params }: Props) {
       session.user.id,
       challenge.id,
     );
+
+  console.log(userHasStartedChallenge);
 
   if (!challenge) {
     return <div>Challenge not found</div>;

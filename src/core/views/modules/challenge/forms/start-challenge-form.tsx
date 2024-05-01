@@ -1,13 +1,14 @@
 "use client";
-import React, { useTransition } from "react";
-import type { Challenge } from "@prisma/client";
-import type { Session } from "next-auth";
 
+import { useState, useTransition } from "react";
+import { Typography } from "@/core/views/components/typography";
 import { startChallengeAction } from "@/core/views/actions/challenge/start-challenge";
 import { StartChallengeButton } from "@/core/views//modules/challenge/components/start-challenge-button";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
+import type { Session } from "next-auth";
 
 type Props = {
-  challenge: Challenge;
+  challenge: ChallengeDTO;
   session: Session;
   userHasStartedChallenge: boolean;
 };
@@ -17,11 +18,10 @@ export const StartChallengeForm = ({
   session,
   userHasStartedChallenge,
 }: Props) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  function handleSubmit() {
     startTransition(async () => {
       const payload = await startChallengeAction({
         challengeId: challenge.id,
@@ -29,22 +29,20 @@ export const StartChallengeForm = ({
       });
 
       if (payload.serverError) {
-        alert("Error starting challenge");
-        return;
+        setErrorMessage(payload.serverError);
       }
-
-      alert("Challenge started");
     });
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={handleSubmit}>
       <StartChallengeButton
         session={session}
         challenge={challenge}
         isPending={isPending}
         userHasStartedChallenge={userHasStartedChallenge}
       />
+      {errorMessage && <Typography.Error>{errorMessage}</Typography.Error>}
     </form>
   );
 };
