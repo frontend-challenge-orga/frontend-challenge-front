@@ -92,6 +92,14 @@ model Subscription {
     userId      String   @unique
 }
 
+model WebhookEvent {
+    id          Int      @id @default(autoincrement())
+    event_type  String
+    event_idempotency_key String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
 model Credit {
     id          Int      @id @default(autoincrement())
     createdAt   DateTime @default(now())
@@ -179,6 +187,8 @@ enum SubscriptionDuration {
     MONTHLY
     YEARLY
 }
+
+
 
 
 
