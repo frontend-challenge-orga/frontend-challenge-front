@@ -3,6 +3,7 @@ import { subscriptionService } from "@/core/infrastructure/services/subscription
 import { addMonthlySubscriptionCredit } from "@/core/infrastructure/use-cases/add-monthly-subscription-credit";
 import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
+import { handleCanceledSubscription } from "@/core/infrastructure/webhooks/handle-canceled-subscription";
 
 export async function handleUpdatedSubscriptionWebhook(
   subscription: Stripe.Subscription,
@@ -17,6 +18,16 @@ export async function handleUpdatedSubscriptionWebhook(
 
   if (!subscription.metadata.customer_email) {
     throw new Error("Missing required customer email");
+  }
+
+  if (subscription.cancel_at) {
+    await handleCanceledSubscription(
+      subscription.metadata.userID,
+      subscription.metadata.customer_email,
+      new Date(subscription.cancel_at * 1000),
+    );
+
+    return;
   }
 
   await subscriptionService.createSubscription(

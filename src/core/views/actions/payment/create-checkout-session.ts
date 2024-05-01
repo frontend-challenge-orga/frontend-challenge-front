@@ -1,8 +1,8 @@
 "use server";
 
-import { userAction } from "@/config/libs/next-safe-action";
+import { ServerActionError, userAction } from "@/config/libs/next-safe-action";
 import { createCheckoutSession } from "@/core/infrastructure/services/stripe.service";
-
+import { ACTION_ERROR } from "@/config/constants";
 import * as z from "zod";
 
 const schema = z.object({
@@ -22,15 +22,9 @@ export const createCheckoutSessionAction = userAction(
         subscription_duration,
       );
 
-      return {
-        url: checkoutSession.url,
-      };
+      return checkoutSession.url;
     } catch (error) {
-      console.error("Error creating stripe session:", error);
-
-      return {
-        error: "Error creating stripe session",
-      };
+      throw new ServerActionError(ACTION_ERROR.CREATE_CHECKOUT_SESSION);
     }
   },
 );

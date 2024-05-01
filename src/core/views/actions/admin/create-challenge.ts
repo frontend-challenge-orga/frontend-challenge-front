@@ -1,7 +1,7 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { challengeService } from "@/core/infrastructure/services/challenge.service";
-
 import { adminAction, ServerActionError } from "@/config/libs/next-safe-action";
 import { formSchema } from "@/core/views/modules/admin/forms/create-challenge-schema";
 import { extractValuesFromArray } from "@/config/utils";
