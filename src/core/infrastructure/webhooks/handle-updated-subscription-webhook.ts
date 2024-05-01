@@ -4,8 +4,10 @@ import { addMonthlySubscriptionCredit } from "@/core/infrastructure/use-cases/ad
 import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
 import { handleCanceledSubscription } from "@/core/infrastructure/webhooks/handle-canceled-subscription";
+import { db } from "@/config/server/db";
 
 export async function handleUpdatedSubscriptionWebhook(
+  idempotencyKey: string | undefined | null,
   subscription: Stripe.Subscription,
 ) {
   if (!subscription.metadata) {
@@ -18,6 +20,14 @@ export async function handleUpdatedSubscriptionWebhook(
 
   if (!subscription.metadata.customer_email) {
     throw new Error("Missing required customer email");
+  }
+
+  const existingEvent = await db.webhookEvent.findFirst({
+    where: { event_idempotency_key: idempotencyKey },
+  });
+
+  if (existingEvent) {
+    throw new Error("Event already processed");
   }
 
   if (subscription.cancel_at) {
@@ -42,4 +52,11 @@ export async function handleUpdatedSubscriptionWebhook(
   await mailingService(
     subscription.metadata.customer_email,
   ).sendSubscriptionConfirmation();
+
+  await db.webhookEvent.create({
+    data: {
+      event_type: "customer.subscription.updated",
+      event_idempotency_key: idempotencyKey,
+    },
+  });
 }
