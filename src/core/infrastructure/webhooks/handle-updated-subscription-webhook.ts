@@ -1,10 +1,11 @@
-import { mailingService } from "@/core/infrastructure/services/resend.service";
+import { db } from "@/config/server/db";
 import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
-import { addMonthlySubscriptionCredit } from "@/core/infrastructure/use-cases/add-monthly-subscription-credit";
+import { creditService } from "@/core/infrastructure/services/credit.service";
+import { mailingService } from "@/core/infrastructure/services/resend.service";
+import { handleCanceledSubscription } from "@/core/infrastructure/webhooks/handle-canceled-subscription";
 import type { SubscriptionDurationType } from "@/config/types";
 import type Stripe from "stripe";
-import { handleCanceledSubscription } from "@/core/infrastructure/webhooks/handle-canceled-subscription";
-import { db } from "@/config/server/db";
+import { webhookEventService } from "@/core/infrastructure/services/webhook.event.service";
 
 export async function handleUpdatedSubscriptionWebhook(
   idempotencyKey: string | undefined | null,
@@ -22,9 +23,9 @@ export async function handleUpdatedSubscriptionWebhook(
     throw new Error("Missing required customer email");
   }
 
-  const existingEvent = await db.webhookEvent.findFirst({
-    where: { event_idempotency_key: idempotencyKey },
-  });
+  const existingEvent = await webhookEventService.findByIdempotency(
+    idempotencyKey!,
+  );
 
   if (existingEvent) {
     throw new Error("Event already processed");
@@ -47,7 +48,7 @@ export async function handleUpdatedSubscriptionWebhook(
     new Date(subscription.current_period_end * 1000),
   );
 
-  await addMonthlySubscriptionCredit(subscription.metadata.userID);
+  await creditService.addCredit(subscription.metadata.userID);
 
   await mailingService(
     subscription.metadata.customer_email,

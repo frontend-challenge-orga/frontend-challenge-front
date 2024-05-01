@@ -1,5 +1,5 @@
-import { creditRepository } from "@/core/infrastructure/repositories/credit.repository";
+import { creditService } from "@/core/infrastructure/services/credit.service";
 
 export async function deductChallengeCredits(userId: string) {
-  await creditRepository.subtractChallengeCredits(userId, 1);
+  await creditService.subtractChallengeCredits(userId, 1);
 }

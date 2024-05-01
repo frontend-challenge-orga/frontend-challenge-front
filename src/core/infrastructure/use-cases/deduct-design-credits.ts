@@ -1,6 +1,6 @@
-import { creditRepository } from "@/core/infrastructure/repositories/credit.repository";
-import { ACTION_ERROR } from "@/config/constants";
+import { creditService } from "@/core/infrastructure/services/credit.service";
 import { ServerActionError } from "@/config/libs/next-safe-action";
+import { ACTION_ERROR } from "@/config/constants";
 
 export async function deductDesignCredits(
   userId: string,
@@ -10,5 +10,5 @@ export async function deductDesignCredits(
     throw new ServerActionError(ACTION_ERROR.INSUFFICIENT_DESIGN_CREDITS);
   }
 
-  await creditRepository.subtractDesignCredits(userId, 1);
+  await creditService.subtractDesignCredits(userId, 1);
 }

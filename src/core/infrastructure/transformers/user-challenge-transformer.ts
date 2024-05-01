@@ -1,5 +1,5 @@
 import type { UserChallengeDTO } from "@/core/infrastructure/dto/user.challenge.dto";
-import type { UserChallenge } from "@/core/domain/entities/user.entity";
+import type { UserChallenge } from "@/core/domain/entities/user.challenge.entity";
 
 export class UserChallengeTransformer {
   static toDomain(userChallengeDTO: UserChallengeDTO): UserChallenge {
