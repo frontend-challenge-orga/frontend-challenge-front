@@ -17,7 +17,7 @@ import { createChallengeAction } from "@/core/views/actions/admin/create-challen
 import { ChallengePreview } from "../components/challenge-preview";
 import type * as z from "zod";
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -56,7 +56,7 @@ export const CreateChallengeForm = () => {
     });
   }
 
-  const inputValues = useWatch(form);
+  const currentValues = form.getValues();
 
   return (
     <Form {...form}>
@@ -115,7 +115,7 @@ export const CreateChallengeForm = () => {
         />
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
-          <ChallengePreview data={inputValues} />
+          <ChallengePreview currentValues={currentValues} />
         </div>
         <Typography.Error>{errorMessage}</Typography.Error>
       </form>

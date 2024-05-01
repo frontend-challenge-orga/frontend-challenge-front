@@ -10,21 +10,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/core/views/components/ui/dialog";
+import { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
 
-interface InputValues {
-  name: string;
-  description: string;
-  language: string;
-  difficulty: string;
-  brief: string;
-  tips: string;
-  assets_presentation: Array<{ value: string }>;
-  premium: boolean;
-  starter_code_path_file: string;
-  starter_figma_path_file: string;
-}
-// Je n'arrive pas à supprimer l'erreur TS proprement ^^
-export const ChallengePreview = ({ data }: InputValues) => {
+type Props = {
+  currentValues: FormValues;
+};
+
+// Tu as bien avancé sur ce composant.
+// J'ai réglé les différents problèmes de TypeScript.
+// Actuellement, la card challenge est difficilement réutilisable en raison d'une utilisation excessive des balises dialog.
+// Il faudrait revoir la structure de la card pour la rendre plus facilement réutilisable.
+// Tu peux passer le contenu de la card challenge dans le dialog content.
+// Essaye d'extraire les icônes du composant pour les rendre plus réutilisables. /components/ui/icons/icon.tsx
+// J'ai remarqué que tu as utilisé du style en ligne. Essayons d'éviter le style en ligne et de privilégier les classes Tailwind.
+
+export const ChallengePreview = ({ currentValues }: Props) => {
+  const {
+    name,
+    premium,
+    difficulty,
+    language,
+    description,
+    starter_code_path_file,
+    starter_figma_path_file,
+  } = currentValues;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -35,9 +45,8 @@ export const ChallengePreview = ({ data }: InputValues) => {
         <DialogContent className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[550px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
           <div className="container mx-auto px-4 py-2">
             <DialogTitle className="text-mauve12 m-0 flex gap-4  text-[17px] font-medium">
-              {" "}
-              <h2 className="mb-4 text-2xl font-bold">{data.name} preview</h2>
-              <span>{data.premium ? "PREMIUM" : "FREE"}</span>
+              <h2 className="mb-4 text-2xl font-bold">{name} preview</h2>
+              <span>{premium ? "PREMIUM" : "FREE"}</span>
             </DialogTitle>
             <DialogDescription className="text-mauve11 mb-5 mt-[10px] text-[15px] leading-normal">
               <div className="h-56 bg-cover bg-center">
@@ -49,19 +58,17 @@ export const ChallengePreview = ({ data }: InputValues) => {
               </div>
               <div className="rounded-lg bg-white p-4 shadow">
                 <div className="flex justify-between pb-8">
-                  <span>{data.difficulty}</span>
-                  <span>{data.language}</span>
+                  <span>{difficulty}</span>
+                  <span>{language}</span>
                 </div>
                 <div className="overflow-hidden overflow-y-auto ">
-                  <p className="max-h-[100px] text-gray-600">
-                    {data.description}
-                  </p>
+                  <p className="max-h-[100px] text-gray-600">{description}</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-col items-center">
                 <div className="mt-4 flex gap-8">
                   <a
-                    href={data.starter_code_path_file}
+                    href={starter_code_path_file}
                     target="_blank"
                     className=" flex items-center rounded-md border-2 border-transparent p-2 text-gray-600 transition-colors duration-500 hover:border-blue-500 "
                   >
@@ -85,7 +92,7 @@ export const ChallengePreview = ({ data }: InputValues) => {
                     </svg>
                   </a>
                   <a
-                    href={data.starter_figma_path_file}
+                    href={starter_figma_path_file}
                     target="_blank"
                     className="ml-4 flex items-center rounded-md border-2 border-transparent p-2 text-gray-600 transition-colors duration-500 hover:border-blue-500"
                   >
