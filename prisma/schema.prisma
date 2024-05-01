@@ -93,7 +93,7 @@ model Subscription {
 }
 
 model WebhookEvent {
-    id          Int      @id @default(autoincrement())
+    id          String      @id @default(uuid())
     event_type  String
     event_idempotency_key String?
     createdAt   DateTime @default(now())
@@ -101,7 +101,7 @@ model WebhookEvent {
 }
 
 model Credit {
-    id          Int      @id @default(autoincrement())
+    id          String   @id @default(uuid())
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     challenge_amount      Int  @default(0)
