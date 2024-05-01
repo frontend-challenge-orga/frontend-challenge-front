@@ -1,7 +1,7 @@
 import { getServerAuthSession } from "@/config/server/auth";
 import { LogoutButton } from "@/core/views/components/ui/logout-button";
 import { LoginButton } from "@/core/views/components/ui/login-button";
-import { CancelSubscriptionForm } from "@/core/views/modules/payment/components/cancel-subscription-form";
+import { CancelSubscriptionForm } from "@/core/views/modules/payment/forms/cancel-subscription-form";
 
 export default async function HomePage() {
   const session = await getServerAuthSession();

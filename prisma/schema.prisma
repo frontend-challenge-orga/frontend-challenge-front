@@ -82,7 +82,7 @@ model Subscription {
     id          Int      @id @default(autoincrement())
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    subscribed  Boolean  @default(true)
+    subscribed  Boolean
     subscription_id String
     subscription_duration SubscriptionDuration
     subscribed_at DateTime?

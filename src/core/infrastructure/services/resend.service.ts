@@ -23,7 +23,9 @@ export const mailingService = (email: string) => ({
     }
   },
 
-  sendCancellationSubscriptionConfirmation: async () => {
+  sendCancellationSubscriptionConfirmation: async (
+    subscriptionEndDate: Date,
+  ) => {
     if (!email) {
       throw new Error("Missing required email");
     }
@@ -33,7 +35,9 @@ export const mailingService = (email: string) => ({
         from: "contact@frontend-challenge.com",
         to: email,
         subject: "Subscription Cancellation",
-        react: SendCancellationSubscriptionConfirmationTemplate(),
+        react: SendCancellationSubscriptionConfirmationTemplate({
+          subscriptionEndDate,
+        }),
       });
     } catch (error) {
       console.error(error);
