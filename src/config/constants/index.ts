@@ -1,14 +1,19 @@
 export const URL = {
   LANDING: "/",
+  CHALLENGES: "/challenges",
+  SOLUTIONS: "/solutions",
+  SUBSCRIPTION: "/subscription",
   DASHBOARD: "/dashboard",
   DASHBOARD_CHALLENGES: "/dashboard/challenges",
   DASHBOARD_CHALLENGES_CREATE: "/dashboard/challenges/create",
   DASHBOARD_SUBSCRIPTIONS: "/dashboard/subscriptions",
 };
 
-export const API_ENDPOINT = {
-  LOGIN: "/api/auth/signin",
-};
+export const NAVIGATION = [
+  { name: "Challenges", href: URL.CHALLENGES },
+  { name: "Solutions", href: URL.SOLUTIONS },
+  { name: "Unlock Pro", href: URL.SUBSCRIPTION },
+];
 
 export const ROLE = {
   USER: "USER",
