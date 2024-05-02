@@ -1,10 +1,15 @@
+import type {
+  Difficulty,
+  Language,
+} from "@/core/domain/entities/challenge.entity";
+
 export type ChallengeDTO = {
   id: string;
   name: string;
   slug: string;
   description: string;
-  language: "HTML_CSS" | "JS" | "API";
-  difficulty: "NEWBIE" | "JUNIOR" | "INTERMEDIATE" | "ADVANCED" | "GURU";
+  language: Language;
+  difficulty: Difficulty;
   points: number;
   brief: string;
   tips: string;

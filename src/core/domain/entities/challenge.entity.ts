@@ -3,7 +3,7 @@ export type Challenge = {
   readonly name: string;
   readonly slug: string;
   readonly description: string;
-  readonly language: "HTML_CSS" | "JS" | "API";
+  readonly language: Language;
   readonly difficulty: Difficulty;
   readonly points: number;
   readonly brief: string;
@@ -21,3 +21,5 @@ export type Difficulty =
   | "INTERMEDIATE"
   | "ADVANCED"
   | "GURU";
+
+export type Language = "HTML_CSS" | "JS" | "API";
