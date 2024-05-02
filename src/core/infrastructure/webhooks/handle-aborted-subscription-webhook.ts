@@ -6,7 +6,7 @@ import type Stripe from "stripe";
 export async function handleAbortedSubscriptionWebhook(
   subscription: Stripe.Subscription,
 ) {
-  const payload = await subscriptionService.getSubscriptionById(
+  const payload = await subscriptionService.getSubscriptionByUserId(
     subscription.metadata.userID!,
   );
 

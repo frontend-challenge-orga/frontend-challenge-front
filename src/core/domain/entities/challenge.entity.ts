@@ -4,12 +4,7 @@ export type Challenge = {
   readonly slug: string;
   readonly description: string;
   readonly language: "HTML_CSS" | "JS" | "API";
-  readonly difficulty:
-    | "NEWBIE"
-    | "JUNIOR"
-    | "INTERMEDIATE"
-    | "ADVANCED"
-    | "GURU";
+  readonly difficulty: Difficulty;
   readonly points: number;
   readonly brief: string;
   readonly tips: string;
@@ -19,3 +14,10 @@ export type Challenge = {
   readonly starter_figma_path_file: string;
   readonly createdById: string;
 };
+
+export type Difficulty =
+  | "NEWBIE"
+  | "JUNIOR"
+  | "INTERMEDIATE"
+  | "ADVANCED"
+  | "GURU";

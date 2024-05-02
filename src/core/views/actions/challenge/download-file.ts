@@ -1,33 +1,26 @@
 "use server";
 
-import { deductDesignCredits } from "@/core/infrastructure/use-cases/deduct-design-credits";
-import { ServerActionError, userAction } from "@/config/libs/next-safe-action";
-import { getTemporaryFileLink } from "@/core/infrastructure/services/dropbox.service";
-import { FILE_TYPE, SUBSCRIPTION } from "@/config/constants";
+import { userAction } from "@/config/libs/next-safe-action";
+import { executeDownloadFile } from "@/core/infrastructure/use-cases/execute-download-file";
+import { handleActionError } from "@/core/views/actions/handle-action-error";
+import { FILE_TYPE } from "@/config/constants";
 import * as z from "zod";
 
 const schema = z.object({
+  challengeId: z.string().optional(),
   pathFile: z.string(),
   type: z.enum([FILE_TYPE.FIGMA, FILE_TYPE.STARTER]),
 });
 
 export const downloadFileAction = userAction(schema, async (data, ctx) => {
   try {
-    const file_url = await getTemporaryFileLink(data.pathFile);
-
-    const isFigmaType = data.type === FILE_TYPE.FIGMA;
-    const isNotYearlySubscription =
-      ctx.userSubscriptionDuration !== SUBSCRIPTION.YEARLY;
-
-    if (isFigmaType && isNotYearlySubscription) {
-      await deductDesignCredits(ctx.userId, ctx.userCreditDesignAmount);
-    }
-
-    return file_url;
+    return await executeDownloadFile({
+      userId: ctx.userId,
+      challengeId: data.challengeId,
+      pathFile: data.pathFile,
+      typeFile: data.type,
+    });
   } catch (error) {
-    if (error instanceof ServerActionError)
-      throw new ServerActionError(error.message);
-
-    throw error;
+    handleActionError(error as Error);
   }
 });

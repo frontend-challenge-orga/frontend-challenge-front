@@ -153,6 +153,7 @@ model ChallengeSolution {
 
 model UserChallenge {
     id           String    @id @default(uuid())
+    figma_file_unlocked Boolean @default(false)
     startedAt    DateTime  @default(now())
     completedAt  DateTime?
     user         User      @relation(fields: [userId], references: [id])

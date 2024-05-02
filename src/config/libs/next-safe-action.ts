@@ -3,9 +3,9 @@ import { getServerAuthSession } from "@/config/server/auth";
 import { ACTION_ERROR, ROLE } from "@/config/constants";
 
 export const adminAction = createSafeActionClient({
-  handleReturnedServerError(e) {
-    if (e instanceof ServerActionError) {
-      return e.message;
+  handleReturnedServerError(error) {
+    if (error instanceof ServerActionError) {
+      return error.message;
     }
 
     return DEFAULT_SERVER_ERROR;
@@ -24,12 +24,12 @@ export const adminAction = createSafeActionClient({
 export class ServerActionError extends Error {}
 
 export const userAction = createSafeActionClient({
-  handleReturnedServerError(e) {
-    if (e instanceof ServerActionError) {
-      return e.message;
+  handleReturnedServerError(error) {
+    if (error instanceof ServerActionError) {
+      return error.message;
     }
 
-    return DEFAULT_SERVER_ERROR;
+    return error.message;
   },
 
   async middleware() {

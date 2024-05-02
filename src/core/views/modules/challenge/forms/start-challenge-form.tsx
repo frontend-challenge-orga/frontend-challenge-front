@@ -25,7 +25,7 @@ export const StartChallengeForm = ({
     startTransition(async () => {
       const payload = await startChallengeAction({
         challengeId: challenge.id,
-        premium: challenge.premium,
+        isPremiumChallenge: challenge.premium,
       });
 
       if (payload.serverError) {
