@@ -23,14 +23,6 @@ export const ROLE = {
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
 
-export const DIFFICULTY_POINTS = {
-  NEWBIE: 5,
-  JUNIOR: 10,
-  INTERMEDIATE: 15,
-  ADVANCED: 20,
-  GURU: 25,
-};
-
 export const SUBSCRIPTION = {
   MONTHLY: "MONTHLY",
   YEARLY: "YEARLY",
@@ -65,10 +57,11 @@ export const ACTION_ERROR = {
   START_CHALLENGE: "An error occurred while starting the challenge.",
   INSUFFICIENT_CHALLENGE_CREDITS:
     "You don't have enough credit to start the challenge.",
+  INSUFFICIENT_DESIGN_CREDITS:
+    "You don't have enough credit to download the design file.",
   REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
   SUBMIT_CHALLENGE_SOLUTION:
     "An error occurred while submitting the challenge solution.",
   DOWNLOAD_FILE: "An error occurred while downloading the file.",
-  INSUFFICIENT_DESIGN_CREDITS:
-    "You don't have enough credit to download the design file.",
+  USER_HAS_NO_SUBSCRIPTION: "User has no subscription.",
 };

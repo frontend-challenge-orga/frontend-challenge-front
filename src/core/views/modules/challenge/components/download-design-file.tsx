@@ -29,6 +29,7 @@ export const DownloadDesignFile = ({ challenge }: Props) => {
       </CardContent>
       <CardFooter>
         <DownloadDesignFileForm
+          challengeId={challenge.id}
           starter_figma_path_file={challenge.starter_figma_path_file}
         />
       </CardFooter>

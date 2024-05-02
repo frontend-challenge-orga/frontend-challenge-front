@@ -14,21 +14,27 @@ export const executeStartChallenge = async ({
   challengeId,
   isPremiumChallenge,
 }: ExecuteStartChallenge) => {
-  const { subscription_duration } =
-    await subscriptionService.getSubscriptionByUserId(userId);
+  if (isPremiumChallenge) {
+    const userSubscription =
+      await subscriptionService.getSubscriptionByUserId(userId);
 
-  const isMonthlySubscription = subscription_duration === SUBSCRIPTION.MONTHLY;
-  const isCreditableChallenge = isPremiumChallenge && isMonthlySubscription;
-
-  if (isCreditableChallenge) {
-    const userCredits = await creditService.getCreditByUserId(userId);
-    const hasEnoughCredits = userCredits.challenge_amount > 0;
-
-    if (!hasEnoughCredits) {
-      throw new Error(ACTION_ERROR.INSUFFICIENT_CHALLENGE_CREDITS);
+    if (!userSubscription) {
+      throw new Error(ACTION_ERROR.USER_HAS_NO_SUBSCRIPTION);
     }
 
-    await creditService.subtractChallengeCredits(userId, 1);
+    const isMonthlySubscription =
+      userSubscription.subscription_duration === SUBSCRIPTION.MONTHLY;
+
+    if (isMonthlySubscription) {
+      const userCredits = await creditService.getCreditByUserId(userId);
+      const hasEnoughCredits = userCredits.challenge_amount > 0;
+
+      if (!hasEnoughCredits) {
+        throw new Error(ACTION_ERROR.INSUFFICIENT_CHALLENGE_CREDITS);
+      }
+
+      await creditService.subtractChallengeCredits(userId, 1);
+    }
   }
 
   await userChallengeService.startChallenge(userId, challengeId);
