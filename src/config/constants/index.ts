@@ -63,6 +63,8 @@ export const ACTION_ERROR = {
     "An error occurred while canceling the subscription. Contact support.",
   CREATE_CHALLENGE: "An error occurred while creating the challenge.",
   START_CHALLENGE: "An error occurred while starting the challenge.",
+  INSUFFICIENT_CHALLENGE_CREDITS:
+    "You don't have enough credit to start the challenge.",
   REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
   SUBMIT_CHALLENGE_SOLUTION:
     "An error occurred while submitting the challenge solution.",

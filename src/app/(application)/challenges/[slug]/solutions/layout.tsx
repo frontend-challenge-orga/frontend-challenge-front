@@ -1,8 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { getServerAuthSession } from "@/config/server/auth";
-
-import { checkUserSubmittedSolution } from "@/core/infrastructure/use-cases/check-user-submitted-solution";
 import { LockedSolution } from "@/core/views/modules/challenge/components/locked-solution";
+import { challengeSolutionService } from "@/core/infrastructure/services/challenge.solution.service";
 
 type Props = {
   params: {
@@ -17,10 +16,11 @@ export default async function ChallengeSolutionsLayout({
 }: Props) {
   const session = await getServerAuthSession();
 
-  const hasUserSubmittedSolution = await checkUserSubmittedSolution(
-    session!,
-    params.slug,
-  );
+  const hasUserSubmittedSolution =
+    await challengeSolutionService.hasUserSubmittedSolution(
+      session!.user.id,
+      params.slug,
+    );
 
   const isUserPremium = session!.user.subscribed;
 

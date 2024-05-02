@@ -4,7 +4,7 @@ import type { Subscription } from "@/core/domain/entities/subscription.entity";
 
 interface ISubscriptionService {
   getSubscriptions(): Promise<Subscription[]>;
-  getSubscriptionById(userId: string): Promise<Subscription>;
+  getSubscriptionByUserId(userId: string): Promise<Subscription>;
   createSubscription(
     userId: string,
     subscriptionId: string,
@@ -24,7 +24,7 @@ export const subscriptionService: ISubscriptionService = {
     });
   },
 
-  getSubscriptionById: async (userId: string) => {
+  getSubscriptionByUserId: async (userId: string) => {
     return subscriptionRepository.show(userId).then((subscription) => {
       return SubscriptionTransformer.toEntity(subscription);
     });

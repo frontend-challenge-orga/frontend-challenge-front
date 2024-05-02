@@ -1,26 +1,26 @@
 "use server";
 
 import * as z from "zod";
-import { userAction, ServerActionError } from "@/config/libs/next-safe-action";
-import { startChallenge } from "@/core/infrastructure/use-cases/start-challenge";
 import { revalidatePath } from "next/cache";
-import { ACTION_ERROR, URL } from "@/config/constants";
+import { userAction } from "@/config/libs/next-safe-action";
+import { executeStartChallenge } from "@/core/infrastructure/use-cases/execute-start-challenge";
+import { handleActionError } from "@/core/views/actions/handle-action-error";
+import { URL } from "@/config/constants";
 
 const schema = z.object({
   challengeId: z.string(),
-  premium: z.boolean(),
+  isPremiumChallenge: z.boolean(),
 });
 
 export const startChallengeAction = userAction(schema, async (data, ctx) => {
   try {
-    await startChallenge(
-      ctx.userId,
-      ctx.userSubscriptionDuration,
-      data.challengeId,
-      data.premium,
-    );
+    await executeStartChallenge({
+      userId: ctx.userId,
+      challengeId: data.challengeId,
+      isPremiumChallenge: data.isPremiumChallenge,
+    });
   } catch (error) {
-    throw new ServerActionError(ACTION_ERROR.START_CHALLENGE);
+    handleActionError(error as Error);
   }
 
   revalidatePath(`${URL.DASHBOARD_CHALLENGES}/${data.challengeId}`);

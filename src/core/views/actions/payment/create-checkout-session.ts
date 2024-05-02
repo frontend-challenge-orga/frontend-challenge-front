@@ -1,7 +1,7 @@
 "use server";
 
 import { ServerActionError, userAction } from "@/config/libs/next-safe-action";
-import { createCheckoutSession } from "@/core/infrastructure/services/stripe.service";
+import { stripeService } from "@/core/infrastructure/services/stripe.service";
 import { ACTION_ERROR } from "@/config/constants";
 import * as z from "zod";
 
@@ -16,7 +16,7 @@ export const createCheckoutSessionAction = userAction(
   schema,
   async ({ subscription_duration }, ctx) => {
     try {
-      const checkoutSession = await createCheckoutSession(
+      const checkoutSession = await stripeService.createCheckoutSession(
         ctx.userId,
         ctx.userEmail,
         subscription_duration,
