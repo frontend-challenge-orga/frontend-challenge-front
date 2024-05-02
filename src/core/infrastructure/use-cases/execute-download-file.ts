@@ -1,8 +1,8 @@
 import { dropboxService } from "@/core/infrastructure/services/dropbox.service";
 import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
-import { ACTION_ERROR, FILE_TYPE, SUBSCRIPTION } from "@/config/constants";
 import { creditService } from "@/core/infrastructure/services/credit.service";
 import { userChallengeService } from "@/core/infrastructure/services/user.challenge.service";
+import { ACTION_ERROR, FILE_TYPE, SUBSCRIPTION } from "@/config/constants";
 
 type ExecuteDownloadFile = {
   userId: string;
