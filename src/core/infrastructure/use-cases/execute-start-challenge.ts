@@ -9,21 +9,15 @@ type ExecuteStartChallenge = {
   isPremiumChallenge: boolean;
 };
 
-export const executeStartChallenge = async ({
-  userId,
-  challengeId,
-  isPremiumChallenge,
-}: ExecuteStartChallenge) => {
+export const executeStartChallenge = async ({ userId, challengeId, isPremiumChallenge }: ExecuteStartChallenge) => {
   if (isPremiumChallenge) {
-    const userSubscription =
-      await subscriptionService.getSubscriptionByUserId(userId);
+    const userSubscription = await subscriptionService.getSubscriptionByUserId(userId);
 
     if (!userSubscription) {
       throw new Error(ACTION_ERROR.USER_HAS_NO_SUBSCRIPTION);
     }
 
-    const isMonthlySubscription =
-      userSubscription.subscription_duration === SUBSCRIPTION.MONTHLY;
+    const isMonthlySubscription = userSubscription.subscription_duration === SUBSCRIPTION.MONTHLY;
 
     if (isMonthlySubscription) {
       const userCredits = await creditService.getCreditByUserId(userId);
