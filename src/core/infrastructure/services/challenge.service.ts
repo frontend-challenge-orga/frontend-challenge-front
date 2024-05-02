@@ -3,7 +3,7 @@ import { ChallengeTransformer } from "@/core/infrastructure/transformers/challen
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
-interface IChallengeService {
+export interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
   getChallengeById(id: string): Promise<ChallengeDTO>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
