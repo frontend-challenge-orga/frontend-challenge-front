@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import Link from "next/link";
 import type { Session } from "next-auth";
 import { SessionGuard } from "../../auth/components/session-guard";
 import { type ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
@@ -8,10 +8,7 @@ type Props = {
   getServerAuthSession: () => Promise<Session | null>;
 };
 
-export async function ChallengesPageContainer({
-  getChallenges,
-  getServerAuthSession,
-}: Props) {
+export async function ChallengesPageContainer({ getChallenges, getServerAuthSession }: Props) {
   const session = await getServerAuthSession();
   const challenges = await getChallenges();
 
