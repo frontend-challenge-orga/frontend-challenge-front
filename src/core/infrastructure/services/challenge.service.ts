@@ -3,16 +3,14 @@ import { ChallengeTransformer } from "@/core/infrastructure/transformers/challen
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
-interface IChallengeService {
+export interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
   getChallengeById(id: string): Promise<ChallengeDTO>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
   createChallenge(data: Challenge): Promise<ChallengeDTO>;
-  updateChallenge(
-    id: string,
-    data: Challenge,
-  ): Promise<ChallengeDTO | undefined>;
+  updateChallenge(id: string, data: Challenge): Promise<ChallengeDTO | undefined>;
   removeChallenge(id: string): Promise<void>;
+  isPremiumChallenge(challengeId: string): Promise<boolean>;
 }
 
 export const challengeService: IChallengeService = {
@@ -50,5 +48,11 @@ export const challengeService: IChallengeService = {
 
   removeChallenge: async (id: string) => {
     return challengeRepository.remove(id);
+  },
+
+  isPremiumChallenge: async (challengeId: string) => {
+    return challengeRepository.show(challengeId).then((challenge) => {
+      return challenge.premium;
+    });
   },
 };

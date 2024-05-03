@@ -6,6 +6,7 @@ import { startChallengeAction } from "@/core/views/actions/challenge/start-chall
 import { StartChallengeButton } from "@/core/views//modules/challenge/components/start-challenge-button";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { Session } from "next-auth";
+import { SessionGuard } from "@/core/views/modules/auth/components/session-guard";
 
 type Props = {
   challenge: ChallengeDTO;
@@ -13,11 +14,7 @@ type Props = {
   userHasStartedChallenge: boolean;
 };
 
-export const StartChallengeForm = ({
-  challenge,
-  session,
-  userHasStartedChallenge,
-}: Props) => {
+export const StartChallengeForm = ({ challenge, session, userHasStartedChallenge }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -25,7 +22,8 @@ export const StartChallengeForm = ({
     startTransition(async () => {
       const payload = await startChallengeAction({
         challengeId: challenge.id,
-        isPremiumChallenge: challenge.premium,
+
+        /*isPremiumChallenge: challenge.premium,*/
       });
 
       if (payload.serverError) {
@@ -36,12 +34,14 @@ export const StartChallengeForm = ({
 
   return (
     <form action={handleSubmit}>
-      <StartChallengeButton
-        session={session}
-        challenge={challenge}
-        isPending={isPending}
-        userHasStartedChallenge={userHasStartedChallenge}
-      />
+      <SessionGuard session={session}>
+        <StartChallengeButton
+          session={session}
+          challenge={challenge}
+          isPending={isPending}
+          userHasStartedChallenge={userHasStartedChallenge}
+        />
+      </SessionGuard>
       {errorMessage && <Typography.Error>{errorMessage}</Typography.Error>}
     </form>
   );

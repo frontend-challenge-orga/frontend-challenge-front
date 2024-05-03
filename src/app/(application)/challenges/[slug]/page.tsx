@@ -17,11 +17,7 @@ export default async function ChallengePage({ params }: Props) {
     return <div>Challenge not found</div>;
   }
 
-  const userHasStartedChallenge =
-    await userChallengeRepository.hasUserStartedChallenge(
-      session.user.id,
-      challenge.id,
-    );
+  const userHasStartedChallenge = await userChallengeRepository.hasUserStartedChallenge(session.user.id, challenge.id);
 
   console.log(userHasStartedChallenge);
 
@@ -31,11 +27,7 @@ export default async function ChallengePage({ params }: Props) {
 
   return (
     <div>
-      <StartChallengeForm
-        challenge={challenge}
-        session={session}
-        userHasStartedChallenge={userHasStartedChallenge}
-      />
+      <StartChallengeForm challenge={challenge} session={session} userHasStartedChallenge={userHasStartedChallenge} />
     </div>
   );
 }
