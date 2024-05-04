@@ -7,11 +7,14 @@ const getServerAuthSessionMock = jest.fn().mockReturnValue(SESSION_MOCK);
 
 const getChallengesMock = jest.fn().mockReturnValue(CHALLENGES_MOCK);
 
+const getCompletedChallengesMock = jest.fn().mockReturnValue([]);
+
 describe(ChallengesPageContainer.name, () => {
   test("the page render correctly", async () => {
     const serverComponent = await ChallengesPageContainer({
       getChallenges: getChallengesMock,
       getServerAuthSession: getServerAuthSessionMock,
+      getCompletedChallenges: jest.fn(),
     });
 
     render(serverComponent);
@@ -21,12 +24,11 @@ describe(ChallengesPageContainer.name, () => {
     const serverComponent = await ChallengesPageContainer({
       getChallenges: getChallengesMock,
       getServerAuthSession: getServerAuthSessionMock,
+      getCompletedChallenges: getCompletedChallengesMock,
     });
 
     render(serverComponent);
 
-    expect(screen.getAllByTestId("challenge")).toHaveLength(
-      CHALLENGES_MOCK.length,
-    );
+    expect(screen.getAllByTestId("challenge")).toHaveLength(CHALLENGES_MOCK.length);
   });
 });
