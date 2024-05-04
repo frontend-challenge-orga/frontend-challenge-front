@@ -1,14 +1,7 @@
-import { challengeService } from "@/core/infrastructure/services/challenge.service";
-import { challengeSolutionService } from "@/core/infrastructure/services/challenge.solution.service";
-import { getServerAuthSession } from "@/config/server/auth";
 import { ChallengesPageContainer } from "@/core/views/modules/challenge/pages/challenges-page-container";
+import { getServerAuthSession } from "@/config/server/auth";
+import { getChallenges } from "@/core/infrastructure/use-cases/get-challenges";
 
 export default async function ChallengesPage() {
-  return (
-    <ChallengesPageContainer
-      getServerAuthSession={() => getServerAuthSession()}
-      getChallenges={() => challengeService.getChallenges()}
-      getCompletedChallenges={(userId: string) => challengeSolutionService.getCompletedChallenges(userId)}
-    />
-  );
+  return <ChallengesPageContainer getServerAuthSession={getServerAuthSession} getChallenges={getChallenges} />;
 }

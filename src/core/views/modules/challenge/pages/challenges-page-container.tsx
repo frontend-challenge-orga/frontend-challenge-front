@@ -7,14 +7,16 @@ import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 
 type Props = {
-  getChallenges: () => Promise<ChallengeDTO[]>;
   getServerAuthSession: () => Promise<Session | null>;
-  getCompletedChallenges: (userId: string) => Promise<ChallengeSolutionDTO[]>;
+  getChallenges: () => Promise<{
+    challenges: ChallengeDTO[];
+    getCompletedChallenges: (userId: string) => Promise<ChallengeSolutionDTO[]>;
+  }>;
 };
 
-export async function ChallengesPageContainer({ getChallenges, getServerAuthSession, getCompletedChallenges }: Props) {
+export async function ChallengesPageContainer({ getChallenges, getServerAuthSession }: Props) {
   const session = await getServerAuthSession();
-  const challenges = await getChallenges();
+  const { challenges, getCompletedChallenges } = await getChallenges();
   const completedChallenges = session ? await getCompletedChallenges(session.user.id) : [];
 
   return (
