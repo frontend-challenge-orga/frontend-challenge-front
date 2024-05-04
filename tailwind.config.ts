@@ -13,6 +13,9 @@ const config = {
       },
     },
     extend: {
+      textShadow: {
+        default: "0 2px 5px rgba(0, 0, 0, 0.5)",
+      },
       screens: {
         "tablet-grid-challenge": "780px",
         "desktop-grid-challenge": "1080px",
@@ -58,6 +61,7 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
         tags: "5rem;",
       },
+
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

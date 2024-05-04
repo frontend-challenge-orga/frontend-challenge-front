@@ -4,20 +4,30 @@ import { ChallengeCardLanguage } from "@/core/views/modules/challenge/components
 import { ChallengeCardDescription } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-description";
 import { ChallengeCardDifficulty } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-difficulty";
 import { ChallengeTailwindCardLayout } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-layout";
+
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
+import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 import type { Session } from "next-auth";
 
 type Props = {
   challenge: ChallengeDTO;
+  completedChallenges: ChallengeSolutionDTO[];
   session: Session | null;
 };
 
-export const ChallengeCard = ({ challenge, session }: Props) => {
-  const { slug, name, description, difficulty, premium } = challenge;
+export const ChallengeCard = async ({ challenge, completedChallenges, session }: Props) => {
+  const { id, slug, name, description, difficulty, premium } = challenge;
+
+  const isCompletedChallenge = completedChallenges.some((completedChallenge) => completedChallenge.challengeId === id);
 
   return (
     <ChallengeTailwindCardLayout>
-      <ChallengeCardHeader slug={slug} premium={premium} />
+      <ChallengeCardHeader
+        slug={slug}
+        premium={premium}
+        session={session}
+        isCompletedChallenge={isCompletedChallenge}
+      />
 
       <div className={"p-6"}>
         <ChallengeCardName slug={slug} name={name} />
