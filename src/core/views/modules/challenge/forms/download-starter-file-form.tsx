@@ -16,7 +16,7 @@ export const DownloadStarterFileForm = ({ challengeId, starter_code_path_file }:
   function handleSubmit() {
     startTransition(async () => {
       const payload = await downloadFileAction({
-        challengeId: challengeId,
+        challengeId,
         pathFile: starter_code_path_file,
         type: FILE_TYPE.STARTER,
       });

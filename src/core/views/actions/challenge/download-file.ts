@@ -7,7 +7,7 @@ import { FILE_TYPE } from "@/config/constants";
 import * as z from "zod";
 
 const schema = z.object({
-  challengeId: z.string().optional(),
+  challengeId: z.string(),
   pathFile: z.string(),
   type: z.enum([FILE_TYPE.FIGMA, FILE_TYPE.STARTER]),
 });

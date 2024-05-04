@@ -28,7 +28,7 @@ export const executeDownloadFile = async ({ userId, challengeId, pathFile, typeF
   const isFigmaType = typeFile === FILE_TYPE.FIGMA;
   const isYearlySubscription = await subscriptionService.isYearlySubscription(userId);
   const isPremiumChallenge = await challengeService.isPremiumChallenge(challengeId);
-  const alreadyUnlockedFigmaFile = await userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId!);
+  const alreadyUnlockedFigmaFile = await userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId);
 
   const isCreditableFile = isFigmaType && !isPremiumChallenge && !isYearlySubscription && !alreadyUnlockedFigmaFile;
 
@@ -41,7 +41,7 @@ export const executeDownloadFile = async ({ userId, challengeId, pathFile, typeF
     }
 
     await creditService.subtractDesignCredits(userId, 1);
-    await userChallengeService.unlockFigmaFile(userId, challengeId!);
+    await userChallengeService.unlockFigmaFile(userId, challengeId);
   }
 
   return await dropboxService.getTemporaryFileLink(pathFile);
