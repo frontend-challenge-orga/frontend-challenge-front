@@ -2,7 +2,7 @@ import { creditRepository } from "@/core/infrastructure/repositories/credit.repo
 import { CreditTransformer } from "@/core/infrastructure/transformers/credit-transformer";
 import type { CreditDTO } from "@/core/infrastructure/dto/credit.dto";
 
-interface ICreditRepository {
+export interface ICreditService {
   getCreditByUserId(userId: string): Promise<CreditDTO>;
   addCredit(userId: string): Promise<CreditDTO>;
   subtractChallengeCredits(userId: string, amount: number): Promise<CreditDTO>;
@@ -11,7 +11,7 @@ interface ICreditRepository {
   userDesignCredits(userId: string): Promise<number>;
 }
 
-export const creditService: ICreditRepository = {
+export const creditService: ICreditService = {
   getCreditByUserId: async (userId: string) => {
     return creditRepository.show(userId).then((credit) => {
       return CreditTransformer.toEntity(credit);
