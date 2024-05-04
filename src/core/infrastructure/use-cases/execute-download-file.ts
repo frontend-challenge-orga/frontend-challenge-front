@@ -25,11 +25,11 @@ export const executeDownloadFile = async ({ userId, challengeId, typeFile }: Exe
   }
 
   const isFigmaType = typeFile === FILE_TYPE.FIGMA;
-  const isYearlySubscription = await subscriptionService.isYearlySubscription(userId);
+  const isYearlySubscribed = await subscriptionService.isYearlySubscribed(userId);
   const isPremiumChallenge = await challengeService.isPremiumChallenge(challengeId);
   const alreadyUnlockedFigmaFile = await userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId);
 
-  const isCreditableFile = isFigmaType && !isPremiumChallenge && !isYearlySubscription && !alreadyUnlockedFigmaFile;
+  const isCreditableFile = isFigmaType && !isPremiumChallenge && !isYearlySubscribed && !alreadyUnlockedFigmaFile;
 
   if (isCreditableFile) {
     const userCredits = await creditService.userDesignCredits(userId);

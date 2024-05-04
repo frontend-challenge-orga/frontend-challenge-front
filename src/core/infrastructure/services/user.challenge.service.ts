@@ -2,7 +2,7 @@ import type { UserChallengeDTO } from "@/core/infrastructure/dto/user.challenge.
 import { userChallengeRepository } from "@/core/infrastructure/repositories/user.challenge.repository";
 import { UserChallengeTransformer } from "@/core/infrastructure/transformers/user-challenge-transformer";
 
-interface IUserChallengeService {
+export interface IUserChallengeService {
   getStartedChallenge(userId: string, challengeId: string): Promise<UserChallengeDTO | null>;
   getStartedChallengeBySlug(userId: string, challengeSlug: string): Promise<UserChallengeDTO | null>;
   startChallenge(userId: string, challengeId: string): Promise<UserChallengeDTO | undefined>;

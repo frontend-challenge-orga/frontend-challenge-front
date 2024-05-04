@@ -1,14 +1,15 @@
 import { userRepository } from "@/core/infrastructure/repositories/user.repository";
 import { UserTransformer } from "@/core/infrastructure/transformers/user-transformer";
 import type { User } from "@/core/domain/entities/user.entity";
-import type { UserDTO } from "@/core/infrastructure/dto/user.dto";
+import type { UserDTO } from "../dto/user.dto";
 
-interface IUserService {
+export interface IUserService {
   getUsers(): Promise<UserDTO[]>;
   getUserById(id: string): Promise<UserDTO>;
   updateUser(data: User): Promise<UserDTO>;
   updateUserPoints(id: string, points: number): Promise<UserDTO>;
   deleteUser(id: string): Promise<void>;
+  isUserLogged(id: string): Promise<boolean>;
 }
 
 export const userService: IUserService = {
@@ -40,5 +41,9 @@ export const userService: IUserService = {
 
   deleteUser: async (id: string) => {
     return userRepository.delete(id);
+  },
+
+  isUserLogged: async (id: string) => {
+    return await userRepository.getLoggedUser(id);
   },
 };

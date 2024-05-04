@@ -45,4 +45,15 @@ export const userRepository: IUserRepository = {
       },
     });
   },
+
+  getLoggedUser: async (id: string) => {
+    const session = await db.session.findFirst({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (session === null) return false;
+    else return true;
+  },
 };

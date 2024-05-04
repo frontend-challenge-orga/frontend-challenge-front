@@ -2,7 +2,7 @@ import { SubscriptionTransformer } from "@/core/infrastructure/transformers/subs
 import { subscriptionRepository } from "@/core/infrastructure/repositories/subscription.repository";
 import type { Subscription } from "@/core/domain/entities/subscription.entity";
 
-interface ISubscriptionService {
+export interface ISubscriptionService {
   getSubscriptions(): Promise<Subscription[]>;
   getSubscriptionByUserId(userId: string): Promise<Subscription>;
   createSubscription(
@@ -13,8 +13,9 @@ interface ISubscriptionService {
   ): Promise<Subscription>;
   updateSubscription(userId: string): Promise<Subscription>;
   cancelSubscription(userId: string): Promise<Subscription>;
-  userIsSubscribed(userId: string): Promise<boolean>;
-  isYearlySubscription(userId: string): Promise<boolean>;
+  isSubscribed(userId: string): Promise<boolean>;
+  isYearlySubscribed(userId: string): Promise<boolean>;
+  isMonthlySubscribed(userId: string): Promise<boolean>;
 }
 
 export const subscriptionService: ISubscriptionService = {
@@ -57,15 +58,21 @@ export const subscriptionService: ISubscriptionService = {
     });
   },
 
-  userIsSubscribed: async (userId: string) => {
+  isSubscribed: async (userId: string) => {
     return subscriptionRepository.show(userId).then((subscription) => {
       return subscription?.subscribed;
     });
   },
 
-  isYearlySubscription: async (userId: string) => {
+  isYearlySubscribed: async (userId: string) => {
     return subscriptionRepository.show(userId).then((subscription) => {
       return subscription?.subscription_duration === "YEARLY";
+    });
+  },
+
+  isMonthlySubscribed: async (userId: string) => {
+    return subscriptionRepository.show(userId).then((subscription) => {
+      return subscription?.subscription_duration === "MONTHLY";
     });
   },
 };
