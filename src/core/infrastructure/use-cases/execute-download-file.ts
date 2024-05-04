@@ -10,11 +10,10 @@ import { challengeService } from "@/core/infrastructure/services/challenge.servi
 type ExecuteDownloadFile = {
   userId: string;
   challengeId: string;
-  pathFile: string;
   typeFile: "FIGMA" | "STARTER";
 };
 
-export const executeDownloadFile = async ({ userId, challengeId, pathFile, typeFile }: ExecuteDownloadFile) => {
+export const executeDownloadFile = async ({ userId, challengeId, typeFile }: ExecuteDownloadFile) => {
   const userLoggedIn = await db.session.findFirst({
     where: {
       userId,
@@ -44,5 +43,19 @@ export const executeDownloadFile = async ({ userId, challengeId, pathFile, typeF
     await userChallengeService.unlockFigmaFile(userId, challengeId);
   }
 
-  return await dropboxService.getTemporaryFileLink(pathFile);
+  const fileLink = await db.challenge.findFirst({
+    where: {
+      id: challengeId,
+    },
+    select: {
+      starter_code_path_file: true,
+      starter_figma_path_file: true,
+    },
+  });
+
+  if (!fileLink) {
+    throw new Error(ACTION_ERROR.FILE_NOT_FOUND);
+  }
+
+  return isFigmaType ? fileLink.starter_figma_path_file : fileLink.starter_code_path_file;
 };

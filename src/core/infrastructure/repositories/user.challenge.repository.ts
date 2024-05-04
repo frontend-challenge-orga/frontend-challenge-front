@@ -3,7 +3,7 @@ import type { IUserChallengeRepository } from "@/core/domain/repositories/user.c
 
 export const userChallengeRepository: IUserChallengeRepository = {
   getStartedChallenge(userId: string, challengeId: string) {
-    return db.userChallenge.findUniqueOrThrow({
+    return db.userChallenge.findUnique({
       where: {
         userId_challengeId: {
           userId,

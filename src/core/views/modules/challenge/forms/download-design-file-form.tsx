@@ -9,10 +9,7 @@ type Props = {
   starter_figma_path_file: string;
 };
 
-export const DownloadDesignFileForm = ({
-  challengeId,
-  starter_figma_path_file,
-}: Props) => {
+export const DownloadDesignFileForm = ({ challengeId, starter_figma_path_file }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
@@ -20,7 +17,6 @@ export const DownloadDesignFileForm = ({
     startTransition(async () => {
       const payload = await downloadFileAction({
         challengeId,
-        pathFile: starter_figma_path_file,
         type: FILE_TYPE.FIGMA,
       });
 

@@ -8,7 +8,7 @@ interface IUserChallengeService {
   startChallenge(userId: string, challengeId: string): Promise<UserChallengeDTO | undefined>;
   unlockFigmaFile(userId: string, challengeId: string): Promise<UserChallengeDTO | undefined>;
   hasUserStartedChallenge(userId: string, challengeId: string): Promise<boolean>;
-  alreadyUnlockedFigmaFile(userId: string, challengeId: string): Promise<boolean>;
+  alreadyUnlockedFigmaFile(userId: string, challengeId: string): Promise<boolean | null | undefined>;
 }
 
 export const userChallengeService: IUserChallengeService = {
@@ -42,7 +42,7 @@ export const userChallengeService: IUserChallengeService = {
 
   alreadyUnlockedFigmaFile: async (userId, challengeId) => {
     return userChallengeRepository.getStartedChallenge(userId, challengeId).then((userChallenge) => {
-      return userChallenge.figma_file_unlocked;
+      return userChallenge?.figma_file_unlocked;
     });
   },
 };

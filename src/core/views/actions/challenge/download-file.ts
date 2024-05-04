@@ -8,7 +8,6 @@ import * as z from "zod";
 
 const schema = z.object({
   challengeId: z.string(),
-  pathFile: z.string(),
   type: z.enum([FILE_TYPE.FIGMA, FILE_TYPE.STARTER]),
 });
 
@@ -17,7 +16,6 @@ export const downloadFileAction = userAction(schema, async (data, ctx) => {
     return await executeDownloadFile({
       userId: ctx.userId,
       challengeId: data.challengeId,
-      pathFile: data.pathFile,
       typeFile: data.type,
     });
   } catch (error) {
