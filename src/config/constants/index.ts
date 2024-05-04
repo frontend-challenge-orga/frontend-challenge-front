@@ -58,4 +58,5 @@ export const ACTION_ERROR = {
   USER_HAS_NO_SUBSCRIPTION: "User has no subscription.",
   USER_HAS_STARTED_CHALLENGE: "User has already started the challenge.",
   USER_NOT_LOGGED_IN: "User is not logged in.",
+  FILE_NOT_FOUND: "File not found.",
 };
