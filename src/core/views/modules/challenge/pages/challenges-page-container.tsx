@@ -1,6 +1,8 @@
-import Link from "next/link";
+import { ChallengesContainer } from "@/core/views/modules/challenge/components/challenge-card/challenges-container";
+import { ChallengesGrid } from "@/core/views/modules/challenge/components/challenges-grid";
+import { ChallengeCard } from "@/core/views/modules/challenge/components/challenge-card";
+
 import type { Session } from "next-auth";
-import { SessionGuard } from "../../auth/components/session-guard";
 import { type ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type Props = {
@@ -11,18 +13,15 @@ type Props = {
 export async function ChallengesPageContainer({ getChallenges, getServerAuthSession }: Props) {
   const session = await getServerAuthSession();
   const challenges = await getChallenges();
+  const testChallenges: ChallengeDTO[] = new Array(10).fill(challenges[0]);
 
   return (
-    <div>
-      {challenges?.map((challenge) => (
-        <div data-testid="challenge" key={challenge.id}>
-          <h1>{challenge.name}</h1>
-          <p>{challenge.description}</p>
-          <SessionGuard session={session}>
-            <Link href={`/challenges/${challenge.slug}`}>Go to challenge</Link>
-          </SessionGuard>
-        </div>
-      ))}
-    </div>
+    <ChallengesContainer>
+      <ChallengesGrid>
+        {testChallenges.map((challenge) => (
+          <ChallengeCard key={challenge.id} challenge={challenge} session={session} />
+        ))}
+      </ChallengesGrid>
+    </ChallengesContainer>
   );
 }

@@ -13,6 +13,8 @@ interface ISubscriptionService {
   ): Promise<Subscription>;
   updateSubscription(userId: string): Promise<Subscription>;
   cancelSubscription(userId: string): Promise<Subscription>;
+  userIsSubscribed(userId: string): Promise<boolean>;
+  isYearlySubscription(userId: string): Promise<boolean>;
 }
 
 export const subscriptionService: ISubscriptionService = {
@@ -52,6 +54,18 @@ export const subscriptionService: ISubscriptionService = {
   cancelSubscription: async (userId: string) => {
     return subscriptionRepository.cancel(userId).then((subscription) => {
       return SubscriptionTransformer.toEntity(subscription);
+    });
+  },
+
+  userIsSubscribed: async (userId: string) => {
+    return subscriptionRepository.show(userId).then((subscription) => {
+      return subscription?.subscribed;
+    });
+  },
+
+  isYearlySubscription: async (userId: string) => {
+    return subscriptionRepository.show(userId).then((subscription) => {
+      return subscription?.subscription_duration === "YEARLY";
     });
   },
 };

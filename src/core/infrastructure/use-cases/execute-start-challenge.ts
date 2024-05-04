@@ -22,18 +22,24 @@ export const executeStartChallenge = async ({ userId, challengeId }: ExecuteStar
     throw new Error(ACTION_ERROR.USER_NOT_LOGGED_IN);
   }
 
-  const isPremiumChallenge = await challengeService.isPremiumChallenge(challengeId);
+  const userHasStartedChallenge = await userChallengeService.getStartedChallenge(userId, challengeId);
 
-  if (isPremiumChallenge) {
-    const userSubscription = await subscriptionService.getSubscriptionByUserId(userId);
-    const userIsSubscribed = userSubscription.subscribed;
+  if (userHasStartedChallenge) {
+    throw new Error(ACTION_ERROR.USER_HAS_STARTED_CHALLENGE);
+  }
+
+  const isYearlySubscription = await subscriptionService.isYearlySubscription(userId);
+  const isPremiumChallenge = await challengeService.isPremiumChallenge(challengeId);
+  const isCreditableChallenge = isPremiumChallenge && !isYearlySubscription;
+
+  if (isCreditableChallenge) {
+    const userIsSubscribed = await subscriptionService.userIsSubscribed(userId);
 
     if (!userIsSubscribed) {
       throw new Error(ACTION_ERROR.USER_HAS_NO_SUBSCRIPTION);
     }
 
-    const userCredits = await creditService.getCreditByUserId(userId);
-    const userChallengeCredits = userCredits.challenge_amount;
+    const userChallengeCredits = await creditService.userChallengeCredits(userId);
     const hasEnoughCredits = userChallengeCredits >= CHALLENGE_PRICE;
 
     if (!hasEnoughCredits) {

@@ -5,16 +5,18 @@ import { downloadFileAction } from "@/core/views/actions/challenge/download-file
 import { FILE_TYPE } from "@/config/constants";
 
 type Props = {
+  challengeId: string;
   starter_code_path_file: string;
 };
 
-export const DownloadStarterFileForm = ({ starter_code_path_file }: Props) => {
+export const DownloadStarterFileForm = ({ challengeId, starter_code_path_file }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit() {
     startTransition(async () => {
       const payload = await downloadFileAction({
+        challengeId,
         pathFile: starter_code_path_file,
         type: FILE_TYPE.STARTER,
       });

@@ -1,5 +1,18 @@
-import type { PropsWithChildren } from "react";
+import React from "react";
 
-export const Paragraph = ({ children }: PropsWithChildren) => {
-  return <p className="leading-7 [&:not(:first-child)]:mt-6">{children}</p>;
-};
+interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(({ children, className, ...props }, ref) => {
+  return (
+    <p className={className} ref={ref} {...props}>
+      {children}
+    </p>
+  );
+});
+
+Paragraph.displayName = "Paragraph";
+
+export { Paragraph };

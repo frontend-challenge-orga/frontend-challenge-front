@@ -10,5 +10,5 @@ type Props = {
 };
 
 export const SessionGuard = ({ session, children }: Props) => {
-  return session ? children : <AuthDialog session={session}>{children}</AuthDialog>;
+  return session ? <Fragment>{children}</Fragment> : <AuthDialog session={session}>{children}</AuthDialog>;
 };
