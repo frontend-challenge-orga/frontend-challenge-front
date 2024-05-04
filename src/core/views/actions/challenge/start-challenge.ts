@@ -9,8 +9,6 @@ import { URL } from "@/config/constants";
 
 const schema = z.object({
   challengeId: z.string(),
-
-  /*isPremiumChallenge: z.boolean(),*/
 });
 
 export const startChallengeAction = userAction(schema, async (data, ctx) => {
@@ -18,7 +16,6 @@ export const startChallengeAction = userAction(schema, async (data, ctx) => {
     await executeStartChallenge({
       userId: ctx.userId,
       challengeId: data.challengeId,
-      /*isPremiumChallenge: data.isPremiumChallenge,*/
     });
   } catch (error) {
     handleActionError(error as Error);

@@ -3,7 +3,7 @@ import type { IUserChallengeRepository } from "@/core/domain/repositories/user.c
 
 export const userChallengeRepository: IUserChallengeRepository = {
   getStartedChallenge(userId: string, challengeId: string) {
-    return db.userChallenge.findUnique({
+    return db.userChallenge.findUniqueOrThrow({
       where: {
         userId_challengeId: {
           userId,
@@ -55,10 +55,7 @@ export const userChallengeRepository: IUserChallengeRepository = {
     });
   },
 
-  hasUserStartedChallenge: async (
-    userId: string,
-    challengeId: string,
-  ): Promise<boolean> => {
+  hasUserStartedChallenge: async (userId: string, challengeId: string): Promise<boolean> => {
     const userChallenge = await db.userChallenge.findFirst({
       where: {
         userId,

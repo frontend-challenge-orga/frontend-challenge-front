@@ -8,6 +8,7 @@ export async function awardPointsForChallenge(
   challengeSolutionId: string,
 ) {
   await userService.updateUserPoints(userId, userPoints + challengePoints);
+
   await pointTransactionService.createPointTransaction({
     id: crypto.randomUUID(),
     userId: userId,

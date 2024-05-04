@@ -22,6 +22,7 @@ export const ROLE = {
 };
 
 export const CHALLENGE_PRICE = 1;
+export const DESIGN_PRICE = 1;
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
 
@@ -55,5 +56,6 @@ export const ACTION_ERROR = {
   SUBMIT_CHALLENGE_SOLUTION: "An error occurred while submitting the challenge solution.",
   DOWNLOAD_FILE: "An error occurred while downloading the file.",
   USER_HAS_NO_SUBSCRIPTION: "User has no subscription.",
+  USER_HAS_STARTED_CHALLENGE: "User has already started the challenge.",
   USER_NOT_LOGGED_IN: "User is not logged in.",
 };
