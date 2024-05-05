@@ -9,14 +9,16 @@ import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
+import { ChallengePreview } from "@/core/views/modules/admin/components/challenge-preview";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
 import { Typography } from "@/core/views/components/typography";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { formSchema } from "./create-challenge-schema";
 import { createChallengeAction } from "@/core/views/actions/admin/create-challenge";
+
 import type * as z from "zod";
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -54,17 +56,15 @@ export const CreateChallengeForm = () => {
     });
   }
 
+  const currentValues = form.getValues();
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-96 p-12">
         {/* Name */}
         <InputForm control={form.control} name="name" label="Project name" />
         {/* Description */}
-        <TextAreaForm
-          control={form.control}
-          name="description"
-          label="Description"
-        />
+        <TextAreaForm control={form.control} name="description" label="Description" />
         {/* Language */}
         <SelectForm
           control={form.control}
@@ -98,19 +98,14 @@ export const CreateChallengeForm = () => {
         {/* Premium */}
         <SwitchForm control={form.control} name="premium" label="Premium" />
         {/* Starter code PATH FILE */}
-        <InputForm
-          control={form.control}
-          name="starter_code_path_file"
-          label="Starter code PATH FILE"
-        />
+        <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
-        <InputForm
-          control={form.control}
-          name="starter_figma_path_file"
-          label="Starter figma PATH FILE"
-        />
+        <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
-        <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
+        <div className="mt-4 flex ">
+          <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
+          <ChallengePreview currentValues={currentValues} />
+        </div>
         <Typography.Error>{errorMessage}</Typography.Error>
       </form>
     </Form>

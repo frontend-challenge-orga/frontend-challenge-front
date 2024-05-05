@@ -10,6 +10,7 @@ import { updateChallengeAction } from "@/core/views/actions/admin/update-challen
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
+import { ChallengePreview } from "@/core/views/modules/admin/components/challenge-preview";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
@@ -54,17 +55,15 @@ export const EditChallengeForm = ({ challenge }: Props) => {
     });
   }
 
+  const currentValues = form.getValues();
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-96 p-12">
         {/* Name */}
         <InputForm control={form.control} name="name" label="Project name" />
         {/* Description */}
-        <TextAreaForm
-          control={form.control}
-          name="description"
-          label="Description"
-        />
+        <TextAreaForm control={form.control} name="description" label="Description" />
         {/* Language */}
         <SelectForm
           control={form.control}
@@ -98,19 +97,14 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         {/* Premium */}
         <SwitchForm control={form.control} name="premium" label="Premium" />
         {/* Starter code PATH FILE */}
-        <InputForm
-          control={form.control}
-          name="starter_code_path_file"
-          label="Starter code PATH FILE"
-        />
+        <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
-        <InputForm
-          control={form.control}
-          name="starter_figma_path_file"
-          label="Starter figma PATH FILE"
-        />
+        <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
-        <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
+        <div className="mt-4 flex ">
+          <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
+          <ChallengePreview currentValues={currentValues} />
+        </div>
       </form>
     </Form>
   );
