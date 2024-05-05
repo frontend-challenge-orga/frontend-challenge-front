@@ -9,7 +9,7 @@ type Props = {
   starter_code_path_file: string;
 };
 
-export const DownloadStarterFileForm = ({ challengeId, starter_code_path_file }: Props) => {
+export const DownloadStarterFileForm = ({ challengeId }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
@@ -17,7 +17,7 @@ export const DownloadStarterFileForm = ({ challengeId, starter_code_path_file }:
     startTransition(async () => {
       const payload = await downloadFileAction({
         challengeId,
-        type: FILE_TYPE.STARTER,
+        fileType: FILE_TYPE.STARTER,
       });
 
       if (payload.serverError) {

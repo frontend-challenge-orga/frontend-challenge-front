@@ -1,42 +1,43 @@
 "use client";
+
+import { Dialog, DialogContent, DialogTrigger } from "@/core/views/components/ui/dialog";
 import { Button } from "@/core/views/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from "@/core/views/components/ui/dialog";
+import { ChallengeCardPreview } from "@/core/views/modules/admin/components/challenge-card-preview";
 import type { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
+import type { Session } from "next-auth";
+import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 
 type Props = {
   currentValues: FormValues;
 };
 
-// Tu as bien avancé sur ce composant.
-// J'ai réglé les différents problèmes de TypeScript.
-// Actuellement, la card challenge est difficilement réutilisable en raison d'une utilisation excessive des balises dialog.
-// Il faudrait revoir la structure de la card pour la rendre plus facilement réutilisable.
-// Tu peux passer le contenu de la card challenge dans le dialog content.
-// Essaye d'extraire les icônes du composant pour les rendre plus réutilisables. /components/ui/icons/icon.tsx
-// J'ai remarqué que tu as utilisé du style en ligne. Essayons d'éviter le style en ligne et de privilégier les classes Tailwind.
+// Rajouter les button de téléchargement figma et starter code
 
 export const ChallengePreview = ({ currentValues }: Props) => {
-  const { name, premium, difficulty, language, description, starter_code_path_file, starter_figma_path_file } =
-    currentValues;
+  const session_mock = {} as Session;
+  const completedChallenges = [] as ChallengeSolutionDTO[];
+  const challenge_mock = {
+    ...currentValues,
+    id: "1",
+    slug: "slug",
+    points: 0,
+    createdById: "1",
+    assets_presentation: [],
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button className="mx-12">Preview</Button>
       </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0" />
-        <DialogContent className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] max-h-[85vh] w-[90vw] max-w-[550px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-          <div className="container mx-auto px-4 py-2">
+
+      <DialogContent className="data-[state=open]:animate-contentShow rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+        <ChallengeCardPreview
+          currentValues={challenge_mock}
+          completedChallenges={completedChallenges}
+          session={session_mock}
+        />
+        {/*<div className="container mx-auto px-4 py-2">
             <DialogTitle className="text-mauve12 m-0 flex gap-4  text-[17px] font-medium">
               <h2 className="mb-4 text-2xl font-bold">{name} preview</h2>
               <span>{premium ? "PREMIUM" : "FREE"}</span>
@@ -116,22 +117,8 @@ export const ChallengePreview = ({ currentValues }: Props) => {
                 </div>
               </div>
             </DialogDescription>
-          </div>
-        </DialogContent>
-        <div
-          style={{
-            display: "flex",
-            marginTop: 25,
-            justifyContent: "flex-end",
-          }}
-        >
-          <DialogClose>
-            <Button className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none">
-              X
-            </Button>
-          </DialogClose>
-        </div>
-      </DialogPortal>
+          </div>*/}
+      </DialogContent>
     </Dialog>
   );
 };

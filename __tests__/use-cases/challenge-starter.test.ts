@@ -1,6 +1,6 @@
 import {
   ChallengeAlreadyStartedError,
-  NotEnoughCreditsError,
+  NotEnoughChallengeCreditsError,
   UserNotLoggedInError,
   UserNotSubscribedError,
 } from "@/core/infrastructure/errors";
@@ -69,6 +69,6 @@ describe(ChallengeStarter.name, () => {
     subscriptionServiceMock.isMonthlySubscribed.mockReturnValueOnce(true);
     creditServiceMock.userChallengeCredits.mockReturnValueOnce(0);
 
-    expect(challengeStarting).rejects.toThrow(NotEnoughCreditsError);
+    expect(challengeStarting).rejects.toThrow(NotEnoughChallengeCreditsError);
   });
 });
