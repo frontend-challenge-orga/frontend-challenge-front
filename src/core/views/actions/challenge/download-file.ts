@@ -1,22 +1,36 @@
 "use server";
 
 import { userAction } from "@/config/libs/next-safe-action";
-import { executeDownloadFile } from "@/core/infrastructure/use-cases/execute-download-file";
 import { handleActionError } from "@/core/views/actions/handle-action-error";
 import { FILE_TYPE } from "@/config/constants";
+import { FileDownloader } from "@/core/infrastructure/use-cases/file-downloader";
 import * as z from "zod";
+
+import { userService } from "@/core/infrastructure/services/user.service";
+import { challengeService } from "@/core/infrastructure/services/challenge.service";
+import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
+import { userChallengeService } from "@/core/infrastructure/services/user.challenge.service";
+import { creditService } from "@/core/infrastructure/services/credit.service";
+
+FileDownloader.initialize({
+  userService,
+  challengeService,
+  subscriptionService,
+  userChallengeService,
+  creditService,
+});
 
 const schema = z.object({
   challengeId: z.string(),
-  type: z.enum([FILE_TYPE.FIGMA, FILE_TYPE.STARTER]),
+  fileType: z.enum([FILE_TYPE.FIGMA, FILE_TYPE.STARTER]),
 });
 
-export const downloadFileAction = userAction(schema, async (data, ctx) => {
+export const downloadFileAction = userAction(schema, async ({ challengeId, fileType }, { userId }) => {
   try {
-    return await executeDownloadFile({
-      userId: ctx.userId,
-      challengeId: data.challengeId,
-      typeFile: data.type,
+    return await FileDownloader.getInstance().do({
+      userId,
+      challengeId,
+      fileType,
     });
   } catch (error) {
     handleActionError(error as Error);

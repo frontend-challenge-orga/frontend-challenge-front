@@ -2,7 +2,7 @@ import {
   UserNotLoggedInError,
   ChallengeAlreadyStartedError,
   UserNotSubscribedError,
-  NotEnoughCreditsError,
+  NotEnoughChallengeCreditsError,
   SingletonNotInitializedError,
 } from "@/core/infrastructure/errors";
 import { type IUserChallengeService } from "@/core/infrastructure/services/user.challenge.service";
@@ -64,29 +64,23 @@ export class ChallengeStarter {
   public async do({ userId, challengeId }: StartChallengeInput) {
     const userIsLoggedIn = await this.userService.isUserLogged(userId);
 
-    if (!userIsLoggedIn) {
-      throw new UserNotLoggedInError();
-    }
+    if (!userIsLoggedIn) throw new UserNotLoggedInError();
 
     const userHasStartedChallenge = await this.userChallengeService.getStartedChallenge(userId, challengeId);
 
-    if (userHasStartedChallenge !== null) {
-      throw new ChallengeAlreadyStartedError();
-    }
+    if (userHasStartedChallenge !== null) throw new ChallengeAlreadyStartedError();
 
     const challengeIsPremium = await this.challengeService.isPremiumChallenge(challengeId);
     const isSubscribed = await this.subscriptionService.isSubscribed(userId);
     const userIsMonthlySubscribed = await this.subscriptionService.isMonthlySubscribed(userId);
 
-    if (challengeIsPremium && !isSubscribed) {
-      throw new UserNotSubscribedError();
-    }
+    if (challengeIsPremium && !isSubscribed) throw new UserNotSubscribedError();
 
     if (challengeIsPremium && userIsMonthlySubscribed) {
       const userCredits = await this.creditService.userChallengeCredits(userId);
 
       if (userCredits < CHALLENGE_PRICE) {
-        throw new NotEnoughCreditsError();
+        throw new NotEnoughChallengeCreditsError();
       }
 
       await this.creditService.subtractChallengeCredits(userId, CHALLENGE_PRICE);

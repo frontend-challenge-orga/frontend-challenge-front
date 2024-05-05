@@ -26,9 +26,23 @@ export class UserNotSubscribedError extends Error {
   }
 }
 
-export class NotEnoughCreditsError extends Error {
+export class NotEnoughChallengeCreditsError extends Error {
   constructor() {
     super("The user does not have enough credits.");
     this.name = "NotEnoughCreditsError";
+  }
+}
+
+export class NotEnoughDesignCreditsError extends Error {
+  constructor() {
+    super("The user does not have enough design credits.");
+    this.name = "NotEnoughDesignCreditsError";
+  }
+}
+
+export class FileNotFoundError extends Error {
+  constructor() {
+    super("The file was not found.");
+    this.name = "FileNotFoundError";
   }
 }

@@ -9,7 +9,7 @@ type Props = {
   starter_figma_path_file: string;
 };
 
-export const DownloadDesignFileForm = ({ challengeId, starter_figma_path_file }: Props) => {
+export const DownloadDesignFileForm = ({ challengeId }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
@@ -17,7 +17,7 @@ export const DownloadDesignFileForm = ({ challengeId, starter_figma_path_file }:
     startTransition(async () => {
       const payload = await downloadFileAction({
         challengeId,
-        type: FILE_TYPE.FIGMA,
+        fileType: FILE_TYPE.FIGMA,
       });
 
       if (payload.serverError) {
@@ -25,7 +25,12 @@ export const DownloadDesignFileForm = ({ challengeId, starter_figma_path_file }:
         return;
       }
 
-      window.location.href = payload.data!;
+      if (!payload.data) {
+        setErrorMessage("An error occurred");
+        return;
+      }
+
+      window.location.href = payload.data;
     });
   }
 
