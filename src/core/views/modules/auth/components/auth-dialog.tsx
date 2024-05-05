@@ -21,18 +21,14 @@ export const AuthDialog = ({ session, children }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <div
-          className={session ? "pointer-events-auto" : "pointer-events-none"}
-        >
-          {children}
+        <div className={session ? "pointer-events-auto" : "pointer-events-none"}>
+          {!session ? <span>Login with github</span> : children}
         </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Oops! 😬</DialogTitle>
-          <DialogDescription>
-            You need to be logged in before you can do that.
-          </DialogDescription>
+          <DialogDescription>You need to be logged in before you can do that.</DialogDescription>
         </DialogHeader>
         <LoginButton session={session} />
       </DialogContent>

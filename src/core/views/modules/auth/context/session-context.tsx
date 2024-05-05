@@ -11,19 +11,13 @@ type SessionProviderProps = PropsWithChildren<SessionContext>;
 
 const SessionContext = createContext<SessionContext | undefined>(undefined);
 
-export const SessionProvider = ({
-  session,
-  children,
-}: SessionProviderProps) => {
-  return (
-    <SessionContext.Provider value={{ session }}>
-      {children}
-    </SessionContext.Provider>
-  );
+export const SessionProvider = ({ session, children }: SessionProviderProps) => {
+  return <SessionContext.Provider value={{ session }}>{children}</SessionContext.Provider>;
 };
 
 export const useSession = () => {
   const context = useContext(SessionContext);
+
   if (context === undefined) {
     throw new Error("useSession must be used within a SessionProvider");
   }

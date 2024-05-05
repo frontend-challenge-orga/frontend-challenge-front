@@ -2,7 +2,6 @@ import { challengeSolutionRepository } from "@/core/infrastructure/repositories/
 import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers/challenge-solution-transformer";
 import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 import type { ChallengeSolution } from "@/core/domain/entities/challenge.solution.entity";
-import { ChallengeCard } from "@/core/views/modules/challenge/components/challenge-card";
 
 interface IChallengeSolutionService {
   createChallengeSolution: (data: ChallengeSolution) => Promise<ChallengeSolutionDTO>;

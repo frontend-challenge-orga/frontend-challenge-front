@@ -4,7 +4,7 @@ import {
   UserNotLoggedInError,
   UserNotSubscribedError,
 } from "@/core/infrastructure/errors";
-import { ChallengeStarter, type StartChallengeInput } from "../../src/core/infrastructure/use-cases/challenge-starter";
+import { ChallengeStarter, type StartChallengeInput } from "@/core/infrastructure/use-cases/challenge-starter";
 
 const userServiceMock = {
   isUserLogged: jest.fn().mockReturnValue(true),

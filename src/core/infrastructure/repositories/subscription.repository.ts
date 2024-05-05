@@ -7,7 +7,7 @@ export const subscriptionRepository: ISubscriptionRepository = {
   },
 
   show: async (userId: string) => {
-    return db.subscription.findUniqueOrThrow({
+    return db.subscription.findUnique({
       where: {
         userId,
       },

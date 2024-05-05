@@ -11,9 +11,8 @@ export interface ISubscriptionService {
     subscriptionDuration: "MONTHLY" | "YEARLY",
     subscriptionEndDate: Date,
   ): Promise<Subscription>;
-  updateSubscription(userId: string): Promise<Subscription>;
   cancelSubscription(userId: string): Promise<Subscription>;
-  isSubscribed(userId: string): Promise<boolean>;
+  isSubscribed(userId: string | undefined): Promise<boolean>;
   isYearlySubscribed(userId: string): Promise<boolean>;
   isMonthlySubscribed(userId: string): Promise<boolean>;
 }
@@ -29,16 +28,14 @@ export const subscriptionService: ISubscriptionService = {
 
   getSubscriptionByUserId: async (userId: string) => {
     return subscriptionRepository.show(userId).then((subscription) => {
+      // TODO - Remove this check and throw an error
+      if (!subscription) throw new Error("Subscription not found");
+
       return SubscriptionTransformer.toEntity(subscription);
     });
   },
 
-  createSubscription: async (
-    userId: string,
-    subscriptionId: string,
-    subscriptionDuration: "MONTHLY" | "YEARLY",
-    subscriptionEndDate: Date,
-  ) => {
+  createSubscription: async (userId, subscriptionId, subscriptionDuration, subscriptionEndDate) => {
     return subscriptionRepository
       .store(userId, subscriptionId, subscriptionDuration, subscriptionEndDate)
       .then((subscription) => {
@@ -46,31 +43,27 @@ export const subscriptionService: ISubscriptionService = {
       });
   },
 
-  updateSubscription: async (userId: string) => {
-    return subscriptionRepository.update(userId).then((subscription) => {
-      return SubscriptionTransformer.toEntity(subscription);
-    });
-  },
-
-  cancelSubscription: async (userId: string) => {
+  cancelSubscription: async (userId) => {
     return subscriptionRepository.cancel(userId).then((subscription) => {
       return SubscriptionTransformer.toEntity(subscription);
     });
   },
 
-  isSubscribed: async (userId: string) => {
+  isSubscribed: async (userId) => {
+    if (!userId) return Promise.resolve(false);
+
     return subscriptionRepository.show(userId).then((subscription) => {
-      return subscription?.subscribed;
+      return !!subscription?.subscribed;
     });
   },
 
-  isYearlySubscribed: async (userId: string) => {
+  isYearlySubscribed: async (userId) => {
     return subscriptionRepository.show(userId).then((subscription) => {
       return subscription?.subscription_duration === "YEARLY";
     });
   },
 
-  isMonthlySubscribed: async (userId: string) => {
+  isMonthlySubscribed: async (userId) => {
     return subscriptionRepository.show(userId).then((subscription) => {
       return subscription?.subscription_duration === "MONTHLY";
     });

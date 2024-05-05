@@ -8,6 +8,14 @@ export const challengeRepository: IChallengeRepository = {
       orderBy: {
         id: "desc",
       },
+
+      include: {
+        challengeSolutions: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
   },
 

@@ -2,7 +2,7 @@ import { db } from "@/config/server/db";
 import type { IUserChallengeRepository } from "@/core/domain/repositories/user.challenge.repository";
 
 export const userChallengeRepository: IUserChallengeRepository = {
-  getStartedChallenge(userId: string, challengeId: string) {
+  showById(userId: string, challengeId: string) {
     return db.userChallenge.findUnique({
       where: {
         userId_challengeId: {
@@ -13,7 +13,7 @@ export const userChallengeRepository: IUserChallengeRepository = {
     });
   },
 
-  getStartedChallengeBySlug(userId: string, challengeSlug: string) {
+  showBySlug(userId: string, challengeSlug: string) {
     return db.userChallenge.findFirst({
       where: {
         userId,
@@ -24,7 +24,7 @@ export const userChallengeRepository: IUserChallengeRepository = {
     });
   },
 
-  startChallenge: async (userId: string, challengeId: string) => {
+  create: async (userId: string, challengeId: string) => {
     return db.userChallenge.create({
       data: {
         user: {
@@ -53,16 +53,5 @@ export const userChallengeRepository: IUserChallengeRepository = {
         figma_file_unlocked: true,
       },
     });
-  },
-
-  hasUserStartedChallenge: async (userId: string, challengeId: string): Promise<boolean> => {
-    const userChallenge = await db.userChallenge.findFirst({
-      where: {
-        userId,
-        challengeId,
-      },
-    });
-
-    return !!userChallenge;
   },
 };
