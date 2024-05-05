@@ -5,7 +5,7 @@ type Props = {
   session: Session | null;
 };
 
-export const ChallengeCardCompleted = async ({ session, isCompletedChallenge }: Props) => {
+export const ChallengeCardCompleted = ({ session, isCompletedChallenge }: Props) => {
   if (!session) return null;
 
   return (

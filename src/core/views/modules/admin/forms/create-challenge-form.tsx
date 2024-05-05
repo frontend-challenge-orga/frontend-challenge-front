@@ -20,6 +20,11 @@ import type * as z from "zod";
 
 export type FormValues = z.infer<typeof formSchema>;
 
+// TODO: Rajouter la checkbox pour la validation de la preview
+// Te rendre sur shadcn pour installer le composant checkbox (https://ui.shadcn.com/docs/components/checkbox)
+// Refactor le composant checkbox en checkbox-form.tsx se référer au composant similaire input-form.tsx
+// Implémenter le composant checkbox-form.tsx dans le formulaire create-challenge-form.tsx && edit-challenge-form.tsx
+
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
