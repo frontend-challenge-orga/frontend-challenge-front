@@ -7,25 +7,25 @@ export interface IUserChallengeService {
   getStartedChallengeBySlug(userId: string, challengeSlug: string): Promise<UserChallengeDTO | null>;
   startChallenge(userId: string, challengeId: string): Promise<UserChallengeDTO | undefined>;
   unlockFigmaFile(userId: string, challengeId: string): Promise<UserChallengeDTO | undefined>;
-  hasUserStartedChallenge(userId: string, challengeId: string): Promise<boolean>;
+  hasUserStartedChallenge(userId: string | undefined, slug: string): Promise<boolean>;
   alreadyUnlockedFigmaFile(userId: string, challengeId: string): Promise<boolean | null | undefined>;
 }
 
 export const userChallengeService: IUserChallengeService = {
   getStartedChallenge: async (userId: string, challengeId: string) => {
-    return userChallengeRepository.getStartedChallenge(userId, challengeId).then((userChallenge) => {
+    return userChallengeRepository.showById(userId, challengeId).then((userChallenge) => {
       return userChallenge ? UserChallengeTransformer.toEntity(userChallenge) : null;
     });
   },
 
   getStartedChallengeBySlug: async (userId, challengeSlug) => {
-    return userChallengeRepository.getStartedChallengeBySlug(userId, challengeSlug).then((userChallenge) => {
+    return userChallengeRepository.showBySlug(userId, challengeSlug).then((userChallenge) => {
       return userChallenge ? UserChallengeTransformer.toEntity(userChallenge) : null;
     });
   },
 
   startChallenge: async (userId, challengeId) => {
-    return userChallengeRepository.startChallenge(userId, challengeId).then((userChallenge) => {
+    return userChallengeRepository.create(userId, challengeId).then((userChallenge) => {
       return UserChallengeTransformer.toEntity(userChallenge);
     });
   },
@@ -36,12 +36,16 @@ export const userChallengeService: IUserChallengeService = {
     });
   },
 
-  hasUserStartedChallenge: async (userId, challengeId) => {
-    return userChallengeRepository.hasUserStartedChallenge(userId, challengeId);
+  hasUserStartedChallenge: async (userId, challengeSlug) => {
+    if (!userId) return Promise.resolve(false);
+
+    return userChallengeRepository.showBySlug(userId, challengeSlug).then((userChallenge) => {
+      return !!userChallenge;
+    });
   },
 
   alreadyUnlockedFigmaFile: async (userId, challengeId) => {
-    return userChallengeRepository.getStartedChallenge(userId, challengeId).then((userChallenge) => {
+    return userChallengeRepository.showById(userId, challengeId).then((userChallenge) => {
       return userChallenge?.figma_file_unlocked;
     });
   },

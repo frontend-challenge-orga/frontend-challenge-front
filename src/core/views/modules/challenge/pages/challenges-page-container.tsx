@@ -8,15 +8,15 @@ import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.s
 
 type Props = {
   getServerAuthSession: () => Promise<Session | null>;
-  getChallenges: () => Promise<{
+  challengesServiceHandler: () => Promise<{
     challenges: ChallengeDTO[];
     getCompletedChallenges: (userId: string) => Promise<ChallengeSolutionDTO[]>;
   }>;
 };
 
-export async function ChallengesPageContainer({ getChallenges, getServerAuthSession }: Props) {
+export async function ChallengesPageContainer({ challengesServiceHandler, getServerAuthSession }: Props) {
   const session = await getServerAuthSession();
-  const { challenges, getCompletedChallenges } = await getChallenges();
+  const { challenges, getCompletedChallenges } = await challengesServiceHandler();
   const completedChallenges = session ? await getCompletedChallenges(session.user.id) : [];
 
   return (

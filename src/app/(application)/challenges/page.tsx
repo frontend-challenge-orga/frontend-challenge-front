@@ -1,7 +1,12 @@
 import { ChallengesPageContainer } from "@/core/views/modules/challenge/pages/challenges-page-container";
 import { getServerAuthSession } from "@/config/server/auth";
-import { getChallenges } from "@/core/infrastructure/use-cases/get-challenges";
+import { challengesServiceHandler } from "@/core/views/page-handler/challenges-service-handler";
 
 export default async function ChallengesPage() {
-  return <ChallengesPageContainer getServerAuthSession={getServerAuthSession} getChallenges={getChallenges} />;
+  return (
+    <ChallengesPageContainer
+      getServerAuthSession={getServerAuthSession}
+      challengesServiceHandler={challengesServiceHandler}
+    />
+  );
 }

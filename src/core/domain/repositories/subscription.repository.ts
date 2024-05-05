@@ -2,7 +2,7 @@ import type { Subscription } from "@/core/domain/entities/subscription.entity";
 
 export interface ISubscriptionRepository {
   index(): Promise<Subscription[]>;
-  show(userId: string): Promise<Subscription>;
+  show(userId: string): Promise<Subscription | null>;
   store(
     userId: string,
     subscriptionId: string,

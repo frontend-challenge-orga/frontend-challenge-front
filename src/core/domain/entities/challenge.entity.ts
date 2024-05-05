@@ -15,11 +15,6 @@ export type Challenge = {
   readonly createdById: string;
 };
 
-export type Difficulty =
-  | "NEWBIE"
-  | "JUNIOR"
-  | "INTERMEDIATE"
-  | "ADVANCED"
-  | "GURU";
+export type Difficulty = "NEWBIE" | "JUNIOR" | "INTERMEDIATE" | "ADVANCED" | "GURU";
 
 export type Language = "HTML_CSS" | "JS" | "API";

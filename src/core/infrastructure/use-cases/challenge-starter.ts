@@ -7,9 +7,9 @@ import {
 } from "@/core/infrastructure/errors";
 import { type IUserChallengeService } from "@/core/infrastructure/services/user.challenge.service";
 import { type IUserService } from "@/core/infrastructure/services/user.service";
-import { type IChallengeService } from "../services/challenge.service";
-import { type ISubscriptionService } from "../services/subscription.service";
-import { type ICreditService } from "../services/credit.service";
+import { type IChallengeService } from "@/core/infrastructure/services/challenge.service";
+import { type ISubscriptionService } from "@/core/infrastructure/services/subscription.service";
+import { type ICreditService } from "@/core/infrastructure/services/credit.service";
 import { CHALLENGE_PRICE } from "@/config/constants";
 
 type UserService = Pick<IUserService, "isUserLogged">;
