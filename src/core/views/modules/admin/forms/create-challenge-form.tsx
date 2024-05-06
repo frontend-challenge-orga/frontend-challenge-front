@@ -5,6 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
+import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
@@ -106,6 +107,8 @@ export const CreateChallengeForm = () => {
         <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
+        {/*Checkbox Preview */}
+        <CheckboxForm control={form.control} name="checkbox" label="checkbox" />
 
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
