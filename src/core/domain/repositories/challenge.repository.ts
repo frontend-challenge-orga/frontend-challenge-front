@@ -2,7 +2,7 @@ import type { Challenge } from "@/core/domain/entities/challenge.entity";
 
 export interface IChallengeRepository {
   index(): Promise<Challenge[]>;
-  show(id: string): Promise<Challenge>;
+  show(id: string): Promise<Challenge | null>;
   showBySlug(slug: string): Promise<Challenge>;
   count(): Promise<number | undefined>;
   create(data: Challenge): Promise<Challenge>;

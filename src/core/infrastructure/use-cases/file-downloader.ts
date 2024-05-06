@@ -13,7 +13,10 @@ import type { ICreditService } from "@/core/infrastructure/services/credit.servi
 import type { FileType } from "@/config/types";
 
 type UserService = Pick<IUserService, "isUserLogged">;
-type ChallengeService = Pick<IChallengeService, "isPremiumChallenge" | "getFileLink">;
+type ChallengeService = Pick<
+  IChallengeService,
+  "isPremiumChallenge" | "getStarterCodeFileLink" | "getStarterFigmaFileLink"
+>;
 type SubscriptionService = Pick<ISubscriptionService, "isYearlySubscribed">;
 type UserChallengeService = Pick<IUserChallengeService, "alreadyUnlockedFigmaFile" | "unlockFigmaFile">;
 type CreditService = Pick<ICreditService, "userDesignCredits" | "subtractDesignCredits">;
@@ -85,9 +88,15 @@ export class FileDownloader {
       await this.userChallengeService.unlockFigmaFile(userId, challengeId);
     }
 
-    const fileLink = await this.challengeService.getFileLink(challengeId, fileType);
+    let fileLink: string | null;
 
-    if (!fileLink) throw new FileNotFoundError();
+    if (isFigmaType) {
+      fileLink = await this.challengeService.getStarterFigmaFileLink(challengeId);
+    } else {
+      fileLink = await this.challengeService.getStarterCodeFileLink(challengeId);
+    }
+
+    if (fileLink === null) throw new FileNotFoundError();
 
     return fileLink;
   }

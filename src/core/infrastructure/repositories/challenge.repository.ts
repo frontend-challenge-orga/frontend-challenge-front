@@ -20,7 +20,7 @@ export const challengeRepository: IChallengeRepository = {
   },
 
   show: async (id: string) => {
-    return db.challenge.findUniqueOrThrow({
+    return db.challenge.findUnique({
       where: {
         id,
       },
