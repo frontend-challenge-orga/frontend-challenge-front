@@ -2,10 +2,8 @@
 
 import { Dialog, DialogContent, DialogTrigger } from "@/core/views/components/ui/dialog";
 import { Button } from "@/core/views/components/ui/button";
-import { ChallengeCardPreview } from "@/core/views/modules/admin/components/challenge-card-preview";
 import type { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
-import type { Session } from "next-auth";
-import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
+import { ChallengeCardPreview } from "@/core/views/modules/admin/components/challenge-card-preview";
 
 type Props = {
   currentValues: FormValues;
@@ -14,17 +12,6 @@ type Props = {
 // Rajouter les button de téléchargement figma et starter code
 
 export const ChallengePreview = ({ currentValues }: Props) => {
-  const session_mock = {} as Session;
-  const completedChallenges = [] as ChallengeSolutionDTO[];
-  const challenge_mock = {
-    ...currentValues,
-    id: "1",
-    slug: "slug",
-    points: 0,
-    createdById: "1",
-    assets_presentation: [],
-  };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,11 +19,7 @@ export const ChallengePreview = ({ currentValues }: Props) => {
       </DialogTrigger>
 
       <DialogContent className="data-[state=open]:animate-contentShow rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-        <ChallengeCardPreview
-          currentValues={challenge_mock}
-          completedChallenges={completedChallenges}
-          session={session_mock}
-        />
+        <ChallengeCardPreview currentValues={currentValues} />
         {/*<div className="container mx-auto px-4 py-2">
             <DialogTitle className="text-mauve12 m-0 flex gap-4  text-[17px] font-medium">
               <h2 className="mb-4 text-2xl font-bold">{name} preview</h2>

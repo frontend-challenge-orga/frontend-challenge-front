@@ -3,7 +3,7 @@ import { ChallengeCardName } from "@/core/views/modules/challenge/components/cha
 import { ChallengeCardLanguage } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-language";
 import { ChallengeCardDescription } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-description";
 import { ChallengeCardDifficulty } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-difficulty";
-import { ChallengeTailwindCardLayout } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-layout";
+import { ChallengeCardLayout } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-layout";
 
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
@@ -21,7 +21,7 @@ export const ChallengeCard = async ({ challenge, completedChallenges, session }:
   const isCompletedChallenge = completedChallenges.some((completedChallenge) => completedChallenge.challengeId === id);
 
   return (
-    <ChallengeTailwindCardLayout>
+    <ChallengeCardLayout>
       <ChallengeCardHeader
         slug={slug}
         premium={premium}
@@ -38,6 +38,6 @@ export const ChallengeCard = async ({ challenge, completedChallenges, session }:
 
         <ChallengeCardDescription description={description} />
       </div>
-    </ChallengeTailwindCardLayout>
+    </ChallengeCardLayout>
   );
 };
