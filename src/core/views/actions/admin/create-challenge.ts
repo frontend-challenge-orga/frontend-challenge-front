@@ -10,23 +10,21 @@ import { extractValuesFromArray } from "@/config/utils";
 import { ACTION_ERROR, URL } from "@/config/constants";
 import * as crypto from "node:crypto";
 
-export const createChallengeAction = adminAction(
-  formSchema,
-  async (data, ctx) => {
-    try {
-      await challengeService.createChallenge({
-        ...data,
-        id: crypto.randomUUID(),
-        slug: data.name.toLowerCase().replace(/ /g, "-"),
-        points: challengeS.getPointsForChallengeDifficulty(data.difficulty),
-        assets_presentation: extractValuesFromArray(data.assets_presentation),
-        createdById: ctx.userId,
-      });
-    } catch (error) {
-      throw new ServerActionError(ACTION_ERROR.CREATE_CHALLENGE);
-    }
+export const createChallengeAction = adminAction(formSchema, async (data, ctx) => {
+  try {
+    const { preview_check, ...rest } = data;
+    await challengeService.createChallenge({
+      ...rest,
+      id: crypto.randomUUID(),
+      slug: data.name.toLowerCase().replace(/ /g, "-"),
+      points: challengeS.getPointsForChallengeDifficulty(data.difficulty),
+      assets_presentation: extractValuesFromArray(data.assets_presentation),
+      createdById: ctx.userId,
+    });
+  } catch (error) {
+    throw new ServerActionError(ACTION_ERROR.CREATE_CHALLENGE);
+  }
 
-    revalidatePath(URL.DASHBOARD_CHALLENGES);
-    redirect(URL.DASHBOARD_CHALLENGES);
-  },
-);
+  revalidatePath(URL.DASHBOARD_CHALLENGES);
+  redirect(URL.DASHBOARD_CHALLENGES);
+});

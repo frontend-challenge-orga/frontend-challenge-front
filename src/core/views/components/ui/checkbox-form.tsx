@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import { Checkbox } from "./checkbox";
-import { FormField, FormItem, FormLabel, FormMessage, FormControl, FormDescription } from "./form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "./form";
 import type { Control } from "react-hook-form";
+import { cn } from "@/config/utils";
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLButtonElement> {
   control: Control<any>;
@@ -17,15 +18,16 @@ const CheckboxForm = React.forwardRef<HTMLButtonElement, CheckboxProps>(
     return (
       <FormField
         control={control}
-        name="checkbox"
+        name={name}
         render={({ field }) => (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4">
+          <FormItem className={cn("flex flex-row items-start space-x-3 space-y-0 p-4", className)}>
             <FormControl>
               <Checkbox checked={field.value} ref={ref} onCheckedChange={field.onChange} {...props} />
             </FormControl>
             <div className="space-y-1 leading-none">
-              <FormLabel>Check the preview before submitting</FormLabel>
+              <FormLabel>{label}</FormLabel>
             </div>
+            <FormMessage className="text-red-500" />
           </FormItem>
         )}
       />

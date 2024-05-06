@@ -13,4 +13,5 @@ export const formSchema = z.object({
   premium: z.boolean(),
   starter_code_path_file: z.string(),
   starter_figma_path_file: z.string(),
+  preview_check: z.boolean(),
 });

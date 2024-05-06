@@ -15,6 +15,7 @@ import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
+import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -41,6 +42,7 @@ export const EditChallengeForm = ({ challenge }: Props) => {
       premium: challenge?.premium,
       starter_code_path_file: challenge?.starter_code_path_file,
       starter_figma_path_file: challenge?.starter_figma_path_file,
+      preview_check: true,
     },
   });
 
@@ -100,6 +102,7 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
+        <CheckboxForm control={form.control} name="preview_check" label="checkbox" />
 
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
