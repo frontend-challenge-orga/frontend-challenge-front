@@ -7,13 +7,15 @@ import { FILE_TYPE } from "@/config/constants";
 
 export interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
-  getChallengeById(id: string): Promise<ChallengeDTO>;
+  getChallengeById(id: string): Promise<ChallengeDTO | null>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
-  getFileLink(challengeId: string, fileType: FileType): Promise<string>;
+  /*  getFileLink(challengeId: string, fileType: FileType): Promise<string>;*/
+  getStarterFigmaFileLink(challengeId: string): Promise<string | null>;
+  getStarterCodeFileLink(challengeId: string): Promise<string | null>;
   createChallenge(data: Challenge): Promise<ChallengeDTO>;
   updateChallenge(id: string, data: Challenge): Promise<ChallengeDTO | undefined>;
   removeChallenge(id: string): Promise<void>;
-  isPremiumChallenge(challengeId: string): Promise<boolean>;
+  isPremiumChallenge(challengeId: string): Promise<boolean | null>;
 }
 
 export const challengeService: IChallengeService = {
@@ -27,6 +29,8 @@ export const challengeService: IChallengeService = {
 
   getChallengeById: async (id: string) => {
     return challengeRepository.show(id).then((challenge) => {
+      if (!challenge) return null;
+
       return ChallengeTransformer.toEntity(challenge);
     });
   },
@@ -37,9 +41,21 @@ export const challengeService: IChallengeService = {
     });
   },
 
-  getFileLink: async (challengeId: string, fileType) => {
+  /* getFileLink: async (challengeId: string, fileType) => {
     return challengeRepository.show(challengeId).then((challenge) => {
       return fileType === FILE_TYPE.FIGMA ? challenge.starter_figma_path_file : challenge.starter_code_path_file;
+    });
+  },*/
+
+  getStarterCodeFileLink: async (challengeId: string) => {
+    return challengeRepository.show(challengeId).then((challenge) => {
+      return challenge?.starter_code_path_file ?? null;
+    });
+  },
+
+  getStarterFigmaFileLink: async (challengeId: string) => {
+    return challengeRepository.show(challengeId).then((challenge) => {
+      return challenge?.starter_figma_path_file ?? null;
     });
   },
 
@@ -61,7 +77,7 @@ export const challengeService: IChallengeService = {
 
   isPremiumChallenge: async (challengeId: string) => {
     return challengeRepository.show(challengeId).then((challenge) => {
-      return challenge.premium;
+      return challenge?.premium ?? null;
     });
   },
 };
