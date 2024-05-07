@@ -4,13 +4,12 @@ import {
   SingletonNotInitializedError,
   UserNotLoggedInError,
 } from "@/core/infrastructure/errors";
-import { DESIGN_PRICE, FIleType } from "@/config/constants";
+import { DESIGN_PRICE, FileType } from "@/config/constants";
 import type { IUserService } from "@/core/infrastructure/services/user.service";
 import type { IChallengeService } from "@/core/infrastructure/services/challenge.service";
 import type { ISubscriptionService } from "@/core/infrastructure/services/subscription.service";
 import type { IUserChallengeService } from "@/core/infrastructure/services/user.challenge.service";
 import type { ICreditService } from "@/core/infrastructure/services/credit.service";
-import type { FileType } from "@/config/types";
 
 type UserService = Pick<IUserService, "isUserLogged">;
 type ChallengeService = Pick<
@@ -70,7 +69,7 @@ export class FileDownloader {
 
     if (!userLoggedIn) throw new UserNotLoggedInError();
 
-    const isFigmaType = fileType === FIleType.FIGMA;
+    const isFigmaType = fileType === FileType.FIGMA;
     if (isFigmaType) return await this.retrieveFigmaFile(challengeId, userId);
     else return await this.retrieveStarterFile(challengeId);
   }

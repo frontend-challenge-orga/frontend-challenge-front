@@ -2,7 +2,7 @@ import { useState, useTransition } from "react";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { Typography } from "@/core/views/components/typography";
 import { downloadFileAction } from "@/core/views/actions/challenge/download-file";
-import { FIleType } from "@/config/constants";
+import { FileType } from "@/config/constants";
 
 type Props = {
   challengeId: string;
@@ -17,7 +17,7 @@ export const DownloadStarterFileForm = ({ challengeId }: Props) => {
     startTransition(async () => {
       const payload = await downloadFileAction({
         challengeId,
-        fileType: FIleType.STARTER,
+        fileType: FileType.STARTER,
       });
 
       if (payload.serverError) {

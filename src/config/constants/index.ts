@@ -31,7 +31,7 @@ export const SUBSCRIPTION = {
   YEARLY: "YEARLY",
 } as const;
 
-export enum FIleType {
+export enum FileType {
   STARTER = "STARTER",
   FIGMA = "FIGMA",
 }

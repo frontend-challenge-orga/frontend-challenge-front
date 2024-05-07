@@ -2,7 +2,7 @@
 
 import { userAction } from "@/config/libs/next-safe-action";
 import { handleActionError } from "@/core/views/actions/handle-action-error";
-import { FIleType } from "@/config/constants";
+import { FileType } from "@/config/constants";
 import { FileDownloader } from "@/core/infrastructure/use-cases/file-downloader";
 import * as z from "zod";
 
@@ -22,7 +22,7 @@ FileDownloader.initialize({
 
 const schema = z.object({
   challengeId: z.string(),
-  fileType: z.enum([FIleType.FIGMA, FIleType.STARTER]),
+  fileType: z.enum([FileType.FIGMA, FileType.STARTER]),
 });
 
 export const downloadFileAction = userAction(schema, async ({ challengeId, fileType }, { userId }) => {
