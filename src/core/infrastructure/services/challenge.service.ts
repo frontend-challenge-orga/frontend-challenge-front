@@ -3,7 +3,7 @@ import { ChallengeTransformer } from "@/core/infrastructure/transformers/challen
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { FileType } from "@/config/types";
-import { FILE_TYPE } from "@/config/constants";
+import { FIleType } from "@/config/constants";
 
 export interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
@@ -43,7 +43,7 @@ export const challengeService: IChallengeService = {
 
   /* getFileLink: async (challengeId: string, fileType) => {
     return challengeRepository.show(challengeId).then((challenge) => {
-      return fileType === FILE_TYPE.FIGMA ? challenge.starter_figma_path_file : challenge.starter_code_path_file;
+      return fileType === FIleType.FIGMA ? challenge.starter_figma_path_file : challenge.starter_code_path_file;
     });
   },*/
 

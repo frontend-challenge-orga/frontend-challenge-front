@@ -1,7 +1,7 @@
 import { subscriptionService } from "@/core/infrastructure/services/subscription.service";
 import { creditService } from "@/core/infrastructure/services/credit.service";
 import { userChallengeService } from "@/core/infrastructure/services/user.challenge.service";
-import { ACTION_ERROR, DESIGN_PRICE, FILE_TYPE } from "@/config/constants";
+import { ACTION_ERROR, DESIGN_PRICE, FIleType } from "@/config/constants";
 
 import { db } from "@/config/server/db";
 import { challengeService } from "@/core/infrastructure/services/challenge.service";
@@ -23,7 +23,7 @@ export const executeDownloadFile = async ({ userId, challengeId, typeFile }: Exe
     throw new Error(ACTION_ERROR.USER_NOT_LOGGED_IN);
   }
 
-  const isFigmaType = typeFile === FILE_TYPE.FIGMA;
+  const isFigmaType = typeFile === FIleType.FIGMA;
   const isYearlySubscribed = await subscriptionService.isYearlySubscribed(userId);
   const isPremiumChallenge = await challengeService.isPremiumChallenge(challengeId);
   const alreadyUnlockedFigmaFile = await userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId);

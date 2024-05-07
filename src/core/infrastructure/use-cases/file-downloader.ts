@@ -4,7 +4,7 @@ import {
   SingletonNotInitializedError,
   UserNotLoggedInError,
 } from "@/core/infrastructure/errors";
-import { DESIGN_PRICE, FILE_TYPE } from "@/config/constants";
+import { DESIGN_PRICE, FIleType } from "@/config/constants";
 import type { IUserService } from "@/core/infrastructure/services/user.service";
 import type { IChallengeService } from "@/core/infrastructure/services/challenge.service";
 import type { ISubscriptionService } from "@/core/infrastructure/services/subscription.service";
@@ -70,7 +70,7 @@ export class FileDownloader {
 
     if (!userLoggedIn) throw new UserNotLoggedInError();
 
-    const isFigmaType = fileType === FILE_TYPE.FIGMA;
+    const isFigmaType = fileType === FIleType.FIGMA;
     const isYearlySubscribed = await this.subscriptionService.isYearlySubscribed(userId);
     const isPremiumChallenge = await this.challengeService.isPremiumChallenge(challengeId);
     const alreadyUnlockedFigmaFile = await this.userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId);
@@ -100,4 +100,6 @@ export class FileDownloader {
 
     return fileLink;
   }
+
+  private async treatStar
 }

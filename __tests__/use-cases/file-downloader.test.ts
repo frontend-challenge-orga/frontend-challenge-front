@@ -7,8 +7,8 @@ const userServiceMock = {
 
 const challengeServiceMock = {
   isPremiumChallenge: jest.fn().mockReturnValue(false),
-  getStarterCodeFileLink: jest.fn().mockReturnValue("fake_code_file_link"),
-  getStarterFigmaFileLink: jest.fn().mockReturnValue("fake_figma_file_link"),
+  getStarterCodeFileLink: jest.fn(),
+  getStarterFigmaFileLink: jest.fn(),
 };
 
 const subscriptionServiceMock = {
@@ -31,6 +31,14 @@ FileDownloader.initialize({
   subscriptionService: subscriptionServiceMock,
   userChallengeService: userChallengeServiceMock,
   creditService: creditServiceMock,
+});
+
+describe("Downloading a starter file", () => {
+  const SUCCESSFUL_INPUT: DownloadFileInput = {
+    userId: "fake_user_id",
+    challengeId: "fake_challenge_id",
+    fileType: "STARTER",
+  };
 });
 
 describe(FileDownloader.name, () => {
