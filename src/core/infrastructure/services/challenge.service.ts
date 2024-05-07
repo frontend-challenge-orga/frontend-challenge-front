@@ -1,6 +1,5 @@
 import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
 import { ChallengeTransformer } from "@/core/infrastructure/transformers/challenge-transformer";
-import { FileType } from "@/config/constants";
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 

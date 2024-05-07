@@ -34,7 +34,7 @@ export const SUBSCRIPTION = {
 export const FILE_TYPE = {
   STARTER: "STARTER",
   FIGMA: "FIGMA",
-};
+} as const;
 
 export const DIFFICULTY = ["NEWBIE", "JUNIOR", "INTERMEDIATE", "ADVANCED", "GURU"] as const;
 
