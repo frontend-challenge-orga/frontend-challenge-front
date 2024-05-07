@@ -58,7 +58,7 @@ describe("downloading a starter file", () => {
 
     userServiceMock.isUserLogged.mockReturnValueOnce(false);
 
-    expect(fileDownloading).rejects.toThrow(UserNotLoggedInError);
+    await expect(fileDownloading).rejects.toThrow(UserNotLoggedInError);
   });
 
   test("should throw in the file can’t be found", async () => {
@@ -66,7 +66,7 @@ describe("downloading a starter file", () => {
 
     challengeServiceMock.getStarterCodeFileLink.mockReturnValueOnce(null);
 
-    expect(fileDownloading).rejects.toThrow(FileNotFoundError);
+    await expect(fileDownloading).rejects.toThrow(FileNotFoundError);
   });
 });
 
@@ -90,7 +90,7 @@ describe("downloading a figma file", () => {
 
     challengeServiceMock.getStarterFigmaFileLink.mockReturnValueOnce(null);
 
-    expect(fileDownloading).rejects.toThrow(FileNotFoundError);
+    await expect(fileDownloading).rejects.toThrow(FileNotFoundError);
   });
 
   test("the user should be logged in", () => {
@@ -101,7 +101,6 @@ describe("downloading a figma file", () => {
     expect(fileDownloading).rejects.toThrow(UserNotLoggedInError);
   });
 
-  //
   test("if the challenge is premium: no intention to debit design credit", async () => {
     const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
     challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(true);
@@ -148,7 +147,7 @@ describe("downloading a figma file", () => {
     creditServiceMock.userDesignCredits.mockReturnValueOnce(DESIGN_PRICE - 1);
     const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
 
-    expect(fileDownloading).rejects.toThrow(NotEnoughDesignCreditsError);
+    await expect(fileDownloading).rejects.toThrow(NotEnoughDesignCreditsError);
   });
 
   test("challenge FREE + user  yearly subscribed + challenge not unlocked: the user have enough credits", async () => {
