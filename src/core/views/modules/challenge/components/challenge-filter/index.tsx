@@ -12,7 +12,7 @@ export const ChallengeFilter = () => {
       difficulty: parseAsArrayOf(parseAsString, "&").withDefault([]),
       language: parseAsArrayOf(parseAsString, "&").withDefault([]),
     },
-    { clearOnDefault: true },
+    { clearOnDefault: true, shallow: false },
   );
 
   const handleFilterChange = async (key: FilterKeyType, value: string) => {
