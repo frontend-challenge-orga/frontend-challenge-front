@@ -19,10 +19,17 @@ import { createChallengeAction } from "@/core/views/actions/admin/create-challen
 import type * as z from "zod";
 
 export type FormValues = z.infer<typeof formSchema>;
+/* TODO: écrire le pseudo code de la FEATURE check if preview  */
 
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [isPreviewCheck, setIsPreviewCheck] = useState(false);
+
+  const handleFirstClick = () => {
+    setIsPreviewCheck(true);
+  };
+  console.log(isPreviewCheck);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -38,7 +45,7 @@ export const CreateChallengeForm = () => {
       premium: false,
       starter_code_path_file: "/starter-code/LOLACCOUNT.txt",
       starter_figma_path_file: "/starter-code/LOLACCOUNT.txt",
-      preview_check: false,
+      preview_check: true,
     },
   });
 
@@ -49,7 +56,7 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      if (!values.preview_check) {
+      if (!isPreviewCheck) {
         setErrorMessage(ACTION_ERROR.PREVIEW_CHECK);
         return;
       }
@@ -106,11 +113,16 @@ export const CreateChallengeForm = () => {
 
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
-        <CheckboxForm control={form.control} name="preview_check" label="checkbox" />
+        <CheckboxForm
+          isPreviewCheck={isPreviewCheck}
+          control={form.control}
+          name="preview_check"
+          label="Check preview before submit"
+        />
 
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
-          <ChallengePreview currentValues={currentValues} />
+          <ChallengePreview handleFirstClick={handleFirstClick} currentValues={currentValues} />
         </div>
         <Typography.Error>{errorMessage}</Typography.Error>
       </form>

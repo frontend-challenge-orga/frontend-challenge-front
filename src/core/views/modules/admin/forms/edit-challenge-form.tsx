@@ -1,10 +1,11 @@
 "use client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
+import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { updateChallengeAction } from "@/core/views/actions/admin/update-challenge";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
@@ -15,7 +16,6 @@ import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
-import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -27,6 +27,11 @@ type Props = {
 
 export const EditChallengeForm = ({ challenge }: Props) => {
   const [isPending, startTransition] = useTransition();
+  const [isPreviewCheck, setIsPreviewCheck] = useState(false);
+
+  const handleFirstClick = () => {
+    setIsPreviewCheck(true);
+  };
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -102,11 +107,11 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
-        <CheckboxForm control={form.control} name="preview_check" label="checkbox" />
+        <CheckboxForm isPreviewCheck={isPreviewCheck} control={form.control} name="preview_check" label="checkbox" />
 
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
-          <ChallengePreview currentValues={currentValues} />
+          <ChallengePreview handleFirstClick={handleFirstClick} currentValues={currentValues} />
         </div>
       </form>
     </Form>

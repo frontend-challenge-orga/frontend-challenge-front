@@ -60,5 +60,5 @@ export const ACTION_ERROR = {
   USER_HAS_STARTED_CHALLENGE: "User has already started the challenge.",
   USER_NOT_LOGGED_IN: "User is not logged in.",
   FILE_NOT_FOUND: "File not found.",
-  PREVIEW_CHECK: "Check the preview before submitting",
+  PREVIEW_CHECK: "Click the preview button before submitting",
 };
