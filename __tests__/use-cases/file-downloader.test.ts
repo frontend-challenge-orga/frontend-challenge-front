@@ -1,5 +1,6 @@
 import { FileDownloader, type DownloadFileInput } from "@/core/infrastructure/use-cases/file-downloader";
-import { NotEnoughDesignCreditsError, UserNotLoggedInError } from "@/core/infrastructure/errors";
+import { FileNotFoundError, NotEnoughDesignCreditsError, UserNotLoggedInError } from "@/core/infrastructure/errors";
+import { DESIGN_PRICE } from "@/config/constants";
 
 const userServiceMock = {
   isUserLogged: jest.fn().mockReturnValue(true),
@@ -7,8 +8,8 @@ const userServiceMock = {
 
 const challengeServiceMock = {
   isPremiumChallenge: jest.fn().mockReturnValue(false),
-  getStarterCodeFileLink: jest.fn().mockReturnValue("fake_code_file_link"),
-  getStarterFigmaFileLink: jest.fn().mockReturnValue("fake_figma_file_link"),
+  getStarterCodeFileLink: jest.fn().mockReturnValue("fake_link"),
+  getStarterFigmaFileLink: jest.fn().mockReturnValue("fake_link"),
 };
 
 const subscriptionServiceMock = {
@@ -33,17 +34,63 @@ FileDownloader.initialize({
   creditService: creditServiceMock,
 });
 
-describe(FileDownloader.name, () => {
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe("downloading a starter file", () => {
+  const SUCCESSFUL_INPUT: DownloadFileInput = {
+    userId: "fake_user_id",
+    challengeId: "fake_challenge_id",
+    fileType: "STARTER",
+  };
+
+  test("successful file downloading", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    await fileDownloading();
+
+    expect(challengeServiceMock.getStarterCodeFileLink.mock.calls).toHaveLength(1);
+  });
+
+  test("the user should be logged in", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    userServiceMock.isUserLogged.mockReturnValueOnce(false);
+
+    await expect(fileDownloading).rejects.toThrow(UserNotLoggedInError);
+  });
+
+  test("should throw in the file can’t be found", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    challengeServiceMock.getStarterCodeFileLink.mockReturnValueOnce(null);
+
+    await expect(fileDownloading).rejects.toThrow(FileNotFoundError);
+  });
+});
+
+describe("downloading a figma file", () => {
   const SUCCESSFUL_INPUT: DownloadFileInput = {
     userId: "fake_user_id",
     challengeId: "fake_challenge_id",
     fileType: "FIGMA",
   };
 
-  test("successful file downloading", () => {
+  test("successful file downloading", async () => {
     const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
 
-    expect(fileDownloading).not.toThrow();
+    await fileDownloading();
+
+    expect(challengeServiceMock.getStarterFigmaFileLink.mock.calls).toHaveLength(1);
+  });
+
+  test("should throw in the file can’t be found", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    challengeServiceMock.getStarterFigmaFileLink.mockReturnValueOnce(null);
+
+    await expect(fileDownloading).rejects.toThrow(FileNotFoundError);
   });
 
   test("the user should be logged in", () => {
@@ -54,44 +101,65 @@ describe(FileDownloader.name, () => {
     expect(fileDownloading).rejects.toThrow(UserNotLoggedInError);
   });
 
-  test("the user should have enough design credits", () => {
+  test("if the challenge is premium: no intention to debit design credit", async () => {
     const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
-
-    creditServiceMock.userDesignCredits.mockReturnValueOnce(0);
-
-    expect(fileDownloading).rejects.toThrow(NotEnoughDesignCreditsError);
-  });
-
-  beforeEach(() => {
-    challengeServiceMock.getStarterCodeFileLink.mockClear();
-    challengeServiceMock.getStarterFigmaFileLink.mockClear();
-  });
-
-  it("should call getStarterCodeFileLink if fileType equal to STARTER", async () => {
-    const SUCCESSFUL_INPUT: DownloadFileInput = {
-      userId: "fake_user_id",
-      challengeId: "fake_challenge_id",
-      fileType: "STARTER",
-    };
-
-    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+    challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(true);
 
     await fileDownloading();
 
-    expect(challengeServiceMock.getStarterCodeFileLink.mock.calls).toHaveLength(1);
-  });
-
-  it("should call getStarterFigmaFileLink if fileType equal to FIGMA", async () => {
-    const SUCCESSFUL_INPUT: DownloadFileInput = {
-      userId: "fake_user_id",
-      challengeId: "fake_challenge_id",
-      fileType: "FIGMA",
-    };
-
-    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
-
-    await fileDownloading();
-
+    expect(creditServiceMock.userDesignCredits.mock.calls).toHaveLength(0);
+    expect(creditServiceMock.subtractDesignCredits.mock.calls).toHaveLength(0);
+    expect(userChallengeServiceMock.unlockFigmaFile.mock.calls).toHaveLength(0);
     expect(challengeServiceMock.getStarterFigmaFileLink.mock.calls).toHaveLength(1);
+  });
+
+  test("challenge is FREE + user is yearly subscribed: no intention to debit design credit", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+    challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(false);
+    subscriptionServiceMock.isYearlySubscribed.mockReturnValueOnce(true);
+
+    await fileDownloading();
+
+    expect(creditServiceMock.userDesignCredits.mock.calls).toHaveLength(0);
+    expect(creditServiceMock.subtractDesignCredits.mock.calls).toHaveLength(0);
+    expect(userChallengeServiceMock.unlockFigmaFile.mock.calls).toHaveLength(0);
+    expect(challengeServiceMock.getStarterFigmaFileLink.mock.calls).toHaveLength(1);
+  });
+
+  test("challenge FREE + user not is yearly subscribed + challenge already unlocked: no intention to debit design credit", async () => {
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+    challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(false);
+    subscriptionServiceMock.isYearlySubscribed.mockReturnValueOnce(false);
+    userChallengeServiceMock.alreadyUnlockedFigmaFile.mockResolvedValueOnce(true);
+
+    await fileDownloading();
+
+    expect(creditServiceMock.userDesignCredits.mock.calls).toHaveLength(0);
+    expect(creditServiceMock.subtractDesignCredits.mock.calls).toHaveLength(0);
+    expect(userChallengeServiceMock.unlockFigmaFile.mock.calls).toHaveLength(0);
+    expect(challengeServiceMock.getStarterFigmaFileLink.mock.calls).toHaveLength(1);
+  });
+
+  test("challenge FREE + user  yearly subscribed + challenge not unlocked: the user don’t have enough credits", async () => {
+    challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(false);
+    subscriptionServiceMock.isYearlySubscribed.mockReturnValueOnce(false);
+    userChallengeServiceMock.alreadyUnlockedFigmaFile.mockResolvedValueOnce(false);
+    creditServiceMock.userDesignCredits.mockReturnValueOnce(DESIGN_PRICE - 1);
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    await expect(fileDownloading).rejects.toThrow(NotEnoughDesignCreditsError);
+  });
+
+  test("challenge FREE + user  yearly subscribed + challenge not unlocked: the user have enough credits", async () => {
+    challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(false);
+    subscriptionServiceMock.isYearlySubscribed.mockReturnValueOnce(false);
+    userChallengeServiceMock.alreadyUnlockedFigmaFile.mockResolvedValueOnce(false);
+    creditServiceMock.userDesignCredits.mockReturnValueOnce(DESIGN_PRICE);
+    const fileDownloading = async () => await FileDownloader.getInstance().do(SUCCESSFUL_INPUT);
+
+    await fileDownloading();
+
+    expect(creditServiceMock.subtractDesignCredits.mock.calls).toHaveLength(1);
+    expect(userChallengeServiceMock.unlockFigmaFile.mock.calls).toHaveLength(1);
   });
 });
