@@ -4,13 +4,12 @@ import {
   SingletonNotInitializedError,
   UserNotLoggedInError,
 } from "@/core/infrastructure/errors";
-import { DESIGN_PRICE, FILE_TYPE } from "@/config/constants";
+import { DESIGN_PRICE, FileType } from "@/config/constants";
 import type { IUserService } from "@/core/infrastructure/services/user.service";
 import type { IChallengeService } from "@/core/infrastructure/services/challenge.service";
 import type { ISubscriptionService } from "@/core/infrastructure/services/subscription.service";
 import type { IUserChallengeService } from "@/core/infrastructure/services/user.challenge.service";
 import type { ICreditService } from "@/core/infrastructure/services/credit.service";
-import type { FileType } from "@/config/types";
 
 type UserService = Pick<IUserService, "isUserLogged">;
 type ChallengeService = Pick<
@@ -70,12 +69,17 @@ export class FileDownloader {
 
     if (!userLoggedIn) throw new UserNotLoggedInError();
 
-    const isFigmaType = fileType === FILE_TYPE.FIGMA;
+    const isFigmaType = fileType === FileType.FIGMA;
+    if (isFigmaType) return await this.retrieveFigmaFile(challengeId, userId);
+    else return await this.retrieveStarterFile(challengeId);
+  }
+
+  private async retrieveFigmaFile(challengeId: string, userId: string): Promise<string> {
     const isYearlySubscribed = await this.subscriptionService.isYearlySubscribed(userId);
     const isPremiumChallenge = await this.challengeService.isPremiumChallenge(challengeId);
     const alreadyUnlockedFigmaFile = await this.userChallengeService.alreadyUnlockedFigmaFile(userId, challengeId);
 
-    const isCreditableFile = isFigmaType && !isPremiumChallenge && !isYearlySubscribed && !alreadyUnlockedFigmaFile;
+    const isCreditableFile = !isPremiumChallenge && !isYearlySubscribed && !alreadyUnlockedFigmaFile;
 
     if (isCreditableFile) {
       const userCredits = await this.creditService.userDesignCredits(userId);
@@ -88,16 +92,16 @@ export class FileDownloader {
       await this.userChallengeService.unlockFigmaFile(userId, challengeId);
     }
 
-    let fileLink: string | null;
-
-    if (isFigmaType) {
-      fileLink = await this.challengeService.getStarterFigmaFileLink(challengeId);
-    } else {
-      fileLink = await this.challengeService.getStarterCodeFileLink(challengeId);
-    }
+    const fileLink = await this.challengeService.getStarterFigmaFileLink(challengeId);
 
     if (fileLink === null) throw new FileNotFoundError();
+    else return fileLink;
+  }
 
-    return fileLink;
+  private async retrieveStarterFile(challengeId: string): Promise<string> {
+    const fileLink = await this.challengeService.getStarterCodeFileLink(challengeId);
+
+    if (fileLink === null) throw new FileNotFoundError();
+    else return fileLink;
   }
 }
