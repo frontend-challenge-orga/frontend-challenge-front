@@ -1,15 +1,14 @@
 import { challengeRepository } from "@/core/infrastructure/repositories/challenge.repository";
 import { ChallengeTransformer } from "@/core/infrastructure/transformers/challenge-transformer";
+import { FileType } from "@/config/constants";
 import type { Challenge } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
-import type { FileType } from "@/config/types";
-import { FileType } from "@/config/constants";
 
 export interface IChallengeService {
   getChallenges(): Promise<ChallengeDTO[]>;
   getChallengeById(id: string): Promise<ChallengeDTO | null>;
   getChallengeBySlug(slug: string): Promise<ChallengeDTO>;
-  /*  getFileLink(challengeId: string, fileType: FileType): Promise<string>;*/
+
   getStarterFigmaFileLink(challengeId: string): Promise<string | null>;
   getStarterCodeFileLink(challengeId: string): Promise<string | null>;
   createChallenge(data: Challenge): Promise<ChallengeDTO>;
@@ -40,12 +39,6 @@ export const challengeService: IChallengeService = {
       return ChallengeTransformer.toEntity(challenge);
     });
   },
-
-  /* getFileLink: async (challengeId: string, fileType) => {
-    return challengeRepository.show(challengeId).then((challenge) => {
-      return fileType === FileType.FIGMA ? challenge.starter_figma_path_file : challenge.starter_code_path_file;
-    });
-  },*/
 
   getStarterCodeFileLink: async (challengeId: string) => {
     return challengeRepository.show(challengeId).then((challenge) => {
