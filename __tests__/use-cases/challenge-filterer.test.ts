@@ -2,13 +2,13 @@ import { ChallengeFilterer } from "@/core/infrastructure/use-cases/challenge-fil
 import { ChallengeMock } from "../../__mocks__/challenge.mock";
 import type { Difficulty, Language } from "@/core/domain/entities/challenge.entity";
 
-const challengeMockInstance = new ChallengeMock();
-
 describe("ChallengeFilterer", () => {
   let filterer: ChallengeFilterer;
+  let challengeMockInstance: ChallengeMock;
 
   beforeEach(() => {
     filterer = new ChallengeFilterer();
+    challengeMockInstance = new ChallengeMock();
   });
 
   test("should filter challenges correctly", async () => {
