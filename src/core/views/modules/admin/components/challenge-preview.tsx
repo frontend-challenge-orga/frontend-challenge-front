@@ -2,20 +2,26 @@
 
 import { Dialog, DialogContent, DialogTrigger } from "@/core/views/components/ui/dialog";
 import { Button } from "@/core/views/components/ui/button";
-import type { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
 import { ChallengeCardPreview } from "@/core/views/modules/admin/components/challenge-card-preview";
 import { ChallengeCardDownload } from "./challenge-card-download";
+import type { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
 
 type Props = {
   currentValues: FormValues;
   handleFirstClick: () => void;
+
+  //setPreviewOpen: (value: boolean) => void;
 };
 
 export const ChallengePreview = ({ currentValues, handleFirstClick }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button onClick={handleFirstClick} className="mx-12">
+        <Button
+          onClick={handleFirstClick}
+          //onClick={() => setPreviewOpen(true)}
+          className="mx-12"
+        >
           Preview
         </Button>
       </DialogTrigger>

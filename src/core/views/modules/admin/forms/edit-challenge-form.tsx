@@ -23,12 +23,17 @@ type Props = {
   challenge: ChallengeDTO;
 };
 
-// TODO: Refactor this component to use it for editing and authoring
-
 export const EditChallengeForm = ({ challenge }: Props) => {
   const [isPending, startTransition] = useTransition();
+
+  // Concernant le nom de l'état, je te conseille de le renommer en isPreviewCheck pour plus de clarté
+  // actuellement, il fais plus référence a une action de validation d'une checkbox et non de l'ouverture d'une modal.
+
   const [isPreviewCheck, setIsPreviewCheck] = useState(false);
 
+  //const [previewOpen, setPreviewOpen] = useState(false);
+
+  // Si tu passe le setPreviewOpen dans le composant ChallengePreview, tu peux te passer de cette fonction
   const handleFirstClick = () => {
     setIsPreviewCheck(true);
   };
@@ -57,6 +62,8 @@ export const EditChallengeForm = ({ challenge }: Props) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    // Il faudrait aussi remettre en place la validation de l'état false de preview_check
+    // réfère toi a create-challenge-form.tsx pour voir comment cela a été fait
     startTransition(async () => {
       await updateChallengeAction({ id: challenge?.id, ...values });
     });
@@ -107,10 +114,16 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
         {/* Starter figma PATH FILE */}
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
-        <CheckboxForm isPreviewCheck={isPreviewCheck} control={form.control} name="preview_check" label="checkbox" />
 
+        {/* Je vois que tu passe l'état isPreviewCheck dans le composant CheckboxForm, il faut garder a l'esprit que le
+        composant doit rester le plus générique possible et donc ne pas dépendre de props spécifiques à un cas
+        d'utilisation. Je te laisse trouver une autre solution pour gérer l'affichage du composant CheckboxForm en
+        fonction de l'état isPreviewCheck.*/}
+        <CheckboxForm isPreviewCheck={isPreviewCheck} control={form.control} name="preview_check" label="checkbox" />
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
+
+          {/*Peut-être passer le setPreviewOpen dans le composant ChallengePreview*/}
           <ChallengePreview handleFirstClick={handleFirstClick} currentValues={currentValues} />
         </div>
       </form>
