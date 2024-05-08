@@ -1,42 +1,58 @@
+import {
+  FILTER_DIFFICULTY_LABELS,
+  FILTER_DIFFICULTY_PARAMS,
+  FILTER_LANGUAGE_LABELS,
+  FILTER_LANGUAGE_PARAMS,
+  FILTER_TYPE_LABELS,
+  FILTER_TYPE_PARAMS,
+} from "@/config/constants";
+
 export const filterType = [
   {
-    type: "free",
-    label: "Free",
+    type: FILTER_TYPE_PARAMS.FREE,
+    label: FILTER_TYPE_LABELS.FREE,
   },
+
   {
-    type: "free+",
-    label: "Free+",
-  },
-  {
-    type: "premium",
-    label: "Premium",
+    type: FILTER_TYPE_PARAMS.PREMIUM,
+    label: FILTER_TYPE_LABELS.PREMIUM,
   },
 ];
+
 export const filterDifficulty = [
   {
-    difficulty: "easy",
-    label: "Easy",
+    difficulty: FILTER_DIFFICULTY_PARAMS.NEWBIE,
+    label: FILTER_DIFFICULTY_LABELS.NEWBIE,
   },
   {
-    difficulty: "medium",
-    label: "Medium",
+    difficulty: FILTER_DIFFICULTY_PARAMS.JUNIOR,
+    label: FILTER_DIFFICULTY_LABELS.JUNIOR,
   },
   {
-    difficulty: "hard",
-    label: "Hard",
+    difficulty: FILTER_DIFFICULTY_PARAMS.INTERMEDIATE,
+    label: FILTER_DIFFICULTY_LABELS.INTERMEDIATE,
+  },
+  {
+    difficulty: FILTER_DIFFICULTY_PARAMS.ADVANCED,
+    label: FILTER_DIFFICULTY_LABELS.ADVANCED,
+  },
+  {
+    difficulty: FILTER_DIFFICULTY_PARAMS.GURU,
+    label: FILTER_DIFFICULTY_LABELS.GURU,
   },
 ];
+
 export const filterLanguage = [
   {
-    language: "html&css",
-    label: "HTML & CSS",
+    language: FILTER_LANGUAGE_PARAMS.HTML_CSS,
+    label: FILTER_LANGUAGE_LABELS.HTML_CSS,
   },
   {
-    language: "js",
-    label: "JavaScript",
+    language: FILTER_LANGUAGE_PARAMS.JS,
+    label: FILTER_LANGUAGE_LABELS.JS,
   },
   {
-    language: "api",
-    label: "API",
+    language: FILTER_LANGUAGE_PARAMS.API,
+    label: FILTER_LANGUAGE_LABELS.API,
   },
 ];

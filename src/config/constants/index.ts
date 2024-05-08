@@ -26,11 +26,6 @@ export const DESIGN_PRICE = 1;
 
 export const LANGUAGE = ["HTML_CSS", "JS", "API"] as const;
 
-export const SUBSCRIPTION = {
-  MONTHLY: "MONTHLY",
-  YEARLY: "YEARLY",
-} as const;
-
 export const FILE_TYPE = {
   STARTER: "STARTER",
   FIGMA: "FIGMA",
@@ -61,4 +56,47 @@ export const ACTION_ERROR = {
   USER_NOT_LOGGED_IN: "User is not logged in.",
   FILE_NOT_FOUND: "File not found.",
   PREVIEW_CHECK: "Click the preview button before submitting",
+};
+
+export const CHALLENGE_TYPE = {
+  FREE: "FREE",
+  PREMIUM: "PREMIUM",
+};
+
+export const FILTER_TYPE_PARAMS = {
+  FREE: "free",
+  PREMIUM: "premium",
+};
+
+export const FILTER_TYPE_LABELS = {
+  FREE: "Free",
+  PREMIUM: "Premium",
+};
+
+export const FILTER_DIFFICULTY_PARAMS = {
+  NEWBIE: "newbie",
+  JUNIOR: "junior",
+  INTERMEDIATE: "intermediate",
+  ADVANCED: "advanced",
+  GURU: "guru",
+};
+
+export const FILTER_DIFFICULTY_LABELS = {
+  NEWBIE: "Newbie",
+  JUNIOR: "Junior",
+  INTERMEDIATE: "Intermediate",
+  ADVANCED: "Advanced",
+  GURU: "Guru",
+};
+
+export const FILTER_LANGUAGE_PARAMS = {
+  HTML_CSS: "html_css",
+  JS: "js",
+  API: "api",
+};
+
+export const FILTER_LANGUAGE_LABELS = {
+  HTML_CSS: "HTML & CSS",
+  JS: "JavaScript",
+  API: "API",
 };
