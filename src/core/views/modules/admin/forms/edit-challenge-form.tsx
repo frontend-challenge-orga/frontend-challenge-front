@@ -1,7 +1,8 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useCheckboxState } from "@/core/views/modules/admin/stores/useCheckboxState";
 import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
@@ -12,8 +13,9 @@ import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
 import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
 import { ChallengePreview } from "@/core/views/modules/admin/components/challenge-preview";
-import { DIFFICULTY, LANGUAGE } from "@/config/constants";
+import { ACTION_ERROR, DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
+import { Typography } from "@/core/views/components/typography";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
 
@@ -23,20 +25,15 @@ type Props = {
   challenge: ChallengeDTO;
 };
 
+//
+
 export const EditChallengeForm = ({ challenge }: Props) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Concernant le nom de l'état, je te conseille de le renommer en isPreviewCheck pour plus de clarté
-  // actuellement, il fais plus référence a une action de validation d'une checkbox et non de l'ouverture d'une modal.
-
-  const [isPreviewCheck, setIsPreviewCheck] = useState(false);
-
-  //const [previewOpen, setPreviewOpen] = useState(false);
-
-  // Si tu passe le setPreviewOpen dans le composant ChallengePreview, tu peux te passer de cette fonction
-  const handleFirstClick = () => {
-    setIsPreviewCheck(true);
-  };
+  // Même résultat mais logique différente :
+  // Création d'un store qui permet de modifier le state de previewOpen sans utiliser de props
+  const { previewOpen } = useCheckboxState();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -62,10 +59,16 @@ export const EditChallengeForm = ({ challenge }: Props) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Il faudrait aussi remettre en place la validation de l'état false de preview_check
-    // réfère toi a create-challenge-form.tsx pour voir comment cela a été fait
     startTransition(async () => {
-      await updateChallengeAction({ id: challenge?.id, ...values });
+      if (!previewOpen) {
+        setErrorMessage(ACTION_ERROR.PREVIEW_CHECK);
+        return;
+      }
+      const payload = await updateChallengeAction({ id: challenge?.id, ...values });
+
+      if (payload.serverError) {
+        setErrorMessage(payload.serverError);
+      }
     });
   }
 
@@ -115,17 +118,13 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         {/* Starter figma PATH FILE */}
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
-        {/* Je vois que tu passe l'état isPreviewCheck dans le composant CheckboxForm, il faut garder a l'esprit que le
-        composant doit rester le plus générique possible et donc ne pas dépendre de props spécifiques à un cas
-        d'utilisation. Je te laisse trouver une autre solution pour gérer l'affichage du composant CheckboxForm en
-        fonction de l'état isPreviewCheck.*/}
-        <CheckboxForm isPreviewCheck={isPreviewCheck} control={form.control} name="preview_check" label="checkbox" />
+        <CheckboxForm control={form.control} name="preview_check" label="Check preview before submit" />
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
 
-          {/*Peut-être passer le setPreviewOpen dans le composant ChallengePreview*/}
-          <ChallengePreview handleFirstClick={handleFirstClick} currentValues={currentValues} />
+          <ChallengePreview currentValues={currentValues} />
         </div>
+        <Typography.Error>{errorMessage}</Typography.Error>
       </form>
     </Form>
   );

@@ -5,23 +5,20 @@ import { Button } from "@/core/views/components/ui/button";
 import { ChallengeCardPreview } from "@/core/views/modules/admin/components/challenge-card-preview";
 import { ChallengeCardDownload } from "./challenge-card-download";
 import type { FormValues } from "@/core/views/modules/admin/forms/create-challenge-form";
+import { useCheckboxState } from "@/core/views/modules/admin/stores/useCheckboxState";
 
 type Props = {
   currentValues: FormValues;
-  handleFirstClick: () => void;
-
-  //setPreviewOpen: (value: boolean) => void;
 };
 
-export const ChallengePreview = ({ currentValues, handleFirstClick }: Props) => {
+export const ChallengePreview = ({ currentValues }: Props) => {
+  // L'état du store previewOpen passe à true au click sur preview
+  const { open } = useCheckboxState();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          onClick={handleFirstClick}
-          //onClick={() => setPreviewOpen(true)}
-          className="mx-12"
-        >
+        <Button onClick={() => open()} className="mx-12">
           Preview
         </Button>
       </DialogTrigger>

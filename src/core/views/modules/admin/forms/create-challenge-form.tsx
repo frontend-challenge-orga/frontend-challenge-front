@@ -1,7 +1,8 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useCheckboxState } from "@/core/views/modules/admin/stores/useCheckboxState";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
 import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
@@ -19,17 +20,11 @@ import { createChallengeAction } from "@/core/views/actions/admin/create-challen
 import type * as z from "zod";
 
 export type FormValues = z.infer<typeof formSchema>;
-/* TODO: écrire le pseudo code de la FEATURE check if preview  */
 
 export const CreateChallengeForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [isPreviewCheck, setIsPreviewCheck] = useState(false);
-
-  const handleFirstClick = () => {
-    setIsPreviewCheck(true);
-  };
-  console.log(isPreviewCheck);
+  const { previewOpen, close } = useCheckboxState();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -56,7 +51,7 @@ export const CreateChallengeForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      if (!isPreviewCheck) {
+      if (!previewOpen) {
         setErrorMessage(ACTION_ERROR.PREVIEW_CHECK);
         return;
       }
@@ -69,6 +64,13 @@ export const CreateChallengeForm = () => {
   }
 
   const currentValues = form.getValues();
+
+  // Ici vu qu'on a besoin que le store soit réinitialisé à false à chaque création d'un nouveau challenge,
+  // j'ai calé un close du store à chaque montage du formulaire de création
+  // (je sais pas si ça va te plaire  ^^)
+  useEffect(() => {
+    close();
+  }, []);
 
   return (
     <Form {...form}>
@@ -113,16 +115,13 @@ export const CreateChallengeForm = () => {
 
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
-        <CheckboxForm
-          isPreviewCheck={isPreviewCheck}
-          control={form.control}
-          name="preview_check"
-          label="Check preview before submit"
-        />
+        {/* Plus de props */}
+        <CheckboxForm control={form.control} name="preview_check" label="Check preview before submit" />
 
         <div className="mt-4 flex ">
           <ButtonSubmit isPending={isPending}>Create Challenge</ButtonSubmit>
-          <ChallengePreview handleFirstClick={handleFirstClick} currentValues={currentValues} />
+          {/* Plus de props */}
+          <ChallengePreview currentValues={currentValues} />
         </div>
         <Typography.Error>{errorMessage}</Typography.Error>
       </form>

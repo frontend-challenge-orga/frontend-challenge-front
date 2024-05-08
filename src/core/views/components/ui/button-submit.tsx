@@ -10,11 +10,7 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-export const ButtonSubmit = ({
-  isPending,
-  children,
-  ...props
-}: ButtonProps) => {
+export const ButtonSubmit = ({ isPending, children, ...props }: ButtonProps) => {
   return (
     <Button type="submit" {...props}>
       {isPending ? "Loading..." : children}
