@@ -1,5 +1,5 @@
 import { CHALLENGE_TYPE } from "@/config/constants";
-import type { ChallengeFilterType, ChallengePageSearchParamsType } from "@/config/types";
+import type { ChallengeFilterTypeUpdate, ChallengePageSearchParamsType } from "@/config/types";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
 type ChallengeFilterInput = {
@@ -17,41 +17,36 @@ export class ChallengeFilterer {
     return withoutNumbers.toUpperCase().split("&");
   }
 
-  private parseUrlParams(searchParams: ChallengePageSearchParamsType["searchParams"]): ChallengeFilterType {
-    const filter: ChallengeFilterType = {};
+  public parseUrlParams(searchParams: ChallengePageSearchParamsType["searchParams"] = {}): ChallengeFilterTypeUpdate {
+    // Utilisez la méthode `reduce` pour transformer `searchParams` en un objet de filtre.
+    return Object.keys(searchParams).reduce((filter, key) => {
+      // Pour chaque clé dans `searchParams`, obtenez la valeur correspondante.
+      const value = searchParams[key];
 
-    if (searchParams?.type) {
-      filter.type = this.parseTypeParam(searchParams.type);
-    }
+      // Si la valeur existe, transformez-la en un tableau de chaînes de caractères
+      // en utilisant la méthode `parseTypeParam`, puis ajoutez-la à l'objet de filtre.
+      if (value) {
+        filter[key] = this.parseTypeParam(value);
+      }
 
-    if (searchParams?.difficulty) {
-      filter.difficulty = this.parseTypeParam(searchParams.difficulty);
-    }
-
-    if (searchParams?.language) {
-      filter.language = this.parseTypeParam(searchParams.language);
-    }
-
-    return filter;
+      return filter;
+    }, {} as ChallengeFilterTypeUpdate);
   }
 
-  private filteredChallenges(challenges: ChallengeDTO[], filter: ChallengeFilterType): ChallengeDTO[] {
+  private matchesFilterType(filterType: string[] | undefined, challengeType: string): boolean {
+    return filterType && filterType.length > 0 ? filterType.includes(challengeType) : true;
+  }
+
+  private filteredChallenges(challenges: ChallengeDTO[], filter: ChallengeFilterTypeUpdate): ChallengeDTO[] {
     return challenges.filter((challenge) => {
-      let matches = true;
+      const typeMatch = this.matchesFilterType(
+        filter.type,
+        challenge.premium ? CHALLENGE_TYPE.PREMIUM : CHALLENGE_TYPE.FREE,
+      );
+      const difficultyMatch = this.matchesFilterType(filter.difficulty, challenge.difficulty);
+      const languageMatch = this.matchesFilterType(filter.language, challenge.language);
 
-      if (filter.type && filter.type.length > 0) {
-        matches = matches && filter.type.includes(challenge.premium ? CHALLENGE_TYPE.PREMIUM : CHALLENGE_TYPE.FREE);
-      }
-
-      if (filter.difficulty && filter.difficulty.length > 0) {
-        matches = matches && filter.difficulty.includes(challenge.difficulty);
-      }
-
-      if (filter.language && filter.language.length > 0) {
-        matches = matches && filter.language.includes(challenge.language);
-      }
-
-      return matches;
+      return typeMatch && difficultyMatch && languageMatch;
     });
   }
 }

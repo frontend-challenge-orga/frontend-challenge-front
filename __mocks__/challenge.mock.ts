@@ -1,11 +1,8 @@
 import { faker } from "@faker-js/faker/locale/en";
-import type {
-  Difficulty,
-  Language,
-} from "@/core/domain/entities/challenge.entity";
+import type { Difficulty, Language } from "@/core/domain/entities/challenge.entity";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 
-class ChallengeMock implements ChallengeDTO {
+export class ChallengeMock implements ChallengeDTO {
   id: string;
   name: string;
   slug: string;
@@ -38,8 +35,3 @@ class ChallengeMock implements ChallengeDTO {
     this.createdById = "user-id";
   }
 }
-
-export const CHALLENGES_MOCK: ChallengeDTO[] = [
-  new ChallengeMock(),
-  new ChallengeMock(),
-];

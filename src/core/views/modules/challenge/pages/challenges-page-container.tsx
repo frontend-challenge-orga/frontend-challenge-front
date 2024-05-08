@@ -25,7 +25,7 @@ export async function ChallengesPageContainer({ challengesServiceHandler, getSer
 
   const filteredChallengesResult = await new ChallengeFilterer().do({
     challenges,
-    searchParams,
+    searchParams: searchParams ?? {},
   });
 
   return (
