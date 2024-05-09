@@ -1,7 +1,8 @@
 "use server";
 
-import { challengeSolutionService } from "@/core/infrastructure/services/challenge.solution.service";
 import { ServerActionError, userAction } from "@/config/libs/next-safe-action";
+import { challengeSolutionService } from "@/core/infrastructure/services/challenge.solution.service";
+import { ChallengeSolutionTransformer } from "@/core/infrastructure/transformers/challenge-solution-transformer";
 import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solution-schema";
 import { awardPointsForChallenge } from "@/core/infrastructure/use-cases/award-points-for-challenge";
 import { ACTION_ERROR } from "@/config/constants";
@@ -16,7 +17,7 @@ export const submitChallengeSolutionAction = userAction(schema, async (data, ctx
   try {
     const { challengePoints, ...rest } = data;
 
-    const challengeSolution = await challengeSolutionService.createChallengeSolution({
+    const challengeSolution = ChallengeSolutionTransformer.toCreate({
       ...rest,
       id: crypto.randomUUID(),
       userId: ctx.userId,
@@ -24,7 +25,9 @@ export const submitChallengeSolutionAction = userAction(schema, async (data, ctx
       challengeId: rest.challengeId,
     });
 
-    await awardPointsForChallenge(ctx.userId, ctx.userPoints, challengePoints, challengeSolution.id);
+    const challengeSolutionPayload = await challengeSolutionService.createChallengeSolution(challengeSolution);
+
+    await awardPointsForChallenge(ctx.userId, ctx.userPoints, challengePoints, challengeSolutionPayload.id);
   } catch (error) {
     throw new ServerActionError(ACTION_ERROR.SUBMIT_CHALLENGE_SOLUTION);
   }

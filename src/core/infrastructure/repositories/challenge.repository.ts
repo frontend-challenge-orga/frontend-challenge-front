@@ -1,7 +1,6 @@
 import { db } from "@/config/server/db";
 import { ChallengeTransformer } from "@/core/infrastructure/transformers/challenge-transformer";
 import type { IChallengeRepository } from "@/core/domain/repositories/challenge.repository";
-import { Prisma } from "@prisma/client";
 
 export const challengeRepository: IChallengeRepository = {
   index: async () => {

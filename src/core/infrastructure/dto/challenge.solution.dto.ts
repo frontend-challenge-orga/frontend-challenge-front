@@ -1,10 +1,18 @@
+import type { UserDTO } from "@/core/infrastructure/dto/user.dto";
+import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
+
 export type ChallengeSolutionDTO = {
-  readonly id: string;
-  readonly title: string;
-  readonly repository_url: string;
-  readonly live_preview_url: string;
-  readonly stacks: string[];
-  readonly solution_retrospective: string;
-  readonly userId: string;
-  readonly challengeId: string;
+  id: string;
+  title: string;
+  repository_url: string;
+  live_preview_url: string;
+  stacks: string[];
+  solution_retrospective: string;
+  userId: string;
+  challengeId: string;
 };
+
+export type ChallengeSolutionViewDTO = {
+  user: UserDTO;
+  challenge: ChallengeDTO;
+} & ChallengeSolutionDTO;

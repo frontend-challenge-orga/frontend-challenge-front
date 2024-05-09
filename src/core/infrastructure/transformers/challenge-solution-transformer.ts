@@ -1,16 +1,20 @@
-import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
-import type { ChallengeSolution } from "@/core/domain/entities/challenge.solution.entity";
+import type { ChallengeSolution, ChallengeSolutionSave } from "@/core/domain/entities/challenge.solution.entity";
+import type { ChallengeSolutionDTO, ChallengeSolutionViewDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 
 export class ChallengeSolutionTransformer {
-  static toDomain(
-    challengeSolutionDTO: ChallengeSolutionDTO,
-  ): ChallengeSolution {
+  static toEntity(challengeSolution: ChallengeSolution): ChallengeSolutionDTO {
+    return challengeSolution;
+  }
+
+  static toCreate(challengeSolution: ChallengeSolutionSave): ChallengeSolutionDTO {
     return {
-      ...challengeSolutionDTO,
+      ...challengeSolution,
     };
   }
 
-  static toEntity(challengeSolution: ChallengeSolution): ChallengeSolutionDTO {
-    return challengeSolution;
+  static toView(challengeSolution: ChallengeSolution): ChallengeSolutionViewDTO {
+    return {
+      ...challengeSolution,
+    };
   }
 }

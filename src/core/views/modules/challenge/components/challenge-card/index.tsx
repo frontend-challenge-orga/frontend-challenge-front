@@ -1,3 +1,4 @@
+import React from "react";
 import { ChallengeCardHeader } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-header";
 import { ChallengeCardName } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-name";
 import { ChallengeCardLanguage } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-language";
@@ -8,26 +9,34 @@ import { ChallengeCardLayout } from "@/core/views/modules/challenge/components/c
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type { ChallengeSolutionDTO } from "@/core/infrastructure/dto/challenge.solution.dto";
 import type { Session } from "next-auth";
+import { ChallengeCardHeaderSolution } from "@/core/views/modules/challenge/components/challenge-card/challenge-card-header-solution";
 
 type Props = {
   challenge: ChallengeDTO;
-  completedChallenges: ChallengeSolutionDTO[];
-  session: Session | null;
+  completedChallenges?: ChallengeSolutionDTO[];
+  solutionId?: string;
+  session?: Session | null;
+  type: "challenge" | "solution";
+  children?: React.ReactNode;
 };
 
-export const ChallengeCard = async ({ challenge, completedChallenges, session }: Props) => {
+export const ChallengeCard = async ({ challenge, completedChallenges, solutionId, session, type, children }: Props) => {
   const { id, slug, name, description, difficulty, premium } = challenge;
 
-  const isCompletedChallenge = completedChallenges.some((completedChallenge) => completedChallenge.challengeId === id);
+  const isCompletedChallenge = completedChallenges?.some((completedChallenge) => completedChallenge.challengeId === id);
 
   return (
     <ChallengeCardLayout>
-      <ChallengeCardHeader
-        slug={slug}
-        premium={premium}
-        session={session}
-        isCompletedChallenge={isCompletedChallenge}
-      />
+      {type === "challenge" && (
+        <ChallengeCardHeader
+          slug={slug}
+          premium={premium}
+          session={session}
+          isCompletedChallenge={isCompletedChallenge}
+        />
+      )}
+
+      {type === "solution" && <ChallengeCardHeaderSolution solutionId={solutionId} slug={slug} />}
 
       <div className={"p-6"}>
         <ChallengeCardName slug={slug} name={name} />
@@ -38,6 +47,8 @@ export const ChallengeCard = async ({ challenge, completedChallenges, session }:
 
         <ChallengeCardDescription description={description} />
       </div>
+
+      {type === "solution" && children}
     </ChallengeCardLayout>
   );
 };
