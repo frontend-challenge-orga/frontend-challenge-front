@@ -33,37 +33,50 @@ ChallengeStarter.initialize({
   creditService: creditServiceMock,
 });
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe(ChallengeStarter.name, () => {
   const SUCCESSFUL_INPUT: StartChallengeInput = {
     userId: "fake_user_id",
     challengeId: "fake_challenge_id",
   };
-  const challengeStarting = async () => await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
 
-  test("successful started challenge", () => {
-    expect(challengeStarting).not.toThrow();
+  test("should start a challenge successfully", async () => {
+    await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
+
+    expect(userChallengeServiceMock.startChallenge).toHaveBeenCalledTimes(1);
   });
 
-  test("the user should be logged in", () => {
+  test("should throw when the user is not logged in", () => {
+    const challengeStarting = async () => await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
+
     userServiceMock.isUserLogged.mockReturnValueOnce(false);
 
     expect(challengeStarting).rejects.toThrow(UserNotLoggedInError);
   });
 
-  test("the user should have never started the challenge", () => {
+  test("should throw when the user has already started the challenge", () => {
+    const challengeStarting = async () => await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
+
     userChallengeServiceMock.getStartedChallenge.mockReturnValueOnce({});
 
     expect(challengeStarting).rejects.toThrow(ChallengeAlreadyStartedError);
   });
 
-  test("the user cannot start a premium challenge if he’s not subscribed", () => {
+  test("should throw when the challenge is premium + the user in not subscribed", () => {
+    const challengeStarting = async () => await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
+
     challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(true);
     subscriptionServiceMock.isSubscribed.mockReturnValueOnce(false);
 
     expect(challengeStarting).rejects.toThrow(UserNotSubscribedError);
   });
 
-  test("if the challenge is premium + the user is MONTHLY subscribed: he user should have enough credits", () => {
+  test("should throw when the challenge is premium + the user is MONTHLY subscribed + the user don’t have enough credits", () => {
+    const challengeStarting = async () => await ChallengeStarter.getInstance().do(SUCCESSFUL_INPUT);
+
     challengeServiceMock.isPremiumChallenge.mockReturnValueOnce(true);
     subscriptionServiceMock.isSubscribed.mockReturnValueOnce(true);
     subscriptionServiceMock.isMonthlySubscribed.mockReturnValueOnce(true);
