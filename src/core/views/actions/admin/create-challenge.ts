@@ -12,9 +12,8 @@ import * as crypto from "node:crypto";
 
 export const createChallengeAction = adminAction(formSchema, async (data, ctx) => {
   try {
-    const { preview_check, ...rest } = data;
     await challengeService.createChallenge({
-      ...rest,
+      ...data,
       id: crypto.randomUUID(),
       slug: data.name.toLowerCase().replace(/ /g, "-"),
       points: challengeS.getPointsForChallengeDifficulty(data.difficulty),

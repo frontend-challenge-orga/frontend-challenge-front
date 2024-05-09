@@ -16,9 +16,8 @@ const formSchema = Schema.extend({
 
 export const updateChallengeAction = adminAction(formSchema, async (data, ctx) => {
   try {
-    const { preview_check, ...rest } = data;
     await challengeService.updateChallenge(data.id, {
-      ...rest,
+      ...data,
       slug: data.name.toLowerCase().replace(/ /g, "-"),
       points: challengeS.getPointsForChallengeDifficulty(data.difficulty),
       assets_presentation: extractValuesFromArray(data.assets_presentation),
