@@ -1,10 +1,11 @@
 "use client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
+import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
 import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { updateChallengeAction } from "@/core/views/actions/admin/update-challenge";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
@@ -13,6 +14,7 @@ import { FieldArrayForm } from "@/core/views/components/ui/field-array-form";
 import { ChallengePreview } from "@/core/views/modules/admin/components/challenge-preview";
 import { DIFFICULTY, LANGUAGE } from "@/config/constants";
 import { SwitchForm } from "@/core/views/components/ui/switch-form";
+import { Typography } from "@/core/views/components/typography";
 import type { ChallengeDTO } from "@/core/infrastructure/dto/challenge.dto";
 import type * as z from "zod";
 
@@ -22,9 +24,8 @@ type Props = {
   challenge: ChallengeDTO;
 };
 
-// TODO: Refactor this component to use it for editing and authoring
-
 export const EditChallengeForm = ({ challenge }: Props) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormValues>({
@@ -51,7 +52,11 @@ export const EditChallengeForm = ({ challenge }: Props) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      await updateChallengeAction({ id: challenge?.id, ...values });
+      const payload = await updateChallengeAction({ id: challenge?.id, ...values });
+
+      if (payload.serverError) {
+        setErrorMessage(payload.serverError);
+      }
     });
   }
 
@@ -59,12 +64,11 @@ export const EditChallengeForm = ({ challenge }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-96 p-12">
-        {/* Name */}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-96 p-12" id="edit-challenge-form">
         <InputForm control={form.control} name="name" label="Project name" />
-        {/* Description */}
+
         <TextAreaForm control={form.control} name="description" label="Description" />
-        {/* Language */}
+
         <SelectForm
           control={form.control}
           name="language"
@@ -72,7 +76,7 @@ export const EditChallengeForm = ({ challenge }: Props) => {
           items={LANGUAGE}
           placeholder="Select a language"
         />
-        {/* Difficulty */}
+
         <SelectForm
           control={form.control}
           name="difficulty"
@@ -80,11 +84,11 @@ export const EditChallengeForm = ({ challenge }: Props) => {
           items={DIFFICULTY}
           placeholder="Select a difficulty"
         />
-        {/* Brief */}
+
         <TextAreaForm control={form.control} name="brief" label="Brief" />
-        {/* Tips */}
+
         <TextAreaForm control={form.control} name="tips" label="Tips" />
-        {/* Assets presentation */}
+
         <FieldArrayForm<FormValues>
           control={form.control}
           fields={fields}
@@ -94,17 +98,22 @@ export const EditChallengeForm = ({ challenge }: Props) => {
           name="assets_presentation"
           label={"Assets presentation"}
         />
-        {/* Premium */}
+
         <SwitchForm control={form.control} name="premium" label="Premium" />
-        {/* Starter code PATH FILE */}
+
         <InputForm control={form.control} name="starter_code_path_file" label="Starter code PATH FILE" />
-        {/* Starter figma PATH FILE */}
+
         <InputForm control={form.control} name="starter_figma_path_file" label="Starter figma PATH FILE" />
 
         <div className="mt-4 flex ">
-          <ButtonSubmit isPending={isPending}>Edit Challenge</ButtonSubmit>
-          <ChallengePreview currentValues={currentValues} />
+          <ChallengePreview
+            currentValues={currentValues}
+            form="edit-challenge-form"
+            type="edit"
+            isPending={isPending}
+          />
         </div>
+        <Typography.Error>{errorMessage}</Typography.Error>
       </form>
     </Form>
   );

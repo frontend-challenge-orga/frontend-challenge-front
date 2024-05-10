@@ -45,6 +45,7 @@ export const ACTION_ERROR = {
   CANCEL_SUBSCRIPTION: "An error occurred while canceling the subscription. Contact support.",
   CREATE_CHALLENGE: "An error occurred while creating the challenge.",
   START_CHALLENGE: "An error occurred while starting the challenge.",
+  EDIT_CHALLENGE: "An error occurred while editing the challenge",
   INSUFFICIENT_CHALLENGE_CREDITS: "You don't have enough credit to start the challenge.",
   INSUFFICIENT_DESIGN_CREDITS: "You don't have enough credit to download the design file.",
   REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
@@ -54,6 +55,7 @@ export const ACTION_ERROR = {
   USER_HAS_STARTED_CHALLENGE: "User has already started the challenge.",
   USER_NOT_LOGGED_IN: "User is not logged in.",
   FILE_NOT_FOUND: "File not found.",
+  PREVIEW_CHECK: "Click the preview button before submitting",
 };
 
 export const CHALLENGE_TYPE = {
