@@ -1,9 +1,9 @@
-import type { Feedback } from "@/core/domain/entities/feedback.entity";
+import type { Feedback, FeedbackSave } from "@/core/domain/entities/feedback.entity";
 
 export interface IFeedbackRepository {
   index(): Promise<Feedback[]>;
-  show(challengeId: string): Promise<Feedback | null>;
-  create(data: Feedback): Promise<Feedback>;
-  update(id: string, data: Feedback): Promise<Feedback | undefined>;
+  shows(challengeSolutionId: string): Promise<Feedback[] | null>;
+  create(data: FeedbackSave): Promise<FeedbackSave>;
+  update(id: string, data: FeedbackSave): Promise<FeedbackSave | undefined>;
   /* remove(id: string): Promise<void>;*/
 }

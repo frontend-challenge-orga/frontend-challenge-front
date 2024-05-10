@@ -4,6 +4,6 @@ export interface IChallengeSolutionRepository {
   index: () => Promise<ChallengeSolution[]>;
   createChallengeSolution: (data: ChallengeSolutionSave) => Promise<ChallengeSolutionSave>;
   findByChallengeSlug: (slug: string) => Promise<ChallengeSolution[]>;
-  findByChallengeId: (challengeId: string) => Promise<ChallengeSolution[]>;
+  findByChallengeId: (challengeId: string) => Promise<ChallengeSolution | null>;
   hasUserSubmittedSolution: (userId: string, slug: string) => Promise<boolean>;
 }

@@ -89,6 +89,3 @@ export class ChallengeStarter {
     await this.userChallengeService.startChallenge(userId, challengeId);
   }
 }
-
-//Idealy we want to place the initialization of the singleton here but it breaks the tests
-//Jest struggles when importing the services concretions

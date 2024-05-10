@@ -35,7 +35,7 @@ export const challengeSolutionRepository: IChallengeSolutionRepository = {
   },
 
   findByChallengeId: async (id: string) => {
-    return db.challengeSolution.findMany({
+    return db.challengeSolution.findFirst({
       where: {
         id,
       },

@@ -8,19 +8,25 @@ export const feedbackRepository: IFeedbackRepository = {
       orderBy: {
         id: "desc",
       },
+      include: {
+        user: true,
+      },
     });
   },
 
-  show: async (id: string) => {
-    return db.feedback.findUnique({
+  shows: async (challengeSolutionId: string) => {
+    return db.feedback.findMany({
       where: {
-        id,
+        challengeSolutionId,
+      },
+      include: {
+        user: true,
       },
     });
   },
 
   create: async (data) => {
-    const feedback = FeedbackTransformer.toEntity(data);
+    const feedback = FeedbackTransformer.toCreate(data);
     return db.feedback.create({ data: feedback });
   },
 
