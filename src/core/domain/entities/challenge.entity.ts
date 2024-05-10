@@ -18,9 +18,3 @@ export type Challenge = {
 export type Difficulty = "NEWBIE" | "JUNIOR" | "INTERMEDIATE" | "ADVANCED" | "GURU";
 
 export type Language = "HTML_CSS" | "JS" | "API";
-
-export type Filter = {
-  readonly type?: string[];
-  readonly difficulty?: string[];
-  readonly language?: string[];
-};

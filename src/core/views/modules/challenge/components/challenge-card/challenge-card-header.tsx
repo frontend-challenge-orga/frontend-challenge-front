@@ -9,8 +9,8 @@ type Props = {
   slug: string;
   picture?: string;
   premium: boolean;
-  isCompletedChallenge: boolean;
-  session: Session | null;
+  isCompletedChallenge?: boolean;
+  session?: Session | null;
 };
 
 export const ChallengeCardHeader = ({ slug, premium, isCompletedChallenge, session }: Props) => {

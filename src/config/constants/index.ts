@@ -50,6 +50,7 @@ export const ACTION_ERROR = {
   INSUFFICIENT_DESIGN_CREDITS: "You don't have enough credit to download the design file.",
   REMOVE_CHALLENGE: "An error occurred while removing the challenge.",
   SUBMIT_CHALLENGE_SOLUTION: "An error occurred while submitting the challenge solution.",
+  SUBMIT_FEEDBACK: "An error occurred while submitting the feedback.",
   DOWNLOAD_FILE: "An error occurred while downloading the file.",
   USER_HAS_NO_SUBSCRIPTION: "User has no subscription.",
   USER_HAS_STARTED_CHALLENGE: "User has already started the challenge.",

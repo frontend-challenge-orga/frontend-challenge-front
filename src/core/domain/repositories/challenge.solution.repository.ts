@@ -1,9 +1,9 @@
-import type { ChallengeSolution } from "@/core/domain/entities/challenge.solution.entity";
+import type { ChallengeSolution, ChallengeSolutionSave } from "@/core/domain/entities/challenge.solution.entity";
 
 export interface IChallengeSolutionRepository {
   index: () => Promise<ChallengeSolution[]>;
-  createChallengeSolution: (data: ChallengeSolution) => Promise<ChallengeSolution>;
+  createChallengeSolution: (data: ChallengeSolutionSave) => Promise<ChallengeSolutionSave>;
   findByChallengeSlug: (slug: string) => Promise<ChallengeSolution[]>;
-  findByChallengeId: (challengeId: string) => Promise<ChallengeSolution[]>;
+  findByChallengeId: (challengeId: string) => Promise<ChallengeSolution | null>;
   hasUserSubmittedSolution: (userId: string, slug: string) => Promise<boolean>;
 }

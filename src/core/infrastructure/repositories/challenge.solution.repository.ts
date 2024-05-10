@@ -4,11 +4,16 @@ import type { IChallengeSolutionRepository } from "@/core/domain/repositories/ch
 
 export const challengeSolutionRepository: IChallengeSolutionRepository = {
   index: async () => {
-    return db.challengeSolution.findMany();
+    return db.challengeSolution.findMany({
+      include: {
+        user: true,
+        challenge: true,
+      },
+    });
   },
 
   createChallengeSolution: async (data) => {
-    const challengeSolution = ChallengeSolutionTransformer.toEntity(data);
+    const challengeSolution = ChallengeSolutionTransformer.toCreate(data);
 
     return db.challengeSolution.create({
       data: challengeSolution,
@@ -22,13 +27,21 @@ export const challengeSolutionRepository: IChallengeSolutionRepository = {
           slug,
         },
       },
+      include: {
+        user: true,
+        challenge: true,
+      },
     });
   },
 
   findByChallengeId: async (id: string) => {
-    return db.challengeSolution.findMany({
+    return db.challengeSolution.findFirst({
       where: {
         id,
+      },
+      include: {
+        user: true,
+        challenge: true,
       },
     });
   },

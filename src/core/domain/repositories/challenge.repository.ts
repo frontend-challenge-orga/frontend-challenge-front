@@ -1,4 +1,4 @@
-import type { Challenge, Filter } from "@/core/domain/entities/challenge.entity";
+import type { Challenge } from "@/core/domain/entities/challenge.entity";
 
 export interface IChallengeRepository {
   index(): Promise<Challenge[]>;

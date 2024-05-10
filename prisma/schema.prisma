@@ -57,6 +57,7 @@ model User {
     challenges    Challenge[]
     userChallenges UserChallenge[]
     challengeSubmissions ChallengeSolution[]
+    feedbacks     Feedback[]
 }
 
 model PointTransaction {
@@ -147,8 +148,24 @@ model ChallengeSolution {
     challengeId  String
     createdAt    DateTime  @default(now())
     updatedAt    DateTime  @updatedAt
+    feedbacks    Feedback[]
 
     @@unique([userId, challengeId])
+}
+
+model Feedback {
+    id           String    @id @default(uuid())
+    comment      String
+    rating       Int       @default(0)
+    user         User      @relation(fields: [userId], references: [id])
+    userId       String
+    challengeSolution ChallengeSolution @relation(fields: [challengeSolutionId], references: [id])
+    challengeSolutionId String
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    @@index([userId])
+    @@index([challengeSolutionId])
 }
 
 model UserChallenge {

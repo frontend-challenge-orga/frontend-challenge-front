@@ -1,8 +1,8 @@
 import type { Session } from "next-auth";
 
 type Props = {
-  isCompletedChallenge: boolean;
-  session: Session | null;
+  isCompletedChallenge?: boolean;
+  session?: Session | null;
 };
 
 export const ChallengeCardCompleted = ({ session, isCompletedChallenge }: Props) => {

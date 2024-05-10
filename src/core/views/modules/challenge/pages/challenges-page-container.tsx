@@ -1,4 +1,4 @@
-import { ChallengesContainer } from "@/core/views/modules/challenge/components/challenge-card/challenges-container";
+import { Fragment } from "react";
 import { ChallengesGrid } from "@/core/views/modules/challenge/components/challenges-grid";
 import { ChallengeCard } from "@/core/views/modules/challenge/components/challenge-card";
 import { ChallengeFilter } from "@/core/views/modules/challenge/components/challenge-filter";
@@ -29,7 +29,7 @@ export async function ChallengesPageContainer({ challengesServiceHandler, getSer
   });
 
   return (
-    <ChallengesContainer>
+    <Fragment>
       <ChallengeFilter />
       <ChallengesGrid>
         {filteredChallengesResult.map((challenge) => (
@@ -38,9 +38,10 @@ export async function ChallengesPageContainer({ challengesServiceHandler, getSer
             challenge={challenge}
             completedChallenges={completedChallenges}
             session={session}
+            type={"challenge"}
           />
         ))}
       </ChallengesGrid>
-    </ChallengesContainer>
+    </Fragment>
   );
 }
