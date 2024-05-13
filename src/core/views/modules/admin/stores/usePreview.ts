@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface CheckboxState {
+interface PreviewState {
   previewOpen: boolean;
   open: () => void;
   close: () => void;
 }
 
-export const useCheckboxState = create<CheckboxState>((set) => ({
+export const usePreview = create<PreviewState>((set) => ({
   previewOpen: false,
   open: () => set({ previewOpen: true }),
   close: () => set({ previewOpen: false }),

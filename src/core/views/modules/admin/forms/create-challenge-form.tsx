@@ -101,8 +101,8 @@ export const CreateChallengeForm = () => {
         <div className="mt-4 flex ">
           <ChallengePreview
             currentValues={currentValues}
-            form="create-challenge-form"
-            type="create"
+            formId="create-challenge-form"
+            formType="create"
             isPending={isPending}
           />
         </div>
