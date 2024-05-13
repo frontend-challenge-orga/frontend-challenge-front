@@ -1,11 +1,11 @@
 import { feedbackRepository } from "@/core/infrastructure/repositories/feedback.repository";
 import { FeedbackTransformer } from "@/core/infrastructure/transformers/feedback-transformer";
-import type { Feedback } from "@/core/domain/entities/feedback.entity";
+import type { FeedbackSave } from "@/core/domain/entities/feedback.entity";
 import type { FeedbackDTO, FeedbackViewDTO } from "@/core/infrastructure/dto/feedback.dto";
 
 interface IFeedbackService {
   getFeedbacks(challengeSolutionId: string): Promise<FeedbackViewDTO[] | null>;
-  createFeedback(data: Feedback): Promise<FeedbackDTO>;
+  createFeedback(data: FeedbackSave): Promise<FeedbackDTO>;
 }
 
 export const feedbackService: IFeedbackService = {

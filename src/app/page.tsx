@@ -4,6 +4,7 @@ import { CancelSubscriptionForm } from "@/core/views/modules/payment/forms/cance
 
 export default async function HomePage() {
   const session = await getServerAuthSession();
+  console.log(session);
 
   return (
     <>
