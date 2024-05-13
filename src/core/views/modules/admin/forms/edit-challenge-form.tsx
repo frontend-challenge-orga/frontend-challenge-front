@@ -5,8 +5,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { formSchema } from "./create-challenge-schema";
 import { Form } from "@/core/views/components/ui/form";
 import { InputForm } from "@/core/views/components/ui/input-form";
-import { CheckboxForm } from "@/core/views/components/ui/checkbox-form";
-import { ButtonSubmit } from "@/core/views/components/ui/button-submit";
 import { updateChallengeAction } from "@/core/views/actions/admin/update-challenge";
 import { TextAreaForm } from "@/core/views/components/ui/textarea-form";
 import { SelectForm } from "@/core/views/components/ui/select-form";
@@ -108,8 +106,8 @@ export const EditChallengeForm = ({ challenge }: Props) => {
         <div className="mt-4 flex ">
           <ChallengePreview
             currentValues={currentValues}
-            form="edit-challenge-form"
-            type="edit"
+            formId="edit-challenge-form"
+            formType="edit"
             isPending={isPending}
           />
         </div>
