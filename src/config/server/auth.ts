@@ -2,8 +2,9 @@ import { getServerSession, type DefaultSession, type NextAuthOptions } from "nex
 import GithubProvider from "next-auth/providers/github";
 import { env } from "@/config/env";
 import { db } from "@/config/server/db";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type Adapter } from "next-auth/adapters";
+import { CustomPrismaAdapter } from "@/config/server/custom-prisma-adapter";
+import type { Session as PrismaSession } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,12 +17,14 @@ declare module "next-auth" {
     user: {
       id: string;
       role: User["role"];
+      accessToken: string;
     } & DefaultSession["user"];
   }
 
   interface User {
     // ...other properties
     role: "USER" | "COLLABORATOR" | "ADMIN";
+    sessions: PrismaSession[];
   }
 }
 
@@ -39,10 +42,12 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: user.id,
         role: user.role ?? "USER",
+        accessToken: user.sessions[0]?.sessionToken,
       },
     }),
   },
-  adapter: PrismaAdapter(db) as Adapter,
+
+  adapter: CustomPrismaAdapter(db) as Adapter,
   providers: [
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
