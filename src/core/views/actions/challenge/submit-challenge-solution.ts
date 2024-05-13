@@ -7,6 +7,7 @@ import { formSchema } from "@/core/views/modules/challenge/forms/challenge-solut
 import { awardPointsForChallenge } from "@/core/infrastructure/use-cases/award-points-for-challenge";
 import { ACTION_ERROR } from "@/config/constants";
 import * as z from "zod";
+import { userService } from "@/core/infrastructure/services/user.service";
 
 const schema = formSchema.extend({
   challengeId: z.string(),
@@ -27,7 +28,9 @@ export const submitChallengeSolutionAction = userAction(schema, async (data, ctx
 
     const challengeSolutionPayload = await challengeSolutionService.createChallengeSolution(challengeSolution);
 
-    await awardPointsForChallenge(ctx.userId, ctx.userPoints, challengePoints, challengeSolutionPayload.id);
+    const user = await userService.getUserById(ctx.userId);
+
+    await awardPointsForChallenge(ctx.userId, user.points, challengePoints, challengeSolutionPayload.id);
   } catch (error) {
     throw new ServerActionError(ACTION_ERROR.SUBMIT_CHALLENGE_SOLUTION);
   }
