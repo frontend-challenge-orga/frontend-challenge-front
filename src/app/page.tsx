@@ -1,9 +1,11 @@
 import { getServerAuthSession } from "@/config/server/auth";
 import { Header } from "@/core/views/components/layouts/header";
 import { CancelSubscriptionForm } from "@/core/views/modules/payment/forms/cancel-subscription-form";
+import { getServerSession } from "next-auth";
 
 export default async function HomePage() {
   const session = await getServerAuthSession();
+
   console.log(session);
 
   return (
